@@ -18,7 +18,7 @@ def count_lines(filepath):
     # HINT: Remember, you can use a file in a for-loop
     
     # verify input
-    print("filepath is: ", filepath)
+    #print("filepath is: ", filepath)
 
     # create accumulator
     number_of_lines = 0 
@@ -36,7 +36,7 @@ def count_lines(filepath):
 
     file_to_count.close()
 
-    print("number_of_lines is: ", number_of_lines)
+    #print("number_of_lines is: ", number_of_lines)
 
     return number_of_lines
 
@@ -59,7 +59,7 @@ def write_numbers(filepath,n):
     # HINT: You can only write strings to a file, so convert the numbers first
 
     #verify input
-    print("filepath is: ", filepath)
+    #print("filepath is: ", filepath)
 
 
     #open file for writing / create new blank file
