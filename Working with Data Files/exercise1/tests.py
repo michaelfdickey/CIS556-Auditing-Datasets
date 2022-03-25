@@ -23,6 +23,7 @@ def test_count_lines():
     result = funcs.count_lines(filepath)
     introcs.assert_equals(6,result)
     
+    """
     filepath = os.path.join(parent,'files','readfile2.txt')
     result = funcs.count_lines(filepath)
     introcs.assert_equals(23,result)
@@ -30,7 +31,7 @@ def test_count_lines():
     filepath = os.path.join(parent,'files','readfile3.txt')
     result = funcs.count_lines(filepath)
     introcs.assert_equals(10,result)
-
+    """
 
 def test_write_numbers():
     """
@@ -100,5 +101,5 @@ def test_write_numbers():
 
 if __name__ == '__main__':
     test_count_lines()
-    test_write_numbers()
-    print('Module funcs passed all tests.')
+    #test_write_numbers()
+    #print('Module funcs passed all tests.')

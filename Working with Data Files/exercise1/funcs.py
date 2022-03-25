@@ -16,7 +16,27 @@ def count_lines(filepath):
     Precondition: filepath is a string with the FULL PATH to a text file
     """
     # HINT: Remember, you can use a file in a for-loop
-    pass            # Implement me
+    
+    # verify input
+    print("filepath is: ", filepath)
+
+    # create accumulator
+    number_of_lines = 0 
+
+    file_to_count = open(filepath)
+
+    # test to confirm open and read file
+    """
+    text = file_to_count.read()
+    print(text)
+    """
+
+    for line in file_to_count:
+        number_of_lines = number_of_lines + 1 
+
+    print("number_of_lines is: ", number_of_lines)
+
+    return number_of_lines
 
 
 def write_numbers(filepath,n):
