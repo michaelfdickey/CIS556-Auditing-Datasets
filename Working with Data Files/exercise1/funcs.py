@@ -34,6 +34,8 @@ def count_lines(filepath):
     for line in file_to_count:
         number_of_lines = number_of_lines + 1 
 
+    file_to_count.close()
+
     print("number_of_lines is: ", number_of_lines)
 
     return number_of_lines
