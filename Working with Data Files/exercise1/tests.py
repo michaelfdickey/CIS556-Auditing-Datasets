@@ -61,6 +61,9 @@ def test_write_numbers():
     # Check to see if they are the same
     introcs.assert_equals(correct,actual)
     
+    
+
+    """
     # TEST 2
     filepath = os.path.join(parent,'files','tempfile.txt')
     funcs.write_numbers(filepath,16)
@@ -79,6 +82,8 @@ def test_write_numbers():
     # Check to see if they are the same
     introcs.assert_equals(correct,actual)
     
+    
+
     # TEST 3
     filepath = os.path.join(parent,'files','tempfile.txt')
     funcs.write_numbers(filepath,26)
@@ -96,9 +101,9 @@ def test_write_numbers():
     
     # Check to see if they are the same
     introcs.assert_equals(correct,actual)
-
+    """
 
 if __name__ == '__main__':
-    test_count_lines()
-    #test_write_numbers()
+    #test_count_lines()
+    test_write_numbers()
     #print('Module funcs passed all tests.')

@@ -57,5 +57,23 @@ def write_numbers(filepath,n):
     Precondition: n is an int > 0.
     """
     # HINT: You can only write strings to a file, so convert the numbers first
-    pass            # Implement me
 
+    #verify input
+    print("filepath is: ", filepath)
+
+
+    #open file for writing / create new blank file
+    file_to_write = open(filepath,'w')
+    #close file
+    file_to_write.close()
+
+
+    #reopen to append
+    file_to_write = open(filepath,'a')
+    #add line
+    for number in range(n):
+        file_to_write.write(str(number))
+        if number < n-1:
+            file_to_write.write('\n')
+    #close file
+    file_to_write.close()
