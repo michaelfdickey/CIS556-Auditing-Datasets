@@ -56,7 +56,7 @@ def test_read_csv():
     print("  table type is: ", type(table[0]))
     print("  table entry type is: ", type(table[0][0]))
     
-    """
+    
     # Second test
     fpath  = os.path.join(parent,'files','readcsv2.csv')
     table = func.read_csv(fpath)
@@ -65,7 +65,7 @@ def test_read_csv():
     introcs.assert_true(len(table) > 0 and type(table[0]) == list)
     introcs.assert_true(len(table[0]) > 0 and type(table[0][0]) == str)
     introcs.assert_equals(table, FILE2)
-    """
+    
 
 
 if __name__ == '__main__':

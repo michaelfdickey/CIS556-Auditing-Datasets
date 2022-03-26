@@ -42,6 +42,9 @@ def read_csv(filename):
         print(row)
         table_result.append(row)
 
+    # close file
+    file.close()
+
     # returns table
     print(table_result)
     return table_result
