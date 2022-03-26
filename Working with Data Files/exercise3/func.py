@@ -35,7 +35,7 @@ def write_csv(data,filename):
     print(" filename is: ", filename)
 
     # create/open file
-    file_to_write = open(filename,'w')
+    file_to_write = open(filename,'w',newline='')
 
     # wrap file as a csv
     wrapped_file = csv.writer(file_to_write)
