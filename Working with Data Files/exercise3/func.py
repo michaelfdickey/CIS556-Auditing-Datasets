@@ -25,4 +25,25 @@ def write_csv(data,filename):
     Precondition: filename is a string representing a path to a file with extension
     .csv or .CSV.  The file may or may not exist.
     """
-    pass                    # Implement this function
+    
+    # print tracing
+    print(" starting write_csv")
+
+    # verify input
+    print(" data is: ", data)
+    print(" data type is: ", type(data))
+    print(" filename is: ", filename)
+
+    # create/open file
+    file_to_write = open(filename,'w')
+
+    # wrap file as a csv
+    wrapped_file = csv.writer(file_to_write)
+
+    # iterate through data and write to csv file
+    for row in data:
+        print("  row is: ", row)
+        wrapped_file.writerow(row)
+
+    # close file
+    file_to_write.close()
