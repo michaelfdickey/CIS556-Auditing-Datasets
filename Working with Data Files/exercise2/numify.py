@@ -6,7 +6,9 @@ import csv
 
 file = open('file.csv')			# opens file
 wrapper = csv.reader(file)		# puts in wrapper with csv.reader
+#table = wrapper 
 
+length = len(wrapper)
 
-for rpos in range(len(wrapper)):
-	print("rpos is:", rpos)
+for row in wrapper:
+	print("row is", row)

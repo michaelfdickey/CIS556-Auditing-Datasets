@@ -3,8 +3,8 @@ Module with a function to read CSV files (converting them into a 2D list)
 
 This function will be used in the main project.  You should hold on to it.
 
-Author: YOUR NAME HERE
-Date: THE DATE HERE
+Author: Michael Dickey
+Date: Mar 26 2022
 """
 import csv
 
@@ -22,4 +22,27 @@ def read_csv(filename):
     Precondition: filename is a string, referring to a file that exists, and that file 
     is a valid CSV file
     """
-    pass                    # Implement this function
+
+    print(" running read_csv")
+
+    # verify input
+    print(" filename is: ", filename)
+
+    # create accumlator
+    table_result = []
+
+    # open csv file
+    file = open(filename)
+
+    # put in csv wrapper
+    wrapped_file = csv.reader(file)
+
+    # iterate through file and add each row to a new list
+    for row in wrapped_file:
+        print(row)
+        table_result.append(row)
+
+    # returns table
+    print(table_result)
+    return table_result
+
