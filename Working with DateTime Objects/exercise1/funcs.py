@@ -20,12 +20,12 @@ def christmas_day(year):
     # HINT: Make a date object and use the isoweekday method
 
     # verify inputs
-    print(" year is: ", year)
+    #print(" year is: ", year)
 
     # get day of week from dateimte.date.weekday
     christmas_day = datetime.date(year,12,25).weekday()
 
-    print(" christmas_day is: ", christmas_day)
+    #print(" christmas_day is: ", christmas_day)
 
     christmas_day = christmas_day + 1                       #because weekday only returns ints from 0 - 6
 
@@ -44,4 +44,17 @@ def iso_str(d,t):
     Precondition: t is a time object
     """
     # HINT: Combine date and time into a datetime and use isoformat
-    pass                    # Implement this function
+
+    # verify input
+    print(" d is: ", d)
+    print(" t is: ", t)
+
+    # result example 2019-10-12T12:35:15.000205
+
+    date = str(d)
+    time = str(t)
+
+    datetime_iso = date + 'T' + time
+    print("  datetime_iso is: ", datetime_iso)
+
+    return datetime_iso
