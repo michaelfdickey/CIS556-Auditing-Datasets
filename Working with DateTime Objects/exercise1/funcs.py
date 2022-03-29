@@ -22,6 +22,7 @@ def christmas_day(year):
     # verify inputs
     print(" year is: ", year)
 
+    # get day of week from dateimte.date.weekday
     christmas_day = datetime.date(year,12,25).weekday()
 
     print(" christmas_day is: ", christmas_day)
