@@ -18,8 +18,17 @@ def christmas_day(year):
     Precondition: years is an int > 0 (and a year using the Gregorian calendar)
     """
     # HINT: Make a date object and use the isoweekday method
-    pass                    # Implement this function
 
+    # verify inputs
+    print(" year is: ", year)
+
+    christmas_day = datetime.date(year,12,25).weekday()
+
+    print(" christmas_day is: ", christmas_day)
+
+    christmas_day = christmas_day + 1                       #because weekday only returns ints from 0 - 6
+
+    return christmas_day
 
 def iso_str(d,t):
     """
