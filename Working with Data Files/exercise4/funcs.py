@@ -36,6 +36,9 @@ def read_json(filename):
     print(" json_text is: ", json_text)
     print(" type(json_text) is: ", type(json_text))
 
+    # close file
+    file_opened.close()
+
     # return contents
     return json_text
 
