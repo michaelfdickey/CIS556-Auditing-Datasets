@@ -1,5 +1,7 @@
 # CIS556-Auditing-Datasets
 
+## opening, reading, writing and updating common filetypes: text, CSV, and JSON
+
 ## reading json files
 ```
 import json
