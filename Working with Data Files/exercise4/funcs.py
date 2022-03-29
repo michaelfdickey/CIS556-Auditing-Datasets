@@ -3,8 +3,8 @@ Module with a functions to read and write JSON files (using dictionaries)
 
 This function will be used in the main project.  You should hold on to it.
 
-Author: YOUR NAME HERE
-Date: THE DATE HERE
+Author: Michael Dickey
+Date: Mar 28 2022
 """
 import json
 
@@ -21,7 +21,26 @@ def read_json(filename):
     Precondition: filename is a string, referring to a file that exists, and that file 
     is a valid JSON file
     """
-    pass                    # Implement this function
+
+    # verify input
+    print(" filename is: ", filename)
+
+    # open file
+    file_opened = open(filename)
+
+    # read file contents
+    text_to_import = file_opened.read()
+
+    # convert file to readable format
+    json_text = json.loads(text_to_import)
+    print(" json_text is: ", json_text)
+    print(" type(json_text) is: ", type(json_text))
+
+    # return contents
+    return json_text
+
+
+
 
 
 def write_json(data,filename):
