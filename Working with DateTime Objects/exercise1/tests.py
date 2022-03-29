@@ -45,13 +45,12 @@ def test_iso_str():
     result = funcs.iso_str(d,datetime.time(12,35,15,205))
     introcs.assert_equals('2019-10-12T12:35:15.000205',result)
     
-    """
     result = funcs.iso_str(d,datetime.time(9,15))
     introcs.assert_equals('2019-10-12T09:15:00',result)
-    
+  
     result = funcs.iso_str(d,datetime.time(23,59,59))
     introcs.assert_equals('2019-10-12T23:59:59',result)
-    
+
     d = datetime.date(1984,6,5)
     
     result = funcs.iso_str(d,datetime.time(12,35,15,205))
@@ -62,7 +61,7 @@ def test_iso_str():
     
     result = funcs.iso_str(d,datetime.time(23,59,59))
     introcs.assert_equals('1984-06-05T23:59:59',result)
-    """
+   
 
 if __name__ == '__main__':
     test_christmas_day()
