@@ -69,4 +69,34 @@ def write_json(data,filename):
     Precondition: filename is a string representing a path to a file with extension
     .json or .JSON.  The file may or may not exist.
     """
-    pass                    # Implement this function
+
+    # verify inputs
+    print(" data is: ", data)
+    print(" filename is: ", filename)
+
+    # convert data to json friendly format
+    text_to_write = json.dumps(data,indent=4)   #pretty json format with linebreaks
+    #text_to_write = json.dumps(data)            #unformated json
+
+    
+    # open file
+    file_to_write = open(filename,'w')
+
+    # write text to file
+    file_to_write.write(text_to_write)
+
+    #close file
+    file_to_write.close()
+
+    
+    """  
+    data = {'a':1, 'b':True, 'c':'hello'}       #create data (dictionary, list, etc)
+
+    text_to_write = json.dumps(data)            #converts to json format
+        #OR
+    text_to_write = json.dumps(data,indent=4)   #pretty json format with lindbreaks
+
+    file = open('file2.json','w')               #create the file and open it
+    file.write(text_to_write)                   #write the text to the file
+    file.close()                                #remember to close it
+    """
