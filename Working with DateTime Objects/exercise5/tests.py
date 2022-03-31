@@ -34,24 +34,27 @@ def test_str_to_time():
     input   = '2016-05-12T16:23-4:00'
     result = funcs.str_to_time(input)
     introcs.assert_equals(parse(input),result)
-    
+
+    print("~TEST 5~")
     input   = '2016-05-12T16:23'
     correct = parse(input+'-4:00')
     result  = funcs.str_to_time(input,correct.tzinfo)
     introcs.assert_equals(correct,result)
     
+    print("~TEST 6~")
     input   = '2016-05-12T16:23'
     correct = parse(input+'-5:00')
     offset  =  parse(input+'-4:00')
     result  = funcs.str_to_time(input+'-5:00',offset)
     introcs.assert_equals(correct, result)
     
+    print("~TEST 7~")
     input   = '2016-05-12T16:23'
     central = 'America/Chicago'
     correct = timezone(central).localize(parse(input))
     result  =  funcs.str_to_time(input,central)
     introcs.assert_equals(correct, result)
-
+    
 
 def test_daytime():
     """
@@ -90,5 +93,5 @@ def test_daytime():
 
 if __name__ == '__main__':
     test_str_to_time()
-    test_daytime()
+    #test_daytime()
     print('Module funcs passed all tests.')

@@ -7,6 +7,10 @@ Author: Michael Dickey
 Date:   Mar 31 2022
 """
 
+import datetime
+import pytz
+from dateutil.parser import parse
+
 
 def str_to_time(timestamp,tz=None):
     """
@@ -18,7 +22,7 @@ def str_to_time(timestamp,tz=None):
     
     If the timestamp has a timezone, then it should keep that timezone even if
     the value for tz is not None.  Otherwise, if timestamp has no timezone and 
-    tz if not None, this this function will assign that timezone to the datetime 
+    tz is not None, this this function will assign that timezone to the datetime 
     object. 
     
     The value for tz can either be a string or a time OFFSET. If it is a string, 
@@ -34,8 +38,68 @@ def str_to_time(timestamp,tz=None):
     """
     # HINT: Use the code from the previous exercise and update the timezone
     # Use localize if timezone is a string; otherwise replace the timezone if not None
-    pass                    # Implement this function
 
+    # verify inputs
+    print(" timestamp is: ", timestamp, "tz is: ", tz)
+
+    # try to convert with parse function
+    try:
+        dt_timestamp = parse(timestamp)
+        print(" dt_timestamp is: ", dt_timestamp)
+    except:
+        ## if invalid return none
+        return None
+
+    # check if it has a timezone (even if empty)
+    if dt_timestamp.tzinfo != None:
+        print("  dt_timestamp has a tz and is a valid datetime object, returning dt_timestamp")
+        return dt_timestamp
+
+    if dt_timestamp.tzinfo == None:
+        print("  dt_timestamp tzinfo is None, adding tz")
+
+        ## if no timezone and tz = none, return datetime
+        if tz == None:
+            print("   tz argument was blank: ", tz, "returning datetime as is")
+            print("   dt_timestamp is: ", dt_timestamp)
+            return dt_timestamp
+
+        ## if no timezone and tz!=None give datetime tz
+        if tz != None:
+            if isinstance(tz, str) == False:    #ignore if tz isn't empty but also isn't a string
+                print("   no timezone in timestamp, tz not empty, adding tz to datetime object")
+                print("    dt_timestamp is: ", dt_timestamp)
+                print("    tz is: ", tz)
+                print("    type(tz) is: ", type(tz))
+
+                dt_timestamp_new = dt_timestamp.replace(tzinfo=tz)
+
+                return dt_timestamp_new
+
+        ## if tz is string convert and localize it
+        if isinstance(tz, str) == True:
+            print("    tz is: ", repr(tz))
+            print("    tz is a string, converting with pytz")
+            tza = pytz.timezone(tz)
+            print("    tz is now: ", repr(tza))
+            print("    type(tza) is: ", type(tza))
+
+            print("     str(dt_timestamp) is: ", repr(str(dt_timestamp)))
+            dt_timestamp_new = dt_timestamp.replace(tzinfo=tza)
+            print("     str(dt_timestamp_new) is: ", repr(str(dt_timestamp_new)))
+
+            dt_timestamp_localized = tza.localize(dt_timestamp)
+
+            #tzb = tza.localize()     
+            #dt_timestamp_localized = tz.localize(dt_timestamp_new)
+
+            print("      dt_timestamp_localized is: ", dt_timestamp_localized)
+
+            return dt_timestamp_localized
+        
+        
+
+    # return result
 
 def daytime(time,daycycle):
     """
