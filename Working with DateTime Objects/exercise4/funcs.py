@@ -9,6 +9,7 @@ Author: Michael Dickey
 Date:   Mar 30 2022
 """
 
+import datetime
 from dateutil.parser import parse
 
 def str_to_time(timestamp):
@@ -71,7 +72,53 @@ def sunset(date,daycycle):
     Parameter daycycle: The daycycle dictionary
     Precondition: daycycle is a valid daycycle dictionary, as described above
     """
-    # HINT: ISO FORMAT IS 'yyyy-mm-ddThh:mm'.  For the sunrise value, construct a
-    # string in ISO format and call str_to_time.
-    pass                    # Implement this function
+    # HINT: ISO FORMAT IS 'yyyy-mm-ddThh:mm'.  
+    # For the sunrise value, construct a string in ISO format and call str_to_time.
+
+    # verify inputs
+    print(" date is: ", date)
+    #print(" daycycle is: ", daycycle)
+    print(" type(date) is: ", type(date))
+
+    # convert to datetime.datetime
+    if isinstance(date, datetime.datetime) == False:
+        print("  this is not a datetime.datetime object, converting")
+        date = datetime.datetime(date.year,date.month,date.day,0,0,0)
+        print("  date is now: ", str(date), " and type(date): ", type(date))
+
+    # looks up the sunset day and time for that date and returns it
+    ## gets year and year dictionary
+    print(" type(daycycle) is: ", type(daycycle))
+    print(" date.year is: ", date.year)
+    year = str(date.year)                           #year in dictionary is int
+    year_dictionary = daycycle[year]                #gets the dictionary for the whole year
+    #print("  year_dictionary is: ", year_dictionary)
+    
+    ## process month and day to get mm-dd dict
+    month = str(date.month)
+    day = str(date.day)
+    print("  month is: ", month, "day is: ", day)
+    
+    if len(month) < 2:
+        print("   month is single digit, converting")
+        month = "0" + month
+        print("   month is now: ", month)
+
+    if len(day) < 2:
+        print("   day is single digit, converting")
+        day = "0" + day
+        print("   day is now: ", day)
+
+    mmdd = month + "-" + day
+    print("  mmdd is: ", repr(mmdd))
+
+
+
+    # convert sunset datetime to ISO8601
+    #parsed_date = str_to_time(date)
+    #print(" parsed_date is: ", parsed_date)
+    
+    # return sunset datetime
+
+    print( " ")
 

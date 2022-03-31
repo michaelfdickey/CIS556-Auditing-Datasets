@@ -66,12 +66,14 @@ def test_sunset():
     file.close()
     
     # TEST 1
+    print(" ~ TEST 1 ~ ")
     d = datetime.date(2017,8,2)
     e = datetime.datetime(2017,8,2,19,24)
     result = funcs.sunset(d,daycycle)
     introcs.assert_equals(datetime.datetime,type(result))
     introcs.assert_equals(e,result)
     
+    """
     # TEST 2
     d = datetime.date(2019,12,25)
     e = datetime.datetime(2019,12,25,16,38)
@@ -102,9 +104,9 @@ def test_sunset():
     d = datetime.date(2022,12,25)
     result = funcs.sunset(d,daycycle)
     introcs.assert_equals(None,result)
-
+	"""
 
 if __name__ == '__main__':
-    test_str_to_time()
-    #test_sunset()
+    #test_str_to_time()
+    test_sunset()
     print('Module funcs passed all tests.')
