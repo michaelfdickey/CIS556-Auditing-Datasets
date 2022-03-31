@@ -110,6 +110,6 @@ def test_sunset():
     introcs.assert_equals(None,result)
 	
 if __name__ == '__main__':
-    #test_str_to_time()
+    test_str_to_time()
     test_sunset()
     print('Module funcs passed all tests.')
