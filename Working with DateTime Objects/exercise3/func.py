@@ -52,12 +52,14 @@ def past_a_week(d1,d2):
     time_diff = d2 - d1
     print("   time_diff is: ", time_diff)
     print("   time_diff.days is: ", time_diff.days)
+
+
+    # evaluate if timeD > 1 week
     if time_diff.days >= 7:
         print("    more than a week has passed, returning True")
         result = True
         return result
 
-    # evaluate if timeD > 1 week
 
     # else return False
     return result
