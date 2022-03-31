@@ -112,13 +112,29 @@ def sunset(date,daycycle):
     mmdd = month + "-" + day
     print("  mmdd is: ", repr(mmdd))
 
+    day_dicitonary = year_dictionary[mmdd]
+    print("  day_dicitonary is: ", day_dicitonary)
 
+    ## get sunset time and hours and minutes
+    sunset_time = day_dicitonary['sunset']
+    print("  sunset_time is: ", sunset_time)
 
-    # convert sunset datetime to ISO8601
-    #parsed_date = str_to_time(date)
-    #print(" parsed_date is: ", parsed_date)
-    
-    # return sunset datetime
+    hours = sunset_time[0:2]
+    print("   hours is: ", hours)
+
+    minutes = sunset_time[3:5]
+    print("   minutes is: ", minutes)
+
+    # build string in ISO FORMAT IS 'yyyy-mm-ddThh:mm'.  
+    sunset_time_ISO = year + "-" + month + "-" + day + "T" + hours + ":" + minutes 
+    print("   sunset_time_ISO is: ", sunset_time_ISO)
+
+    # call str_to_time to convert
+    result = str_to_time(sunset_time_ISO)
+    print("    result is: ", result)
+
+    # return result
+    return result
 
     print( " ")
 
