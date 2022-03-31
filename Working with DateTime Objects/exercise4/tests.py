@@ -73,8 +73,8 @@ def test_sunset():
     introcs.assert_equals(datetime.datetime,type(result))
     introcs.assert_equals(e,result)
     
-    """
     # TEST 2
+    print(" ~ TEST 2 ~ ")
     d = datetime.date(2019,12,25)
     e = datetime.datetime(2019,12,25,16,38)
     result = funcs.sunset(d,daycycle)
@@ -82,13 +82,15 @@ def test_sunset():
     introcs.assert_equals(e,result)
     
     # TEST 3
+    print(" ~ TEST 3 ~ ")
     d = datetime.date(2016,6,2)
     e = datetime.datetime(2016,6,2,19,38)
     result = funcs.sunset(d,daycycle)
     introcs.assert_equals(datetime.datetime,type(result))
     introcs.assert_equals(e,result)
     
-    # TEST 3
+    # TEST 4
+    print(" ~ TEST 4 ~ ")
     d = datetime.date(2016,12,25)
     e = datetime.datetime(2016,12,25,16,39)
     result = funcs.sunset(d,daycycle)
@@ -96,16 +98,17 @@ def test_sunset():
     introcs.assert_equals(e,result)
     
     # TEST 5
+    print(" ~ TEST 5 ~ ")
     d = datetime.date(2014,6,2)
     result = funcs.sunset(d,daycycle)
     introcs.assert_equals(None,result)
     
     # TEST 6
+    print(" ~ TEST 6 ~ ")
     d = datetime.date(2022,12,25)
     result = funcs.sunset(d,daycycle)
     introcs.assert_equals(None,result)
-	"""
-
+	
 if __name__ == '__main__':
     #test_str_to_time()
     test_sunset()

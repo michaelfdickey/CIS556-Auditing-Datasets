@@ -91,9 +91,13 @@ def sunset(date,daycycle):
     print(" type(daycycle) is: ", type(daycycle))
     print(" date.year is: ", date.year)
     year = str(date.year)                           #year in dictionary is int
-    year_dictionary = daycycle[year]                #gets the dictionary for the whole year
-    #print("  year_dictionary is: ", year_dictionary)
     
+    try:
+        year_dictionary = daycycle[year]                #gets the dictionary for the whole year
+        #print("  year_dictionary is: ", year_dictionary)
+    except:
+        return None 
+
     ## process month and day to get mm-dd dict
     month = str(date.month)
     day = str(date.day)
