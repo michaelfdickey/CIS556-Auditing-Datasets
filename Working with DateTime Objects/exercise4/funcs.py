@@ -5,10 +5,11 @@ While these functions are similar to functions found in the assignment, they
 are missing timezone information.  The next exercise will modify these 
 functions to make them compatible with the assignment.
 
-Author: YOUR NAME HERE
-Date:   DATE FINISHED HERE
+Author: Michael Dickey
+Date:   Mar 30 2022
 """
 
+from dateutil.parser import parse
 
 def str_to_time(timestamp):
     """
@@ -22,7 +23,19 @@ def str_to_time(timestamp):
     Precondition: timestamp is a string
     """
     # Hint: Use a try-except to return None if parsing fails
-    pass                    # Implement this function
+
+    # verify input data
+    print(" timestamp is: ", timestamp)
+
+    # try to convert it with parse, return if succseful, don't crash if not
+    try:
+        result = parse(timestamp)
+        print(" ", result)
+        return result
+    except:
+        pass
+
+
 
 
 def sunset(date,daycycle):
