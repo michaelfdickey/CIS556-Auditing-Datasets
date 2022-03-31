@@ -23,7 +23,7 @@ def test_is_before():
     
     result = func.is_before(d1,d2)
     introcs.assert_equals(True,result)
-    
+   
     result = func.is_before(d2,d1)
     introcs.assert_equals(False,result)
     
@@ -35,6 +35,8 @@ def test_is_before():
     
     result = func.is_before(d1,d3)
     introcs.assert_equals(True,result)
+    #d1 = datetime.date(    2019,10,12:     0:0:0)
+    #d3 = datetime.datetime(2019,10,12 ,  9:45:15)
     
     result = func.is_before(d3,d1)
     introcs.assert_equals(False,result)
@@ -44,7 +46,6 @@ def test_is_before():
     
     result = func.is_before(d3,d3)
     introcs.assert_equals(False,result)
- 
 
 if __name__ == '__main__':
     test_is_before()
