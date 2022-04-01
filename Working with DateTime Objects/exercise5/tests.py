@@ -82,6 +82,7 @@ def test_daytime():
     
     # CHECK THE TEST CASES
     for time in times:
+        print("~~ STARTING NEXT TEST CASE ~~")
         act  = funcs.str_to_time(time[0],"America/New_York")
         day  = funcs.daytime(act,daycycle)
         introcs.assert_equals(time[1], day)
@@ -92,6 +93,7 @@ def test_daytime():
 
 
 if __name__ == '__main__':
-    test_str_to_time()
-    #test_daytime()
+    print(" ---------------------------------------------------------------")
+    #test_str_to_time()
+    test_daytime()
     print('Module funcs passed all tests.')
