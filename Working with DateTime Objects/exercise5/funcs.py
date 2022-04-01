@@ -229,7 +229,6 @@ def daytime(time,daycycle):
         tz = pytz.timezone('America/New_York')                                                                          #sunrise/set tz from daycycle.json        
         
         # create sunrise
-        #sunrise = datetime.datetime(int(year),int(month),int(day),int(sunrise_hours),int(sunrise_minutes),tzinfo=tz)
         sunrise_naive = datetime.datetime(int(year),int(month),int(day),int(sunrise_hours),int(sunrise_minutes))        #create datetime object without tz
         print("      sunrise is: ", sunrise)
         sunrise = tz.localize(sunrise_naive)                                                                            #localize it with tz.localize method
@@ -249,25 +248,14 @@ def daytime(time,daycycle):
         print("    time has no tz")
 
 
-
-    """
-    # create now date-time object hour-min from time
-    hour = time.hour
-    print(" hour is: ", hour)
-    minute = time.minute 
-    print(" minute is: ", minute)
-    now = datetime.time(hour,minute)
-    print(" now is: ", now, "type(now) is: ", type(now))
-    """
-
-
     # check values
     print("   sunrise is: ", sunrise)
     print("   now is:     ", now)
     print("   sunset is:  ", sunset)
 
     # evaluate
-    if now < sunrise:
+    if now <= sunrise:
+        print(" now is before sunrise, returning false")
         return False
 
     if now > sunrise:
@@ -276,5 +264,6 @@ def daytime(time,daycycle):
             print(" sunrise < now < sunset is true ")
             return True
 
-        if now > sunset:
+        if now >= sunset:
+            print(" now is after sunset, returning false")
             return False
