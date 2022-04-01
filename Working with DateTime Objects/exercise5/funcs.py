@@ -180,13 +180,11 @@ def daytime(time,daycycle):
     print(" month_dictionary is: ", month_dictionary)
 
     
-
-
-    # get sunrise
+    # get sunrise info
     sunrise = month_dictionary['sunrise']
     print(" sunrise is: ", sunrise)
     
-    ## create sunrise datetime.time object
+    ## get hours and minutes for sunrise
     sunrise_hours = sunrise[0:2]
     if sunrise_hours[0] == '0':
         sunrise_hours = (sunrise_hours[1:2])
@@ -198,49 +196,13 @@ def daytime(time,daycycle):
         print("   sunrise_minutes is now: ", sunrise_minutes)
 
     print("   sunrise_hours is: ", sunrise_hours, "sunrise_minutes is: ", sunrise_minutes)
-
-    sunrise = datetime.time(int(sunrise_hours),int(sunrise_minutes))
-    
-    print("   time.tzinfo is: ", time.tzinfo)
-    
-    
-    # create sunrise, sunset, and now objects:
-    is_aware = time.tzinfo != None              # does time have a tz?
-    print("   is_aware is: ", is_aware)
-    
-    if is_aware == True:
-        print("    time has a tz")
-        tz = pytz.timezone('America/New_York')  #sunrise/set tz from daycycle.json        
-        
-        # create sunrise
-        sunrise = datetime.datetime(int(year),int(month),int(day),int(sunrise_hours),int(sunrise_minutes),tzinfo=tz)
-        print("sunrise is: ", sunrise)
-
-        # create sunset
-
-        # create now
-
-
-
-    if is_aware == False:
-        print("    time has no tz")
-
-
-
-
-
-
-    #sunrise_temp = str(time.year) + "-" + time.month + "-" + time.day  + " " + hours + ":" + minutes + ":00"
-    print(" sunrise.time object is: ", sunrise)
-    print(" type(sunrise) is: ", type(sunrise))
-
     
 
-    # get sunset
+    # get sunset info 
     sunset = month_dictionary['sunset']
     print(" sunset is: ", sunset)
 
-    ## create sunset datetime.time object
+    ## get hours and minutes for sunset
     sunset_hours = sunset[0:2]
     if sunset_hours[0] == '0':
         sunset_hours = (sunset_hours[1:2])
@@ -253,25 +215,50 @@ def daytime(time,daycycle):
 
     print("   sunset_hours is: ", sunset_hours, "sunset_minutes is: ", sunset_minutes)
 
-    sunset = datetime.time(int(sunset_hours),int(sunset_minutes))
-    print(" sunset.time object is: ", sunset)
-    print(" type(sunset) is: ", type(sunset))
 
 
-    # create now date-time object hour-min from time
+
+
+    # create sunrise, sunset, and now objects:
+    print("   time.tzinfo is: ", time.tzinfo)
+    is_aware = time.tzinfo != None              # does time have a tz?
+    print("   is_aware is: ", is_aware)
     
+    if is_aware == True:
+        print("    time has a tz")
+        tz = pytz.timezone('America/New_York')                                                                          #sunrise/set tz from daycycle.json        
+        
+        # create sunrise
+        #sunrise = datetime.datetime(int(year),int(month),int(day),int(sunrise_hours),int(sunrise_minutes),tzinfo=tz)
+        sunrise_naive = datetime.datetime(int(year),int(month),int(day),int(sunrise_hours),int(sunrise_minutes))        #create datetime object without tz
+        print("      sunrise is: ", sunrise)
+        sunrise = tz.localize(sunrise_naive)                                                                            #localize it with tz.localize method
+        print("      sunrise is: ", sunrise)
+
+        # create sunset
+        sunset_naive = datetime.datetime(int(year),int(month),int(day),int(sunset_hours),int(sunset_minutes))
+        print("      sunset is: ", sunset)
+        sunset = tz.localize(sunset_naive)
+        print("      sunset is: ", sunset)
+
+        # create now
+        now = time
+
+
+    if is_aware == False:
+        print("    time has no tz")
+
+
+
+    """
+    # create now date-time object hour-min from time
     hour = time.hour
     print(" hour is: ", hour)
     minute = time.minute 
     print(" minute is: ", minute)
     now = datetime.time(hour,minute)
     print(" now is: ", now, "type(now) is: ", type(now))
-
-    # no you need to use time with it's timezone 
-    print("   time.tzinfo is: ", time.tzinfo)
-    if time.tzinfo != None:
-        tz = time.tzinfo
-        print("     tz is: ", tz)
+    """
 
 
     # check values

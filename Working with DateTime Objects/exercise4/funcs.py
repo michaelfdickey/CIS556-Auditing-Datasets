@@ -116,11 +116,11 @@ def sunset(date,daycycle):
     mmdd = month + "-" + day
     print("  mmdd is: ", repr(mmdd))
 
-    day_dicitonary = year_dictionary[mmdd]
-    print("  day_dicitonary is: ", day_dicitonary)
+    day_dictionary = year_dictionary[mmdd]
+    print("  day_dictionary is: ", day_dictionary)
 
     ## get sunset time and hours and minutes
-    sunset_time = day_dicitonary['sunset']
+    sunset_time = day_dictionary['sunset']
     print("  sunset_time is: ", sunset_time)
 
     hours = sunset_time[0:2]
