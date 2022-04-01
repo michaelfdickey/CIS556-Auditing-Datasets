@@ -84,11 +84,16 @@ def test_daytime():
     for time in times:
         print("~~ STARTING NEXT TEST CASE ~~")
         act  = funcs.str_to_time(time[0],"America/New_York")
+        print(">>> act is: ", act)
         day  = funcs.daytime(act,daycycle)
+        print(">>> day is: ", day)
         introcs.assert_equals(time[1], day)
         
+        print("~~ STARTING NEXT TEST CASE ~~")
         act  = funcs.str_to_time(time[0],"America/Chicago")
+        print(">>> act is: ", act)
         day  = funcs.daytime(act,daycycle)
+        print(">>> day is: ", day)
         introcs.assert_equals(time[2], day)
 
 

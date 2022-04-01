@@ -150,7 +150,7 @@ def daytime(time,daycycle):
     print(" type(time) is: ", type(time))
 
     # get year
-    year = time.year 
+    year = time.year
     print(" year is: ", year)   
 
     # get year dictionary
@@ -179,7 +179,10 @@ def daytime(time,daycycle):
     month_dictionary = year_dictionary[mmdd]
     print(" month_dictionary is: ", month_dictionary)
 
-    # get sumrise
+    
+
+
+    # get sunrise
     sunrise = month_dictionary['sunrise']
     print(" sunrise is: ", sunrise)
     
@@ -197,6 +200,37 @@ def daytime(time,daycycle):
     print("   sunrise_hours is: ", sunrise_hours, "sunrise_minutes is: ", sunrise_minutes)
 
     sunrise = datetime.time(int(sunrise_hours),int(sunrise_minutes))
+    
+    print("   time.tzinfo is: ", time.tzinfo)
+    
+    
+    # create sunrise, sunset, and now objects:
+    is_aware = time.tzinfo != None              # does time have a tz?
+    print("   is_aware is: ", is_aware)
+    
+    if is_aware == True:
+        print("    time has a tz")
+        tz = pytz.timezone('America/New_York')  #sunrise/set tz from daycycle.json        
+        
+        # create sunrise
+        sunrise = datetime.datetime(int(year),int(month),int(day),int(sunrise_hours),int(sunrise_minutes),tzinfo=tz)
+        print("sunrise is: ", sunrise)
+
+        # create sunset
+
+        # create now
+
+
+
+    if is_aware == False:
+        print("    time has no tz")
+
+
+
+
+
+
+    #sunrise_temp = str(time.year) + "-" + time.month + "-" + time.day  + " " + hours + ":" + minutes + ":00"
     print(" sunrise.time object is: ", sunrise)
     print(" type(sunrise) is: ", type(sunrise))
 
@@ -232,6 +266,12 @@ def daytime(time,daycycle):
     print(" minute is: ", minute)
     now = datetime.time(hour,minute)
     print(" now is: ", now, "type(now) is: ", type(now))
+
+    # no you need to use time with it's timezone 
+    print("   time.tzinfo is: ", time.tzinfo)
+    if time.tzinfo != None:
+        tz = time.tzinfo
+        print("     tz is: ", tz)
 
 
     # check values
