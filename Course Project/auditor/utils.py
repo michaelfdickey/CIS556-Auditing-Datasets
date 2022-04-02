@@ -10,8 +10,8 @@ the functions simpler (because the preconditions ensure we have less to worry ab
 enforcing these preconditions can be quite hard. That is why it is not necessary to 
 enforce any of the preconditions in this module.
 
-Author: YOUR NAME HERE
-Date: THE DATE HERE
+Author: Michael Dickey
+Date: Apr 02 2022
 """
 import csv
 import json
@@ -30,7 +30,32 @@ def read_csv(filename):
     Precondition: filename is a string, referring to a file that exists, and that file 
     is a valid CSV file
     """
-    pass                    # Implement this function
+    
+    print(" running read_csv")
+
+    # verify input
+    #print(" filename is: ", filename)
+
+    # create accumlator
+    table_result = []
+
+    # open csv file
+    file = open(filename)
+
+    # put in csv wrapper
+    wrapped_file = csv.reader(file)
+
+    # iterate through file and add each row to a new list
+    for row in wrapped_file:
+        #print(row)
+        table_result.append(row)
+
+    # close file
+    file.close()
+
+    # returns table
+    #print(table_result)
+    return table_result
 
 
 def write_csv(data,filename):
@@ -49,7 +74,27 @@ def write_csv(data,filename):
     Precondition: filename is a string representing a path to a file with extension
     .csv or .CSV.  The file may or may not exist.
     """
-    pass                    # Implement this function
+    # print tracing
+    print(" running write_csv")
+
+    # verify input
+    #print(" data is: ", data)
+    #print(" data type is: ", type(data))
+    #print(" filename is: ", filename)
+
+    # create/open file
+    file_to_write = open(filename,'w',newline='')
+
+    # wrap file as a csv
+    wrapped_file = csv.writer(file_to_write)
+
+    # iterate through data and write to csv file
+    for row in data:
+        #print("  row is: ", row)
+        wrapped_file.writerow(row)
+
+    # close file
+    file_to_write.close()
 
 
 def read_json(filename):
@@ -64,7 +109,26 @@ def read_json(filename):
     Precondition: filename is a string, referring to a file that exists, and that file 
     is a valid JSON file
     """
-    pass                    # Implement this function
+    # verify input
+    #print(" filename is: ", filename)
+    print(" running read_json")
+
+    # open file
+    file_opened = open(filename)
+
+    # read file contents
+    text_to_import = file_opened.read()
+
+    # convert file to readable format
+    json_text = json.loads(text_to_import)
+    #print(" json_text is: ", json_text)
+    #print(" type(json_text) is: ", type(json_text))
+
+    # close file
+    file_opened.close()
+
+    # return contents
+    return json_text
 
 
 def str_to_time(timestamp,tz=None):
