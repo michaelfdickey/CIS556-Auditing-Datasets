@@ -161,7 +161,7 @@ def str_to_time(timestamp,tz=None):
     # HINT: Use the code from the previous exercise and update the timezone
     # Use localize if timezone is a string; otherwise replace the timezone if not None
 
-   # verify inputs
+    # verify inputs
     #print(" timestamp is: ", timestamp, "tz is: ", tz)
 
     # try to convert with parse function
@@ -336,9 +336,6 @@ def daytime(time,daycycle):
     #print("   sunset_hours is: ", sunset_hours, "sunset_minutes is: ", sunset_minutes)
 
 
-
-
-
     # create sunrise, sunset, and now objects:
     #print("   time.tzinfo is: ", time.tzinfo)
     is_aware = time.tzinfo != None              # does time have a tz?
@@ -407,5 +404,54 @@ def get_for_id(id,table):
     Parameter table: The 2-dimensional table of data
     Precondition: table is a non-empty 2-dimension list of strings
     """
-    pass                    # Implement this function
 
+    #print(" running get_for_id")
+
+    # verify data
+    #print("  id is: ", repr(id))
+    #print("  type(id) is: ", type(id))
+    #print("  table is: ", table)
+    #print("  type(table) is: ", type(table))
+
+    # set initial vars
+    #print("  table[0] is: ", table[0])
+    table_columns = len(table)
+    #print("  len(table) is: ", len(table))  
+    row_index = 0
+    column_index = 0
+    result_row = []
+    found_row = None
+    
+    # read table rows and columns
+    try:
+        for row in table:
+            #print(row)
+            for column in range(table_columns):
+                #print("   column is: ", column, "content is: ", row[column])
+                cell_content = row[column]
+                if cell_content == id:
+                    #print("    id found ", id, " in ", table[row_index])
+                    #print("    row_index is: ", row_index)
+                    found_row = row_index
+
+            row_index = row_index + 1
+    except:
+        return None 
+
+    # create a list from row defined by given id
+    if found_row != None:
+        #print("  id is: ", repr(id))
+        #print("  found_row is: ", found_row)
+        #print("   row contents is ", table[found_row])
+        ## loop through columsn in row and built result copy row
+        result_row = table[found_row]
+        #print("   result_row is: ", result_row)
+
+        #print(" ")
+        return result_row
+
+    """
+    # return row 
+    if found_row == None:
+        return None 
+    """
