@@ -300,7 +300,25 @@ def has_multiengine_endorsement(takeoff,student):
     Parameter student: The student pilot
     Precondition: student is 10-element list of strings representing a pilot
     """
-    pass                    # Implement this function
+
+    # no multiengine rating at all, always false
+    if student[9] == '':
+        #print("  student has no multiengine rating, returning False")
+        return False
+
+    # if multiengine has a date then convert to datetime.datetime object
+    if student[9] != '':
+        #print("  student has an multiengine rating, ", student[9])
+        multiengine_date = parse(student[9])
+        #print("  multiengine_date is: ", str(multiengine_date))
+
+    # check if takeoff is after multiengine date
+    if takeoff > multiengine_date:
+        #print("  student was multiengine rated at time of takeoff")
+        return True 
+    else:
+        #print("  student was not multiengine rated at time of takeoff")
+        return False
 
 
 def get_minimums(cert, area, instructed, vfr, daytime, minimums):
