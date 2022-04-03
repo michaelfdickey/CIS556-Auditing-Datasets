@@ -335,8 +335,9 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     miles.  Both WIND and CROSSWIND are speeds in knots.
     
     This function first searches the table for rows that match the function parameters. 
-    It is possible for more than one row to be a match.  A row is a match if ALL four 
-    of the first four columns match.
+    It is possible for more than one row to be a match.  
+
+    A row is a match if ALL four of the first four columns match.
     
     The first column (CATEGORY) has values 'Student', 'Certified', '50 Hours', or 'Dual'.
     If the value 'Student', it is a match if category is PILOT_STUDENT or higher.  If
@@ -406,4 +407,22 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     """
     # Find all rows that can apply to this student
     # Find the best values for each column of the row
-    pass
+    
+    print("Running get_minimums")
+
+    # verify inputs:
+    print(" verifying inputs:")
+    print("  cert is:", cert)
+    print("  area is:", area)
+    print("  instructed is: ", instructed)
+    print("  vfr is: ", vfr)
+    print("  daytime is: ", daytime)
+    #print("  minimums is:", minimums)
+
+
+    # certification references
+    # PILOT_INVALID = -1 
+    # PILOT_NOVICE  = 0      # A pilot that has joined the school, but has not soloed
+    # PILOT_STUDENT = 1      # A pilot that has soloed but does not have a license
+    # PILOT_CERTIFIED = 2    # A pilot that has a license, but has under 50 hours post license 
+    # PILOT_50_HOURS  = 3    # A pilot that 50 hours post license
