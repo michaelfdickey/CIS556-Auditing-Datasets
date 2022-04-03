@@ -39,6 +39,8 @@ Author: Michael Dickey
 Date: Apr 02 2022
 """
 import utils
+import datetime
+from dateutil.parser import parse
 
 
 # CERTIFICATION CLASSIFICATIONS
@@ -79,9 +81,59 @@ def get_certification(takeoff,student):
     Precondition: student is 10-element list of strings representing a pilot
     """
 
-    #verify input
-    print(" takeoff is: ", takeoff)
+    # verify input
+    print(" takeoff is: ", takeoff, "type(takeoff) is:", type(takeoff))
     print(" student_row is: ", student)
+
+    # display student info
+    print("  student_id :", student[0])
+    print("  last name  :", student[1])
+    print("  first name :", student[2])
+    print("  joined     :", student[3])
+    print("  solo       :", student[4])
+    print("  license    :", student[5])
+    print("  50 hours   :", student[6])
+    print("  instrument :", student[7])
+    print("  advanced   :", student[8])
+    print("  multiengine:", student[9])
+
+    
+    #construct datetime.datetime object
+    try:
+        date_joined = parse(student[3])
+        print("    date_joined is: ", date_joined, "type(date_joined) is:", type(date_joined))    
+    except:
+        pass
+    try:
+        date_solo = parse(student[4])
+        print("    date_solo is: ", date_solo, "type(date_solo) is: ", type(date_solo))
+    except:
+        pass
+    try:
+        date_license = parse(student[5])
+    except:
+        pass
+    try:
+        date_50hours = parse(student[6])
+    except:
+        pass
+    try:
+        date_instrment = parse(student[7])
+    except:
+        pass
+    try:
+        date_advanced = parse(student[8])
+    except:
+        pass
+    try:
+        date_multiengine = parse(student[9])
+    except:
+        pass
+
+    #student-milestones
+    student_milestones = {}
+    student_milestones['joined'] = parse(student[3])
+    print(student_milestones)
 
 
 def has_instrument_rating(takeoff,student):
