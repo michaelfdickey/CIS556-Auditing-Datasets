@@ -340,13 +340,13 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     A row is a match if ALL four of the first four columns match.
     
     The first column (CATEGORY) has values 'Student', 'Certified', '50 Hours', or 'Dual'.
-    If the value 'Student', it is a match if category is PILOT_STUDENT or higher.  If
-    the value is 'Certified, it is a match if category is PILOT_CERTIFIED or higher. If
-    it is '50 Hours', it is only a match if category is PILOT_50_HOURS. The value 'Dual' 
-    only matches if instructed is True.
+    If the value 'Student', it is a match if cert is PILOT_STUDENT or higher.  
+    If the value is 'Certified, it is a match if cert is PILOT_CERTIFIED or higher. 
+    If it is '50 Hours', it is only a match if cert is PILOT_50_HOURS. 
+    The value 'Dual'  only matches if instructed is True.
     
-    The second column (CONDITIONS) has values 'VMC' and 'IMC'. A flight filed as VFR 
-    (visual flight rules) is subject to VMC (visual meteorological conditions) minimums.  
+    The second column (CONDITIONS) has values 'VMC' and 'IMC'. 
+    A flight filed as VFR (visual flight rules) is subject to VMC (visual meteorological conditions) minimums.  
     Similarly, a fight filed as IFR is subject to IMC minimums.
     
     The third column (AREA) has values 'Pattern', 'Practice Area', 'Local', 
@@ -412,17 +412,120 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
 
     # verify inputs:
     print(" verifying inputs:")
-    print("  cert is:", cert)
-    print("  area is:", area)
+    print("  cert is:       ", cert)
+    print("  area is:       ", area)
     print("  instructed is: ", instructed)
-    print("  vfr is: ", vfr)
-    print("  daytime is: ", daytime)
+    print("  vfr is:        ", vfr)
+    print("  daytime is:    ", daytime)
     #print("  minimums is:", minimums)
 
-
+    
+    # Check pilot certifications
+    """
     # certification references
-    # PILOT_INVALID = -1 
+    # PILOT_INVALID = -1     # The certification of this pilot is unknown
     # PILOT_NOVICE  = 0      # A pilot that has joined the school, but has not soloed
     # PILOT_STUDENT = 1      # A pilot that has soloed but does not have a license
     # PILOT_CERTIFIED = 2    # A pilot that has a license, but has under 50 hours post license 
     # PILOT_50_HOURS  = 3    # A pilot that 50 hours post license
+    """
+    """
+    The first column (CATEGORY) has values 'Student', 'Certified', '50 Hours', or 'Dual'.
+    If the value 'Student', it is a match if category is PILOT_STUDENT or higher.  If
+    the value is 'Certified, it is a match if category is PILOT_CERTIFIED or higher. If
+    it is '50 Hours', it is only a match if category is PILOT_50_HOURS. The value 'Dual' 
+    only matches if instructed is True.
+    """    
+    print(" checking certifications", cert, "instructed is: ", instructed)
+    if cert == -1:
+        print("  PILOT_INVALID")
+        allowed_categories = ['Dual']
+    if cert == 0:
+        print("  PILOT_NOVICE")
+        allowed_categories = ['Dual','Student']
+    if cert == 1:
+        print("  PILOT_STUDENT")
+        allowed_categories = ['Dual','Student','Certified']
+    print("   category is:", allowed_categories)    
+
+
+    # check conditions
+    """
+    The second column (CONDITIONS) has values 'VMC' and 'IMC'. 
+    A flight filed as VFR (visual flight rules) is subject to VMC (visual meteorological conditions) minimums.
+    Similarly, a fight filed as IFR is subject to IMC minimums.
+    """
+    """
+    **Conditions** describe the overall visibility of the flight. 
+    The conditions are either `VMC` (visual meteorological conditions) or “IMC” (instrument meteorological conditions). 
+    A pilot is either flying VFR (visual flight rules) or IFR (instrument flight rules). 
+    A pilot flying IFR may fly in either VMC or IMC conditions, but a pilot flying VFR may only fly in VMC conditions
+    """
+    print(" checking conditions, vfr: ", vfr, "day:", daytime)
+    if vfr == True:
+        allowed_conditions = ['VMC']
+    if vfr == False:
+        allowed_conditions = ['VMS','IMC']
+    print("   conditions are: ", allowed_conditions)
+
+
+    # check area
+    """
+    The third column (AREA) has values 'Pattern', 'Practice Area', 'Local', 
+    'Cross Country', or 'Any'. Flights that are in the pattern or practice area match
+    'Local' as well.  All flights match 'Any'.
+    """
+    """
+    **Area** is the area in which the flight takes place. “Pattern” is a tight pattern around the airport
+     (where the flight school is hosted). “Practice Area” is an area away from the airport but very nearby.
+      “Cross Country” is a flight to another airport.
+    """
+    print(" checking area:", area)
+    if area == "Pattern":
+        allowed_areas = ['Pattern']
+    if area == "Practice Area":
+        allowed_areas = ['Practice Area']
+    if area == "Local":
+        allowed_areas = ['Practice','Practice Area']
+    if area == "Any":
+        allowed_areas = ['Pattern','Practice Area','Local','Cross Country']
+    print("   allowed_areas are: ", allowed_areas)
+
+    # check time
+    """
+    **Time** is either night or day.
+    The fourth column (TIME) has values 'Day' or 'Night'. The value 'Day' is only 
+    a match if daytime is True. If it is False, 'Night' is the only match.
+    """
+    print(" checking daytime, daytime is:", daytime)
+    if daytime == True:
+        allowed_time = ['Day']
+    if daytime == False:
+        allowed_time = ['Night']
+    print("   allowed_time is: ", allowed_time)
+
+
+
+    #check categories in mininum for matching rows 
+    ## loop through rows in mininum checking against list of allowed categories and capturing matching rows
+    print("  checking rows that match allowed categories: ", allowed_categories)
+    category_matching_rows = []
+    for row_index in range(len(minimums)):
+        #print(row_index, (minimums[row_index]))
+        for allowed_cat_index in range(len(allowed_categories)):
+            if minimums[row_index][0] == allowed_categories[allowed_cat_index]:
+                print("    category found, row: ", row_index, minimums[row_index])
+                category_matching_rows.append(row_index)
+    print("     category_matching_rows are: ", category_matching_rows)
+
+
+    
+    # check conditions in minimum for matching rows
+    print("  checking rows that match allowed conditions", allowed_conditions)
+    conditions_matching_rows = []
+    for row_index in range(len(minimums)):
+        for allowed_conditions_index in range(len(allowed_conditions)):
+            if minimums[row_index][1] == allowed_conditions[allowed_conditions_index]:
+                print("    condition found, row:",row_index, minimums[row_index])
+                conditions_matching_rows.append(row_index)
+    print("     conditions_matching_rows are: ", conditions_matching_rows)
