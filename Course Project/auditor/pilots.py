@@ -340,7 +340,7 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     A row is a match if ALL four of the first four columns match.
     
     The first column (CATEGORY) has values 'Student', 'Certified', '50 Hours', or 'Dual'.
-    If the value 'Student', it is a match if cert is PILOT_STUDENT or higher.  
+    If the value 'Student', it is a match if category is PILOT_STUDENT or higher.  
     If the value is 'Certified, it is a match if cert is PILOT_CERTIFIED or higher. 
     If it is '50 Hours', it is only a match if cert is PILOT_50_HOURS. 
     The value 'Dual'  only matches if instructed is True.
@@ -465,7 +465,7 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     if vfr == True:
         allowed_conditions = ['VMC']
     if vfr == False:
-        allowed_conditions = ['VMS','IMC']
+        allowed_conditions = ['VMC','IMC']
     print("   conditions are: ", allowed_conditions)
 
 
@@ -490,6 +490,7 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     if area == "Any":
         allowed_areas = ['Pattern','Practice Area','Local','Cross Country']
     print("   allowed_areas are: ", allowed_areas)
+
 
     # check time
     """
@@ -529,3 +530,24 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
                 print("    condition found, row:",row_index, minimums[row_index])
                 conditions_matching_rows.append(row_index)
     print("     conditions_matching_rows are: ", conditions_matching_rows)
+
+
+    # check areas in minimums for matching rows
+    print("  checking rows that match allowed areas", allowed_areas)
+    areas_matching_rows = []
+    for row_index in range(len(minimums)):
+        for allowed_areas_index in range(len(allowed_areas)):
+            if minimums[row_index][2] == allowed_areas[allowed_areas_index]:
+                print("    area found, row: ", row_index, minimums[row_index])
+                areas_matching_rows.append(row_index)
+    print("    areas_matching_rows are: ", areas_matching_rows)
+
+    # check times in minimums for matching rows
+    print("  checking times that match allowed times", allowed_time)
+    times_matching_rows = []
+    for row_index in range(len(minimums)):
+        for allowed_time_index in range(len(allowed_time)):
+            if minimums[row_index][3] == allowed_time[allowed_time_index]:
+                print("    time found, row: ", row_index, minimums[row_index])
+                times_matching_rows.append(row_index)
+    print("   times_matching_rows are: ", times_matching_rows)
