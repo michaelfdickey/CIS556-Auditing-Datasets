@@ -85,6 +85,7 @@ def get_certification(takeoff,student):
     print(" takeoff is: ", takeoff, "type(takeoff) is:", type(takeoff))
     print(" student_row is: ", student)
 
+    """
     # display student info
     print("  student_id :", student[0])
     print("  last name  :", student[1])
@@ -96,44 +97,37 @@ def get_certification(takeoff,student):
     print("  instrument :", student[7])
     print("  advanced   :", student[8])
     print("  multiengine:", student[9])
+    """
 
-    
-    #construct datetime.datetime object
-    try:
-        date_joined = parse(student[3])
-        print("    date_joined is: ", date_joined, "type(date_joined) is:", type(date_joined))    
-    except:
-        pass
-    try:
-        date_solo = parse(student[4])
-        print("    date_solo is: ", date_solo, "type(date_solo) is: ", type(date_solo))
-    except:
-        pass
-    try:
-        date_license = parse(student[5])
-    except:
-        pass
-    try:
-        date_50hours = parse(student[6])
-    except:
-        pass
-    try:
-        date_instrment = parse(student[7])
-    except:
-        pass
-    try:
-        date_advanced = parse(student[8])
-    except:
-        pass
-    try:
-        date_multiengine = parse(student[9])
-    except:
-        pass
+    # construct datetime.datetime object
+    ## create lists from milestones and dates to use to create dictionary below
+    student_milestone_keys = ['joined','solo','license','50hours','instrument','advanced','multiengine']
+    student_flight_dates =  [student[3],student[4],student[5],student[6],student[7],student[8],student[9]]
+    #print("   student_milestone_keys: ", student_milestone_keys)
+    #print("   student_flight_dates: ", student_flight_dates)
 
-    #student-milestones
+    ## create initial values for iterating through lists and to create dict
+    create_dict_keys = range(7)
+    flight_dates_index = 0
     student_milestones = {}
-    student_milestones['joined'] = parse(student[3])
-    print(student_milestones)
+
+    ## creates a dicitonary of milestone / dates key/value pairs and tries to convert each date to a datetime.datetime object
+    ## if failes just adds '' as the value
+    for key in student_milestone_keys:
+        #print("    ", key)
+        try:
+            student_milestones[key] = parse(student_flight_dates[flight_dates_index])
+        except:
+            student_milestones[key] = student_flight_dates[flight_dates_index]      
+        flight_dates_index = flight_dates_index + 1
+    
+    ## check result
+    print("    student_milestones: ", student_milestones)
+
+    # evaluate flight
+
+
+
 
 
 def has_instrument_rating(takeoff,student):
