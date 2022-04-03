@@ -415,26 +415,30 @@ def get_for_id(id,table):
 
     # set initial vars
     #print("  table[0] is: ", table[0])
-    table_columns = len(table)
-    #print("  len(table) is: ", len(table))  
+    table_rows = len(table)
+    table_columns = len(table[0])
+    #print(" table_rows is: ", table_rows, "table_columns is: ", table_columns)
     row_index = 0
     column_index = 0
     result_row = []
     found_row = None
     
+
     # read table rows and columns
     try:
-        for row in table:
-            #print(row)
-            for column in range(table_columns):
-                #print("   column is: ", column, "content is: ", row[column])
-                cell_content = row[column]
+        for row_index in range(table_rows):           
+            #print(" row_index:", row_index, table[row_index])
+            for column_index in range(table_columns):
+                #print("   column_index is: ", column_index, "content is: ", table[row_index][column_index])
+                cell_content = table[row_index][column_index]
+                #print("   cell_content is: ", cell_content)               
                 if cell_content == id:
                     #print("    id found ", id, " in ", table[row_index])
                     #print("    row_index is: ", row_index)
                     found_row = row_index
-
             row_index = row_index + 1
+
+
     except:
         return None 
 

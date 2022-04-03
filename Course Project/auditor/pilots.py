@@ -78,7 +78,10 @@ def get_certification(takeoff,student):
     Parameter student: The student pilot
     Precondition: student is 10-element list of strings representing a pilot
     """
-    pass                    # Implement this function
+
+    #verify input
+    print(" takeoff is: ", takeoff)
+    print(" student_row is: ", student)
 
 
 def has_instrument_rating(takeoff,student):
