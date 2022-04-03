@@ -482,13 +482,13 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     """
     print(" checking area:", area)
     if area == "Pattern":
-        allowed_areas = ['Pattern']
+        allowed_areas = ['Pattern','Any']
     if area == "Practice Area":
-        allowed_areas = ['Practice Area']
+        allowed_areas = ['Practice Area','Local','Any']
     if area == "Local":
-        allowed_areas = ['Practice','Practice Area']
+        allowed_areas = ['Practice','Practice Area','Any']
     if area == "Any":
-        allowed_areas = ['Pattern','Practice Area','Local','Cross Country']
+        allowed_areas = ['Pattern','Practice Area','Local','Cross Country','Any']
     print("   allowed_areas are: ", allowed_areas)
 
 
@@ -515,7 +515,7 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
         #print(row_index, (minimums[row_index]))
         for allowed_cat_index in range(len(allowed_categories)):
             if minimums[row_index][0] == allowed_categories[allowed_cat_index]:
-                print("    category found, row: ", row_index, minimums[row_index])
+                #print("    category found, row: ", row_index, minimums[row_index])
                 category_matching_rows.append(row_index)
     print("     category_matching_rows are: ", category_matching_rows)
 
@@ -527,7 +527,7 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     for row_index in range(len(minimums)):
         for allowed_conditions_index in range(len(allowed_conditions)):
             if minimums[row_index][1] == allowed_conditions[allowed_conditions_index]:
-                print("    condition found, row:",row_index, minimums[row_index])
+                #print("    condition found, row:",row_index, minimums[row_index])
                 conditions_matching_rows.append(row_index)
     print("     conditions_matching_rows are: ", conditions_matching_rows)
 
@@ -538,9 +538,10 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     for row_index in range(len(minimums)):
         for allowed_areas_index in range(len(allowed_areas)):
             if minimums[row_index][2] == allowed_areas[allowed_areas_index]:
-                print("    area found, row: ", row_index, minimums[row_index])
+                #print("    area found, row: ", row_index, minimums[row_index])
                 areas_matching_rows.append(row_index)
     print("    areas_matching_rows are: ", areas_matching_rows)
+
 
     # check times in minimums for matching rows
     print("  checking times that match allowed times", allowed_time)
@@ -548,6 +549,75 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     for row_index in range(len(minimums)):
         for allowed_time_index in range(len(allowed_time)):
             if minimums[row_index][3] == allowed_time[allowed_time_index]:
-                print("    time found, row: ", row_index, minimums[row_index])
+                #print("    time found, row: ", row_index, minimums[row_index])
                 times_matching_rows.append(row_index)
     print("   times_matching_rows are: ", times_matching_rows)
+
+
+    # find rows that match all the catagories
+    print(" category_matching_rows", category_matching_rows)
+    print(" conditions_matching_rows", conditions_matching_rows)
+    print(" areas_matching_rows", areas_matching_rows)
+    print(" times_matching_rows", times_matching_rows)
+
+    matching_rows = []
+    for current_category_row in category_matching_rows:
+        #print("  current_category_row: ", current_category_row)
+        for current_condition_row in conditions_matching_rows:
+            #print("   current_condition_row is: ", current_condition_row)
+            for current_area_row in areas_matching_rows:
+                #print("    current_area_row is: ", current_area_row)
+                for current_time_row in times_matching_rows:
+                    #print("      current_time_row is: ", current_time_row)
+                    if current_category_row == current_condition_row:
+                        if current_condition_row == current_area_row:
+                            if current_area_row == current_time_row:
+                                print("  matching row found: ", current_category_row, current_condition_row, current_area_row, current_time_row)
+                                matching_rows.append(current_time_row)
+
+    print(" matching rows are: ", matching_rows)
+
+    
+    ### GET MININUM CIELING AND VISIBILITY AND MAX WIND AND CROSSWIND
+    print(" data from avaialable matching rows:")
+    for row in matching_rows:
+        print("  minimums[row]", row, minimums[row])
+
+    # get cieling from each matching row
+    allowed_cielings = []
+    for row in matching_rows:
+        allowed_cielings.append(minimums[row][4])
+    print("   allowed_cielings are: ", allowed_cielings)
+
+    # get visibility from each matching row
+    allowed_visibility = []
+    for row in matching_rows:
+        allowed_visibility.append(minimums[row][5])
+    print("   allowed_visibility are: ", allowed_visibility)
+
+    # get wind from each matching row
+    allowed_winds = []
+    for row in matching_rows:
+        allowed_winds.append(minimums[row][6])
+    print("   allowed_winds are: ", allowed_winds)
+
+    # crosswind from each matching row 
+    allowed_crosswinds = []
+    for row in matching_rows:
+        allowed_crosswinds.append(minimums[row][7])
+    print("   allowed_crosswinds are: ", allowed_crosswinds)
+
+    # return min from ciel and vis and max from wind and crosswind
+    #sort for min & max
+    allowed_cielings.sort(reverse=True)
+    allowed_visibility.sort()
+    allowed_winds.sort()
+    allowed_crosswinds.sort()
+
+    print(" FINAL values to return", float(allowed_cielings[0]), float(allowed_visibility[0]), float(allowed_winds[0]), float(allowed_crosswinds[0]))
+    minimums_result = []
+    minimums_result.append(float(allowed_cielings[0]))
+    minimums_result.append(float(allowed_visibility[0]))
+    minimums_result.append(float(allowed_winds[0]))
+    minimums_result.append(float(allowed_crosswinds[0]))
+    print(" minimums_result = ", minimums_result)
