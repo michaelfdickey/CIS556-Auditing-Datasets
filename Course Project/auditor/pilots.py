@@ -204,8 +204,41 @@ def has_instrument_rating(takeoff,student):
     Parameter student: The student pilot
     Precondition: student is 10-element list of strings representing a pilot
     """
-    pass                    # Implement this function
 
+    # verify input
+    print(" takeoff is: ", takeoff, "type(takeoff) is: ", type(takeoff))
+    print(" student is: ", student)
+
+    # display all student info
+    print("  student_id :", student[0])
+    print("  last name  :", student[1])
+    print("  first name :", student[2])
+    print("  joined     :", student[3])
+    print("  solo       :", student[4])
+    print("  license    :", student[5])
+    print("  50 hours   :", student[6])
+    print("  instrument :", student[7])
+    print("  advanced   :", student[8])
+    print("  multiengine:", student[9])
+
+    # no instrument rating at all, always false
+    if student[7] == '':
+        print("  student has no instrument rating, returning False")
+        return False
+
+    # if license has a date then convert to datetime.datetime object
+    if student[7] != '':
+        print("  student has an instrument rating, ", student[7])
+        instrument_date = parse(student[7])
+        print("  instrument_date is: ", str(instrument_date))
+
+    # check if takeoff is after instrment date
+    if takeoff > instrument_date:
+        print("  student was instrument rated at time of takeoff")
+        return True 
+    else:
+        print("  student was not instrument rated at time of takeoff")
+        return False
 
 def has_advanced_endorsement(takeoff,student):
     """
