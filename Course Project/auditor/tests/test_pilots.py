@@ -181,6 +181,8 @@ def test_get_minimums():
     fpath  = os.path.join(parent,'minimums.csv')
     table = utils.read_csv(fpath)
     
+    test_case_index = 0
+
     # TEST CASES (last element of each tuple is the row in the minimums table)
     testcases = [(pilots.PILOT_INVALID,  'Pattern',      False,False,True, table,None),
                  (pilots.PILOT_INVALID,  'Pattern',      True, False,True, table,21),
@@ -261,6 +263,7 @@ def test_get_minimums():
     
     # CHECK THE TEST CASES
     for test in testcases:
+        print("     >>> TEST CASE INDEX IS: ", test_case_index)
         mins = pilots.get_minimums(*test[:-1])
         expt = None if test[-1] is None else list(map(float,table[test[-1]][4:]))
         data = (fcn,'('+','.join(map(repr,test[:-2]))+',minimums)',repr(mins),repr(expt))
@@ -268,6 +271,7 @@ def test_get_minimums():
             assert_float_lists_equal(expt, mins,'%s%s returned %s, but should have returned %s' % data)
         else:
             assert_equals(expt, mins,'%s%s returned %s, but should have returned %s' % data)
+        test_case_index = test_case_index + 1
     
     # Test the alternates to catch hard-coding
     parent = os.path.split(__file__)[0]

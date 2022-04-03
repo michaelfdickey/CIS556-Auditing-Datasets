@@ -340,7 +340,7 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     A row is a match if ALL four of the first four columns match.
     
     The first column (CATEGORY) has values 'Student', 'Certified', '50 Hours', or 'Dual'.
-    If the value 'Student', it is a match if category is PILOT_STUDENT or higher.  
+    If the value is 'Student', it is a match if category is PILOT_STUDENT or higher.  
     If the value is 'Certified, it is a match if cert is PILOT_CERTIFIED or higher. 
     If it is '50 Hours', it is only a match if cert is PILOT_50_HOURS. 
     The value 'Dual'  only matches if instructed is True.
@@ -408,8 +408,11 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     # Find all rows that can apply to this student
     # Find the best values for each column of the row
     
-    print("Running get_minimums")
-
+    print("  ")
+    print("  Running get_minimums")
+    print("  >>>>> NEXT TEST CASE <<<<< ")
+    print("  ")
+    
     # verify inputs:
     print(" verifying inputs:")
     print("  cert is:       ", cert)
@@ -419,7 +422,11 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     print("  daytime is:    ", daytime)
     #print("  minimums is:", minimums)
 
-    
+    """
+    for row in minimums:
+        print(row)
+    """
+
     # Check pilot certifications
     """
     # certification references
@@ -431,23 +438,60 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     """
     """
     The first column (CATEGORY) has values 'Student', 'Certified', '50 Hours', or 'Dual'.
-    If the value 'Student', it is a match if category is PILOT_STUDENT or higher.  If
-    the value is 'Certified, it is a match if category is PILOT_CERTIFIED or higher. If
-    it is '50 Hours', it is only a match if category is PILOT_50_HOURS. The value 'Dual' 
+    If the value 'Student', it is a match if cert is PILOT_STUDENT or higher.  If
+    the value is 'Certified, it is a match if cert is PILOT_CERTIFIED or higher. If
+    it is '50 Hours', it is only a match if cert is PILOT_50_HOURS. The value 'Dual' 
     only matches if instructed is True.
     """    
     print(" checking certifications", cert, "instructed is: ", instructed)
     if cert == -1:
         print("  PILOT_INVALID")
-        allowed_categories = ['Dual']
+        allowed_categories = []
     if cert == 0:
         print("  PILOT_NOVICE")
-        allowed_categories = ['Dual','Student']
+        allowed_categories = []
     if cert == 1:
         print("  PILOT_STUDENT")
-        allowed_categories = ['Dual','Student','Certified']
+        allowed_categories = ['Student']
+    if cert == 2:
+        print("  PILOT_CERTIFIED")
+        allowed_categories = ['Student','Certified']
+    if cert == 3:
+        print("  PILOT_50_HOURS")
+        allowed_categories = ['Student','Certified','50 Hours']
+
     print("   category is:", allowed_categories)    
 
+    if instructed == True:
+        print("    adding Dual since instructor = true")
+        allowed_categories.append('Dual')
+        print("   category is:", allowed_categories)  
+
+    ## NO FLIGHT ALLOWED conditions:
+    if cert == -1:
+        if instructed == False:
+            print(" pilot should not be flying alone, return None")
+            return None
+
+    if cert == 0:
+        if instructed == False:
+            print(" pilot has not soloed and should note be flying alone, return None")
+            return None
+
+    if cert == 1:
+        if instructed == False:
+            if vfr == False:
+                print("  pilot not certified for IFR flight alone, returning None")
+                return None
+
+    if cert == 1:
+        if instructed == False:
+                if vfr == False:
+                    if daytime == False:
+                        print(" pilot is student, flying at night alone and vfr false ")
+                        return None
+
+    
 
     # check conditions
     """
@@ -461,11 +505,15 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     A pilot is either flying VFR (visual flight rules) or IFR (instrument flight rules). 
     A pilot flying IFR may fly in either VMC or IMC conditions, but a pilot flying VFR may only fly in VMC conditions
     """
+    """
+    Parameter vfr: Whether the pilot has filed this as an VFR flight
+    Precondition: vfr is a boolean
+    """
     print(" checking conditions, vfr: ", vfr, "day:", daytime)
     if vfr == True:
         allowed_conditions = ['VMC']
     if vfr == False:
-        allowed_conditions = ['VMC','IMC']
+        allowed_conditions = ['IMC','VMC']
     print("   conditions are: ", allowed_conditions)
 
 
@@ -489,6 +537,8 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
         allowed_areas = ['Practice','Practice Area','Any']
     if area == "Any":
         allowed_areas = ['Pattern','Practice Area','Local','Cross Country','Any']
+    if area == "Cross Country":
+        allowed_areas = ['Cross Country','Any']
     print("   allowed_areas are: ", allowed_areas)
 
 
@@ -504,6 +554,8 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     if daytime == False:
         allowed_time = ['Night']
     print("   allowed_time is: ", allowed_time)
+
+
 
 
 
@@ -577,6 +629,9 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
 
     print(" matching rows are: ", matching_rows)
 
+    if matching_rows == []:
+        print(" no matching rows: returning None")
+        return None
     
     ### GET MININUM CIELING AND VISIBILITY AND MAX WIND AND CROSSWIND
     print(" data from avaialable matching rows:")
@@ -586,25 +641,25 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     # get cieling from each matching row
     allowed_cielings = []
     for row in matching_rows:
-        allowed_cielings.append(minimums[row][4])
+        allowed_cielings.append(float(minimums[row][4]))
     print("   allowed_cielings are: ", allowed_cielings)
 
     # get visibility from each matching row
     allowed_visibility = []
     for row in matching_rows:
-        allowed_visibility.append(minimums[row][5])
+        allowed_visibility.append(float(minimums[row][5]))
     print("   allowed_visibility are: ", allowed_visibility)
 
     # get wind from each matching row
     allowed_winds = []
     for row in matching_rows:
-        allowed_winds.append(minimums[row][6])
+        allowed_winds.append(float(minimums[row][6]))
     print("   allowed_winds are: ", allowed_winds)
 
     # crosswind from each matching row 
     allowed_crosswinds = []
     for row in matching_rows:
-        allowed_crosswinds.append(minimums[row][7])
+        allowed_crosswinds.append(float(minimums[row][7]))
     print("   allowed_crosswinds are: ", allowed_crosswinds)
 
     # return min from ciel and vis and max from wind and crosswind
@@ -614,10 +669,12 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     allowed_winds.sort()
     allowed_crosswinds.sort()
 
-    print(" FINAL values to return", float(allowed_cielings[0]), float(allowed_visibility[0]), float(allowed_winds[0]), float(allowed_crosswinds[0]))
+    print(" FINAL values to return", float(min(allowed_cielings)), float(min(allowed_visibility)), float(max(allowed_winds)), float(max(allowed_crosswinds)))
     minimums_result = []
-    minimums_result.append(float(allowed_cielings[0]))
-    minimums_result.append(float(allowed_visibility[0]))
-    minimums_result.append(float(allowed_winds[0]))
-    minimums_result.append(float(allowed_crosswinds[0]))
-    print(" minimums_result = ", minimums_result)
+    minimums_result.append(float(min(allowed_cielings)))
+    minimums_result.append(float(min(allowed_visibility)))
+    minimums_result.append(float(max(allowed_winds)))
+    minimums_result.append(float(max(allowed_crosswinds)))
+    print("     >> RETURNING RESULT >> minimums_result = ", minimums_result)
+    
+    return minimums_result
