@@ -530,7 +530,7 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     """
     print(" checking area:", area)
     if area == "Pattern":
-        allowed_areas = ['Pattern','Any']
+        allowed_areas = ['Pattern','Any','Local']
     if area == "Practice Area":
         allowed_areas = ['Practice Area','Local','Any']
     if area == "Local":

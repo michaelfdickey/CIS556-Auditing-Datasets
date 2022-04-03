@@ -358,6 +358,7 @@ def test_get_minimums():
     
     # CHECK THE TEST CASES
     for test in testcases:
+        print("     >>> TEST CASE INDEX IS: ", test_case_index)
         mins = pilots.get_minimums(*test[:-1])
         expt = None if test[-1] is None else list(map(float,table[test[-1]][4:]))
         data = (fcn,'('+','.join(map(repr,test[:-2]))+',alternates)',repr(mins),repr(expt))
@@ -365,6 +366,7 @@ def test_get_minimums():
             assert_float_lists_equal(expt, mins,'%s%s returned %s, but should have returned %s' % data)
         else:
             assert_equals(expt, mins,'%s%s returned %s, but should have returned %s' % data)
+        test_case_index = test_case_index + 1
     
     print('  %s passed all tests' % fcn)
 
