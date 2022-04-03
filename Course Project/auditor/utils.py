@@ -450,8 +450,3 @@ def get_for_id(id,table):
         #print(" ")
         return result_row
 
-    """
-    # return row 
-    if found_row == None:
-        return None 
-    """
