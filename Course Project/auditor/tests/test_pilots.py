@@ -66,9 +66,9 @@ def test_get_certification():
     # CHECK THE TEST CASES
     for person in students:
         for pos in range(len(takeoffs)):
-            print(" person is: ", person)
+            #print(" person is: ", person)
             row  = utils.get_for_id(person,table)
-            print(" row is: ", row)
+            #print(" row is: ", row)
             time = utils.str_to_time(takeoffs[pos])
             cert = pilots.get_certification(time,row)
             data = (fcn,person,repr(cert_to_name(cert)),takeoffs[pos],repr(cert_to_name(students[person][pos])))

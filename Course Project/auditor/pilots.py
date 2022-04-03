@@ -82,8 +82,8 @@ def get_certification(takeoff,student):
     """
 
     # verify input
-    print(" takeoff is: ", takeoff, "type(takeoff) is:", type(takeoff))
-    print(" student_row is: ", student)
+    #print(" takeoff is: ", takeoff, "type(takeoff) is:", type(takeoff))
+    #print(" student_row is: ", student)
 
     """
     # display student info
@@ -125,40 +125,40 @@ def get_certification(takeoff,student):
     #print("    student_milestones: ", student_milestones)
 
     # evaluate flight
-    print("    takeoff is: ", str(takeoff))
+    #print("    takeoff is: ", str(takeoff))
     
     ## PILOT_INVALID = -1  # The certification of this pilot is unknown
-    print("    joined  is: ", str(student_milestones['joined']))
+    #print("    joined  is: ", str(student_milestones['joined']))
     try:
         if takeoff < student_milestones['joined']:
-            print(" PILOT_INVALID")
+            #print(" PILOT_INVALID")
             return -1
     except:
         # date is invalid
         return -1 
 
     ##PILOT_NOVICE = 0 # A pilot that has joined the school, but has not soloed
-    print("    solo    is: ", str(student_milestones['solo']))
+    #print("    solo    is: ", str(student_milestones['solo']))
     try:
         if takeoff > student_milestones['joined']:
             if takeoff < student_milestones['solo']:
-                print(" PILOT_NOVICE")
+                #print(" PILOT_NOVICE")
                 return 0 
     except:
         if takeoff > student_milestones['joined']:
-            print(" PILOT_NOVICE")
+            #print(" PILOT_NOVICE")
             return 0 
 
     ##PILOT_STUDENT = 1  A pilot that has soloed but does not have a license
-    print("    license is: ", str(student_milestones['license']))
+    #print("    license is: ", str(student_milestones['license']))
     try:
         if takeoff > student_milestones['solo']:
             if takeoff < student_milestones['license']:
-                print(" PILOT_STUDENT")
+                #print(" PILOT_STUDENT")
                 return 1 
     except:
         if takeoff > student_milestones['solo']:        #for when previous date is met, but there are no additional dates to compare
-            print(" PILOT_STUDENT")
+            #print(" PILOT_STUDENT")
             return 1   
 
 
@@ -166,18 +166,18 @@ def get_certification(takeoff,student):
     try:
         if takeoff > student_milestones['license']:
             if takeoff < student_milestones['50hours']:
-                print(" PILOT_CERTIFIED")
+                #print(" PILOT_CERTIFIED")
                 return 2 
     except:
         if takeoff > student_milestones['license']:
-            print(" PILOT_CERTIFIED")
+            #print(" PILOT_CERTIFIED")
             return 2 
 
     ##PILOT_50_HOURS  = 3 A pilot that 50 hours post license
-    print("    50hours is: ", str(student_milestones['50hours']))
+    #print("    50hours is: ", str(student_milestones['50hours']))
     try:
         if takeoff > student_milestones['50hours']:
-            print(" PILOT_50_HOURS")
+            #print(" PILOT_50_HOURS")
             return 3 
     except:
         pass 
