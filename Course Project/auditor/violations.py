@@ -71,7 +71,85 @@ def bad_visibility(visibility,minimum):
     Parameter minimum: The minimum allowed visibility (in statute miles)
     Precondition: minimum is a float or int
     """
-    pass                    # Implement this function
+
+    # verify inputs
+    print(" ")
+    print(" RUNNING bad_visibility")
+    print(" visibility is:", visibility, "type(visibility) is: ", type(visibility))
+    print(" minimum is: ", minimum, "type(minimum) is: ", type(minimum))
+
+    # set initial vars
+    minimum_present = False
+
+
+    if visibility == 'unavailable':
+        print("  visibility is unavailalbe, returning True")
+        return True 
+
+    # get prevailing
+    prevailing = visibility['prevailing']
+    print("  prevailing is: ", prevailing)
+
+    # get minimum if provided
+    try:
+        minimum_observed = visibility['minimum']
+        minimum_present = True
+        print(" minimum_observed is: ", minimum_observed)
+    except:
+        pass 
+    
+    # get units
+    units = visibility['units']
+    print("  units are: ", units)
+
+    if units == 'FT':
+        print(" units are in feet, converting to SM")
+        prevailing = prevailing/5280
+        print("   prevailing is now:", prevailing, "SM")
+    
+
+    """
+    This function should compare ths visibility 'minimum' (if it exists) against the 
+    minimum parameter. Else it compares the 'prevailing' visibilit
+    """
+
+    if minimum_present == True:
+        print("  minimum observation present, comparing min req with min obs")
+        if units == 'FT':
+            minimum_observed = minimum_observed/5280
+            print("   minimum_observed is: ", minimum_observed)
+
+    units = 'SM'
+
+    if units == 'SM':
+        print(" units are SM, processing")
+        
+        if minimum_present == True:
+            if minimum_observed < minimum:
+                print("   minimum_observed is less than minimum, bad visibility, returning True")
+                return True
+            if minimum_observed == minimum:
+                print("   minimum_observed equal to minimum_present, ok")
+                return False
+            if minimum_observed > minimum:
+                print("   minimum_observed > minimum, good viz")
+                return False
+
+
+        if prevailing < minimum:
+            print("   prevailing is less than minimum, bad visibility, returning True")
+            return True
+
+        if prevailing == minimum:
+            print("   prevailing equals minimum")
+            return False
+
+        if prevailing > minimum:
+            print("   prevailing viz greater than minimum, good visibility")
+            return False
+
+
+
 
 
 def bad_winds(winds,maxwind,maxcross):

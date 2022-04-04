@@ -46,8 +46,8 @@ def test(level=TEST_BASIC_APP):
     Parameter level: The assignment level constant.
     Precondition: level is one of TEST_BASIC_APP,TEST_EXTENSION_1,TEST_EXTENSION_2
     """
-    test_utils.test()
-    test_pilots.test()
+    #test_utils.test()              # temporarily commented out to speed up testing
+    #test_pilots.test()
     test_violations.test()
     if level >= TEST_EXTENSION_1:
         test_endorsements.test()

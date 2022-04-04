@@ -54,15 +54,17 @@ def test_bad_visibility():
             ('2017-12-31T22:00:00-05:00',4), ('2017-12-31T03:00:00-05:00',5),
             ('2016-12-31T01:00:00-05:00',0),('2017-12-31T21:00:00-05:00',-1)]
     
+    visibility_test_index = 0 
     # Perform the tests
-    for key in keys:
+    for key in keys:      
         visibility = report[key[0]]['visibility']
         for pos in range(len(minimums)):
+            print(" visibility_test_index is: ", visibility_test_index)
             expt = key[1] != -1 and key[1] <= pos
             test = violations.bad_visibility(visibility,minimums[pos])
             data = (fcn,repr(visibility),repr(minimums[pos]),repr(test),repr(expt))
             assert_equals(expt, test,'%s(%s,%s) returned %s, but should have returned %s' % data)
-    
+            visibility_test_index = visibility_test_index + 1
     print('  %s passed all tests' % fcn)
 
 
