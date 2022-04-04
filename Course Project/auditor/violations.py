@@ -73,39 +73,39 @@ def bad_visibility(visibility,minimum):
     """
 
     # verify inputs
-    ##print(" ")
-    ##print(" RUNNING bad_visibility")
-    ##print(" visibility is:", visibility, "type(visibility) is: ", type(visibility))
-    ##print(" minimum is: ", minimum, "type(minimum) is: ", type(minimum))
+    ###print(" ")
+    ###print(" RUNNING bad_visibility")
+    ###print(" visibility is:", visibility, "type(visibility) is: ", type(visibility))
+    ###print(" minimum is: ", minimum, "type(minimum) is: ", type(minimum))
 
     # set initial vars
     minimum_present = False
 
 
     if visibility == 'unavailable':
-        ##print("  visibility is unavailalbe, returning True")
+        ###print("  visibility is unavailalbe, returning True")
         return True 
 
     # get prevailing
     prevailing = visibility['prevailing']
-    ##print("  prevailing is: ", prevailing)
+    ###print("  prevailing is: ", prevailing)
 
     # get minimum if provided
     try:
         minimum_observed = visibility['minimum']
         minimum_present = True
-        ##print(" minimum_observed is: ", minimum_observed)
+        ###print(" minimum_observed is: ", minimum_observed)
     except:
         pass 
     
     # get units
     units = visibility['units']
-    ##print("  units are: ", units)
+    ###print("  units are: ", units)
 
     if units == 'FT':
-        ##print(" units are in feet, converting to SM")
+        ###print(" units are in feet, converting to SM")
         prevailing = prevailing/5280
-        ##print("   prevailing is now:", prevailing, "SM")
+        ###print("   prevailing is now:", prevailing, "SM")
     
 
     """
@@ -114,38 +114,38 @@ def bad_visibility(visibility,minimum):
     """
 
     if minimum_present == True:
-        ##print("  minimum observation present, comparing min req with min obs")
+        ###print("  minimum observation present, comparing min req with min obs")
         if units == 'FT':
             minimum_observed = minimum_observed/5280
-            ##print("   minimum_observed is: ", minimum_observed)
+            ###print("   minimum_observed is: ", minimum_observed)
 
     units = 'SM'
 
     if units == 'SM':
-        ##print(" units are SM, processing")
+        ###print(" units are SM, processing")
         
         if minimum_present == True:
             if minimum_observed < minimum:
-                ##print("   minimum_observed is less than minimum, bad visibility, returning True")
+                ###print("   minimum_observed is less than minimum, bad visibility, returning True")
                 return True
             if minimum_observed == minimum:
-                ##print("   minimum_observed equal to minimum_present, ok")
+                ###print("   minimum_observed equal to minimum_present, ok")
                 return False
             if minimum_observed > minimum:
-                ##print("   minimum_observed > minimum, good viz")
+                ###print("   minimum_observed > minimum, good viz")
                 return False
 
 
         if prevailing < minimum:
-            ##print("   prevailing is less than minimum, bad visibility, returning True")
+            ###print("   prevailing is less than minimum, bad visibility, returning True")
             return True
 
         if prevailing == minimum:
-            ##print("   prevailing equals minimum")
+            ###print("   prevailing equals minimum")
             return False
 
         if prevailing > minimum:
-            ##print("   prevailing viz greater than minimum, good visibility")
+            ###print("   prevailing viz greater than minimum, good visibility")
             return False
 
 
@@ -195,21 +195,21 @@ def bad_winds(winds,maxwind,maxcross):
     Precondition: maxcross is a float or int
     """
 
-    #print(" ")
-    #print("  >> checking bad_winds << ")
+    ##print(" ")
+    ##print("  >> checking bad_winds << ")
 
     # verify input
-    #print(" winds is: ", winds)
-    #print(" maxwind is: ", maxwind)
-    #print(" maxcross is: ", maxcross)
+    ##print(" winds is: ", winds)
+    ##print(" maxwind is: ", maxwind)
+    ##print(" maxcross is: ", maxcross)
 
     # check initial violations
     if winds == 'calm':
-        #print("  wind is calm, returning False for bad_winds")
+        ##print("  wind is calm, returning False for bad_winds")
         return False
 
     if winds == 'unavailable':
-        #print("  wind speed unavailable, returning True")
+        ##print("  wind speed unavailable, returning True")
         return True
 
     winds_speed = 0
@@ -240,24 +240,24 @@ def bad_winds(winds,maxwind,maxcross):
 
     # if MPS convert all to KTs
     if winds_units == 'MPS':
-        #print("  winds['units'] = MPS converting to KTs")
+        ##print("  winds['units'] = MPS converting to KTs")
         winds_speed = winds_speed * knots
         winds_crosswind = winds_crosswind * knots
         winds_gusts = winds_gusts * knots 
         winds_units = 'KT'
 
-    #print(" winds_speed:", winds_speed, "winds_gusts:", winds_gusts,"winds_crosswind:", winds_crosswind)
+    ##print(" winds_speed:", winds_speed, "winds_gusts:", winds_gusts,"winds_crosswind:", winds_crosswind)
 
     if winds_gusts > maxwind:
-        #print("  wind gusts too high", winds['gusts'], "returning True")
+        ##print("  wind gusts too high", winds['gusts'], "returning True")
         return True
 
     if winds_speed > maxwind:
-        #print("  wind speed too high", winds['speed'], "returning True")
+        ##print("  wind speed too high", winds['speed'], "returning True")
         return True 
 
     if winds_crosswind > maxcross:
-        #print("  wind_crosswind too high:", winds_crosswind, "returning True")
+        ##print("  wind_crosswind too high:", winds_crosswind, "returning True")
         return True 
 
     return False
@@ -305,56 +305,45 @@ def bad_ceiling(ceiling,minimum):
     """
 
 
-    print(" >> running bad_ceiling <<")
+    #print(" >> running bad_ceiling <<")
 
     # verify inputs
-    print(" ceiling is:", ceiling)
-    print(" minimum is:", minimum)
-    print(" type(ceiling) is: ", type(ceiling))
+    #print(" ceiling is:", ceiling)
+    #print(" minimum is:", minimum)
+    #print(" type(ceiling) is: ", type(ceiling))
 
     # initial conditions assessments
     if ceiling == 'clear':
-        print("  ceiling is clear, returning false on bad_ceiling")
+        #print("  ceiling is clear, returning false on bad_ceiling")
         return False
 
     if ceiling == 'unavailable':
-        print("  ceiling is unavailable")
+        #print("  ceiling is unavailable")
         return True 
 
     ceiling_dict = ceiling[0]
-    print(" ceiling_dict is: ", ceiling_dict)
-
-    """
-    if ceiling_dict['type'] == 'scattered':
-        print("  cloud type is scatter, returning false")
-        return False
-
-    if ceiling_dict['type'] == 'a few':
-        print("  could type is a few, returning false")
-        return False
-    """
+    #print(" ceiling_dict is: ", ceiling_dict)
 
     # get all heights from all list entries
     heights = []
     entries = len(ceiling)
-    print(" num of ceiling entries is: ", entries)
+    #print(" num of ceiling entries is: ", entries)
     for entries_index in range(len(ceiling)):
-        print("  ", ceiling[entries_index])
+        #print("  ", ceiling[entries_index])
         # don't include clouds types of 'a few' and 'scattered'
         if ceiling[entries_index]['type'] != 'a few':
             if ceiling[entries_index]['type'] != 'scattered':
                 heights.append(ceiling[entries_index]['height'])
 
-    print("   heights is: ", heights)
-
-    
+    #print("   heights is: ", heights)
+  
     try:
         if min(heights) < minimum:
-            print("   min cloud height is less than ", minimum, "returning True for bad_ceiling")
+            #print("   min cloud height is less than ", minimum, "returning True for bad_ceiling")
             return True 
 
         if min(heights) >= minimum:
-            print("   min cloud height is greater than ", minimum,"returning false for bad_ceiling")
+            #print("   min cloud height is greater than ", minimum,"returning false for bad_ceiling")
             return False 
     except:
         return False     
