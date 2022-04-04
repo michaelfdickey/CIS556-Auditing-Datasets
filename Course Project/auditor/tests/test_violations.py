@@ -59,12 +59,12 @@ def test_bad_visibility():
     for key in keys:      
         visibility = report[key[0]]['visibility']
         for pos in range(len(minimums)):
-            print(" visibility_test_index is: ", visibility_test_index)
+            #print(" visibility_test_index is: ", visibility_test_index)
             expt = key[1] != -1 and key[1] <= pos
             test = violations.bad_visibility(visibility,minimums[pos])
             data = (fcn,repr(visibility),repr(minimums[pos]),repr(test),repr(expt))
             assert_equals(expt, test,'%s(%s,%s) returned %s, but should have returned %s' % data)
-            visibility_test_index = visibility_test_index + 1
+            #visibility_test_index = visibility_test_index + 1
     print('  %s passed all tests' % fcn)
 
 
