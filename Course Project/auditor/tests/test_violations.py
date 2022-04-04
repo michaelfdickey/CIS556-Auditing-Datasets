@@ -114,15 +114,19 @@ def test_bad_ceiling():
            ('2017-12-31T01:00:00-05:00',6), ('2017-12-30T18:00:00-05:00',7),
            ('2017-12-30T20:00:00-05:00',-1),("2017-10-12T11:00:00-04:00",-1)]
     
+    bad_ceiling_index = 0 
+
     # Perform the tests
     for key in keys:
         sky = report[key[0]]['sky']
         for pos in range(len(minimums)):
+            print(" ")
+            print(" >>>> bad_ceiling_index is: ", bad_ceiling_index, " <<<<")
             expt = key[1] != -1 and key[1] <= pos
             test = violations.bad_ceiling(sky,minimums[pos])
             data = (fcn,repr(sky),repr(minimums[pos]),repr(test),repr(expt))
             assert_equals(expt, test,'%s(%s,%s) returned %s, but should have returned %s' % data)
-    
+            bad_ceiling_index = bad_ceiling_index + 1
     print('  %s passed all tests' % fcn)
 
 
