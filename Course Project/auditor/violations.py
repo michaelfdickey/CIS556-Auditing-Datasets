@@ -28,8 +28,8 @@ the functions simpler (because the preconditions ensure we have less to worry ab
 enforcing these preconditions can be quite hard. That is why it is not necessary to 
 enforce any of the preconditions in this module.
 
-Author: YOUR NAME HERE
-Date: THE DATE HERE
+Author: Michael Dickey
+Date: Apr 3 2022
 """
 import utils
 import pilots
