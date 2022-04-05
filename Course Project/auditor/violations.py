@@ -34,6 +34,9 @@ Date: Apr 3 2022
 import utils
 import pilots
 import os.path
+import datetime
+from dateutil.parser import parse
+import dateutil
 
 
 # WEATHER FUNCTIONS
@@ -427,7 +430,58 @@ def get_weather_report(takeoff,weather):
     
     # Search for time in dictionary
     # As fall back, find the closest time before takeoff
-    pass
+
+    print(" ")
+    print(" >> Running get_weather_report <<")
+
+    # verify inputs
+    print(" takeoff is: ", takeoff)
+    #print(" weather is: ", weather)
+    print("  type(takeoff) is: ", type(takeoff))
+
+    # convert to iso format
+    takeoff_iso = takeoff.isoformat()
+
+    print("  takeoff_iso is: ", takeoff_iso)
+
+    # get dictionary entry for that hour
+    try:
+        takeoff_hour_dictionary = weather[takeoff_iso]
+        print(takeoff_hour_dictionary)
+        # get weather code
+        code = takeoff_hour_dictionary['code']
+        print("  code is: ", code)
+        #return takeoff_hour_dictionary
+    except:
+        pass 
+
+    # try the previous hour
+    # 2017-10-12T11:30:00-04:00
+    previous_hour_takeoff_txt = str(takeoff.year) + "-" + str(takeoff.month) + "-" + str(takeoff.day) + " " + str(takeoff.hour) + ':00:00'
+    print("  previous_hour_takeoff_txt is: ", previous_hour_takeoff_txt)
+    previous_hour_takeoff_naive = parse(previous_hour_takeoff_txt)
+    print("  previous_hour_takeoff is: ", str(previous_hour_takeoff_naive))
+    print("  type(previous_hour_takeoff_naive) is: ", type(previous_hour_takeoff_naive))
+    #tz = dateutil.tz.tz.tzoffset(None, -14400)      # manually create offset and add it
+    tz = takeoff.tzinfo                             # grab offset from original takeoff datetime object
+    previous_hour_takeoff = previous_hour_takeoff_naive.replace(tzinfo=tz)
+    print("   previous_hour_takeoff is: ", previous_hour_takeoff)
+    previous_hour_takeoff_iso = previous_hour_takeoff.isoformat()
+    print("   previous_hour_takeoff_iso is: ", previous_hour_takeoff_iso)
+
+
+    # get dictionary entry for previous hour
+    try:
+        takeoff_hour_dictionary = weather[previous_hour_takeoff_iso]
+        print(takeoff_hour_dictionary)
+        # get weather code
+        code = takeoff_hour_dictionary['code']
+        print("  code is: ", code)
+        #return takeoff_hour_dictionary
+    except:
+        pass 
+
+    return takeoff_hour_dictionary
 
 
 def get_weather_violation(weather,minimums):
