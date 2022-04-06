@@ -150,8 +150,10 @@ def test_get_weather_report():
              ("2017-12-27T08:00:00-05:00","2017-12-27T08:00:00-05:00"),
              ("2017-12-27T23:00:00-05:00","2017-12-28T00:00:00-05:00")]
     
+    weather_report_test_index = 0
     # Perform the tests
     for test in tests:
+        print("  >>> weather_report_test_index is: ", weather_report_test_index, "<<<")
         expct = report[test[1]]
         stamp = utils.str_to_time(test[0])
         found = violations.get_weather_report(stamp,report)
@@ -162,7 +164,8 @@ def test_get_weather_report():
         
         data  = (fcn,test[0],'weather',code,repr(expct['code']))
         assert_equals(expct, found,'%s(%s,%s) returned a report with %s, not code=%s' % data)
-    
+        weather_report_test_index = weather_report_test_index + 1
+        
     print('  %s passed all tests' % fcn)
 
 
