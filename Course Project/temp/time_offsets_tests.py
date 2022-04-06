@@ -78,13 +78,18 @@ print(str(new_takeoff_dt))
 Traceback (most recent call last):
 """
 
+test case 1
+takeoff 	"2017-10-12 11:30:00-04:00"
+correct 	"2017-10-12T11:00:00-04:00"  #round down to nearest hour
+incorrect 	"2017-10-12T10:00:00-04:00"  # go backwards a full hour
+
+
 test case 6
 takeoff 	"2017-03-12T03:00:00-05:00"
 correct     "2017-03-12T02:00:00-05:00"
 			"2017-03-12T03:00:00-05:00"
 incorrect 	"2017-03-12T04:00:00-04:00"
 
-test case 1
-takeoff 	"2017-10-12 11:30:00-04:00"
-correct 	"2017-10-12T11:00:00-04:00"  #round down to nearest hour
-incorrect 	"2017-10-12T10:00:00-04:00"  # go backwards a full hour
+
+test case 8
+takeoff 	"2017-12-27 23:00:00-05:00"
