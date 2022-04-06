@@ -37,6 +37,7 @@ import os.path
 import datetime
 from dateutil.parser import parse
 import dateutil
+import csv
 
 
 # WEATHER FUNCTIONS
@@ -807,16 +808,6 @@ def get_weather_violation(weather,minimums):
 
 
 
-
-
-
-
-
-
-
-
-
-
 # FILES TO AUDIT
 # Sunrise and sunset
 DAYCYCLE = 'daycycle.json'
@@ -868,7 +859,25 @@ def list_weather_violations(directory):
     Precondition: directory is the name of a directory containing the files 'daycycle.json',
     'weather.json', 'minimums.csv', 'students.csv', and 'lessons.csv'
     """
+
+    print(" directory is: ", directory)
+
     # Load in all of the files
+
+    ## open daycycle.json
+
+    ## open weather.json
+
+    ## open students.csv
+    path_students_csv = os.path.join('tests','students.csv')
+    file_students_csv = open(path_students_csv)
+    file_students_csv_wrapped = csv.reader(file_students_csv)
+    for row in file_students_csv_wrapped:
+        print(row)
+
+    ## open minimums.csv
+
+    ## open lessons.csv
     
     # For each of the lessons
         # Get the takeoff time
@@ -876,4 +885,4 @@ def list_weather_violations(directory):
         # Get the pilot minimums
         # Get the weather conditions
         # Check for a violation and add to result if so
-    pass
+
