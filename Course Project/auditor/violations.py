@@ -431,18 +431,18 @@ def get_weather_report(takeoff,weather):
     # Search for time in dictionary
     # As fall back, find the closest time before takeoff
 
-    print(" ")
-    print(" >> Running get_weather_report <<")
+    #print(" ")
+    #print(" >> Running get_weather_report <<")
 
     # verify inputs
-    print(" takeoff is: ", takeoff)
+    #print(" takeoff is: ", takeoff)
     #print(" weather is: ", weather)
-    print("  type(takeoff) is: ", type(takeoff))
+    #print("  type(takeoff) is: ", type(takeoff))
 
     ## get ready for converting
     takeoff_dt = takeoff
     takeoff_txt = str(takeoff)
-    print("  takeoff_txt is: ", str(takeoff_txt))
+    #print("  takeoff_txt is: ", str(takeoff_txt))
     
     ## strip out values
     takeoff_year = takeoff_txt[0:4]
@@ -451,25 +451,25 @@ def get_weather_report(takeoff,weather):
     takeoff_hour = takeoff_txt[11:13]
     takeoff_offset = takeoff_txt[20:22]
 
-    print("   takeoff_year: ", takeoff_year)
-    print("   takeoff_month: ", takeoff_month)
-    print("   takeoff_day: ", takeoff_day)
-    print("   takeoff_hour: ", takeoff_hour)
-    print("   takeoff_offset: ", takeoff_offset)
+    #print("   takeoff_year: ", takeoff_year)
+    #print("   takeoff_month: ", takeoff_month)
+    #print("   takeoff_day: ", takeoff_day)
+    #print("   takeoff_hour: ", takeoff_hour)
+    #print("   takeoff_offset: ", takeoff_offset)
 
 
     # convert to iso format
     takeoff_iso = takeoff.isoformat()
 
-    print("  takeoff_iso is: ", takeoff_iso)
+    #print("  takeoff_iso is: ", takeoff_iso)
 
     # get dictionary entry for that hour
     try:
         takeoff_hour_dictionary = weather[takeoff_iso]
-        print(takeoff_hour_dictionary)
+        #print(takeoff_hour_dictionary)
         # get weather code
         code = takeoff_hour_dictionary['code']
-        print("  code is: ", code)
+        #print("  code is: ", code)
         return takeoff_hour_dictionary
     except:
         pass 
@@ -477,25 +477,25 @@ def get_weather_report(takeoff,weather):
     # ROUND DOWN to nearest hour
     # 2017-10-12T11:30:00-04:00
     previous_hour_takeoff_txt = str(takeoff.year) + "-" + str(takeoff.month) + "-" + str(takeoff.day) + " " + str(takeoff.hour) + ':00:00'
-    print("  previous_hour_takeoff_txt is: ", previous_hour_takeoff_txt)
+    #print("  previous_hour_takeoff_txt is: ", previous_hour_takeoff_txt)
     previous_hour_takeoff_naive = parse(previous_hour_takeoff_txt)
-    print("  previous_hour_takeoff is: ", str(previous_hour_takeoff_naive))
-    print("  type(previous_hour_takeoff_naive) is: ", type(previous_hour_takeoff_naive))
+    #print("  previous_hour_takeoff is: ", str(previous_hour_takeoff_naive))
+    #print("  type(previous_hour_takeoff_naive) is: ", type(previous_hour_takeoff_naive))
     #tz = dateutil.tz.tz.tzoffset(None, -14400)      # manually create offset and add it
     tz = takeoff.tzinfo                             # grab offset from original takeoff datetime object
     previous_hour_takeoff = previous_hour_takeoff_naive.replace(tzinfo=tz)
-    print("   previous_hour_takeoff is: ", previous_hour_takeoff)
+    #print("   previous_hour_takeoff is: ", previous_hour_takeoff)
     previous_hour_takeoff_iso = previous_hour_takeoff.isoformat()
-    print("   previous_hour_takeoff_iso is: ", previous_hour_takeoff_iso)
+    #print("   previous_hour_takeoff_iso is: ", previous_hour_takeoff_iso)
 
 
     # get dictionary entry for previous hour
     try:
         takeoff_hour_dictionary = weather[previous_hour_takeoff_iso]
-        print(takeoff_hour_dictionary)
+        #print(takeoff_hour_dictionary)
         # get weather code
         code = takeoff_hour_dictionary['code']
-        print("  code is: ", code)
+        #print("  code is: ", code)
         return takeoff_hour_dictionary
     except:
         pass 
@@ -505,7 +505,7 @@ def get_weather_report(takeoff,weather):
     # ROUND DOWN AND GO BACKWARDS one hour. 
 
     ## subtract 1 hour from hours
-    print("takeoff_hour is: ", takeoff_hour)
+    #print("takeoff_hour is: ", takeoff_hour)
     takeoff_hour = int(takeoff_hour) - 1
     if len(str(takeoff_hour)) < 2:
         takeoff_hour = "0" + str(takeoff_hour)
@@ -513,49 +513,43 @@ def get_weather_report(takeoff,weather):
         takeoff_hour = str(takeoff_hour)
  
     previous_hour_takeoff_txt = str(takeoff.year) + "-" + str(takeoff.month) + "-" + str(takeoff.day) + " " + str(takeoff_hour) + ':00:00'   #note takeof_hour not takeoff.hour
-    print("  previous_hour_takeoff_txt is: ", previous_hour_takeoff_txt)
+    #print("  previous_hour_takeoff_txt is: ", previous_hour_takeoff_txt)
     previous_hour_takeoff_naive = parse(previous_hour_takeoff_txt)
-    print("  previous_hour_takeoff is: ", str(previous_hour_takeoff_naive))
-    print("  type(previous_hour_takeoff_naive) is: ", type(previous_hour_takeoff_naive))
+    #print("  previous_hour_takeoff is: ", str(previous_hour_takeoff_naive))
+    #print("  type(previous_hour_takeoff_naive) is: ", type(previous_hour_takeoff_naive))
     #tz = dateutil.tz.tz.tzoffset(None, -14400)      # manually create offset and add it
     tz = takeoff.tzinfo                             # grab offset from original takeoff datetime object
     previous_hour_takeoff = previous_hour_takeoff_naive.replace(tzinfo=tz)
-    print("   previous_hour_takeoff is: ", previous_hour_takeoff)
+    #print("   previous_hour_takeoff is: ", previous_hour_takeoff)
     previous_hour_takeoff_iso = previous_hour_takeoff.isoformat()
-    print("   previous_hour_takeoff_iso is: ", previous_hour_takeoff_iso)
+    #print("   previous_hour_takeoff_iso is: ", previous_hour_takeoff_iso)
 
     try:
         takeoff_hour_dictionary = weather[previous_hour_takeoff_iso]
-        print(takeoff_hour_dictionary)
+        #print(takeoff_hour_dictionary)
         # get weather code
         code = takeoff_hour_dictionary['code']
-        print("  code is: ", code)
+        #print("  code is: ", code)
         return takeoff_hour_dictionary
     except:
         pass 
-
-
-
-
-
-
 
    
     # convert to different timezone and try again    
 
 
     ## remove hour from offset
-    print(type(takeoff_offset))
+    #print(type(takeoff_offset))
     takeoff_offset = int(takeoff_offset) - 1
-    print(" takeoff_offset is: ", takeoff_offset)
+    #print(" takeoff_offset is: ", takeoff_offset)
     if len(str(takeoff_offset)) < 2:
         takeoff_offset = "0" + str(takeoff_offset)
     else:
         takeoff_offset = str(takeoff_offset)
-    print(" takeoff_offset is: ", takeoff_offset)
+    #print(" takeoff_offset is: ", takeoff_offset)
 
     ## add hour to hours
-    print("takeoff_hour is: ", takeoff_hour)
+    #print("takeoff_hour is: ", takeoff_hour)
     takeoff_hour = int(takeoff_hour) + 1
     if len(str(takeoff_hour)) < 2:
         takeoff_hour = "0" + str(takeoff_hour)
@@ -564,23 +558,23 @@ def get_weather_report(takeoff,weather):
 
     # create new time
     takeoff_thistz_text = takeoff_year + "-" + takeoff_month + "-" + takeoff_day + " " + takeoff_hour + ":00:00" + "-" + takeoff_offset + ":00"
-    print("takeoff_thistz_txt is: ", takeoff_thistz_text)
+    #print("takeoff_thistz_txt is: ", takeoff_thistz_text)
     takeoff_thistz_dt = parse(takeoff_thistz_text)
-    print(takeoff_thistz_dt)
-    print(" takeoff original is: ", str(takeoff_dt))
-    print(" takeoff this tz is: ", str(takeoff_thistz_dt))
-    if takeoff_thistz_dt == takeoff_dt:
-        print(" these two datetimes match")
+    #print(takeoff_thistz_dt)
+    #print(" takeoff original is: ", str(takeoff_dt))
+    #print(" takeoff this tz is: ", str(takeoff_thistz_dt))
+    #if takeoff_thistz_dt == takeoff_dt:
+        #print(" these two datetimes match")
     takeoff_thistz_iso = takeoff_thistz_dt.isoformat()
-    print(" takeoff_thistz_iso is: ", takeoff_thistz_iso)
+    #print(" takeoff_thistz_iso is: ", takeoff_thistz_iso)
 
     # try dictionary entry for new timezone adjusted dt
     try:
         takeoff_hour_dictionary = weather[takeoff_thistz_iso]
-        print(takeoff_hour_dictionary)
+        #print(takeoff_hour_dictionary)
         # get weather code
         code = takeoff_hour_dictionary['code']
-        print("  code is: ", code)
+        #print("  code is: ", code)
         return takeoff_hour_dictionary
     except:
         pass 

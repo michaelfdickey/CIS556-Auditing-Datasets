@@ -153,7 +153,7 @@ def test_get_weather_report():
     weather_report_test_index = 0
     # Perform the tests
     for test in tests:
-        print("  >>> weather_report_test_index is: ", weather_report_test_index, "<<<")
+        #print("  >>> weather_report_test_index is: ", weather_report_test_index, "<<<")
         expct = report[test[1]]
         stamp = utils.str_to_time(test[0])
         found = violations.get_weather_report(stamp,report)
@@ -164,8 +164,8 @@ def test_get_weather_report():
         
         data  = (fcn,test[0],'weather',code,repr(expct['code']))
         assert_equals(expct, found,'%s(%s,%s) returned a report with %s, not code=%s' % data)
-        weather_report_test_index = weather_report_test_index + 1
-        
+        #weather_report_test_index = weather_report_test_index + 1
+
     print('  %s passed all tests' % fcn)
 
 
@@ -300,7 +300,7 @@ def test():
     print('Testing module violations')
     #test_bad_visibility()
     #test_bad_winds()
-    #test_bad_ceiling()
+    test_bad_ceiling()
     test_get_weather_report()
     test_get_weather_violation()
     test_list_weather_violations()
