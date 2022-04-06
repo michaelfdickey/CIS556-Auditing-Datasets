@@ -230,15 +230,19 @@ def test_get_weather_violation():
             'Winds','Winds','Winds','Winds','Winds','Winds','Winds','Winds'),
         ('2017-04-27T06:00:00-04:00','','','','','','','','','','','','','','')]
     
+    weather_violation_test_case = 0
     # Perform the tests
     for test in tests:
         for pos in range(len(minimums)):
+            print( " ")           
+            print(" >> weather_violation_test_case = ", weather_violation_test_case, "  << ")
             expct = test[pos+1]
             read  = report[test[0]] if test[0] in report else None
             check = violations.get_weather_violation(read,minimums[pos])
             
             data  = (fcn,repr(read),repr(minimums[pos]),repr(check),repr(expct))
             assert_equals(expct, check,'%s(%s,%s) returned %s, not %s' % data)
+            weather_violation_test_case = weather_violation_test_case + 1
     
     print('  %s passed all tests' % fcn)
 

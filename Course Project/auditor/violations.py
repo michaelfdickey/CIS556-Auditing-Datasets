@@ -140,15 +140,15 @@ def bad_visibility(visibility,minimum):
 
 
         if prevailing < minimum:
-            ###print("   prevailing is less than minimum, bad visibility, returning True")
+            print("   prevailing is less than minimum, bad visibility, returning True")
             return True
 
         if prevailing == minimum:
-            ###print("   prevailing equals minimum")
+            print("   prevailing equals minimum")
             return False
 
         if prevailing > minimum:
-            ###print("   prevailing viz greater than minimum, good visibility")
+            print("   prevailing viz greater than minimum, good visibility")
             return False
 
 
@@ -252,17 +252,18 @@ def bad_winds(winds,maxwind,maxcross):
     ##print(" winds_speed:", winds_speed, "winds_gusts:", winds_gusts,"winds_crosswind:", winds_crosswind)
 
     if winds_gusts > maxwind:
-        ##print("  wind gusts too high", winds['gusts'], "returning True")
+        print("  wind gusts too high", winds['gusts'], "returning True")
         return True
 
     if winds_speed > maxwind:
-        ##print("  wind speed too high", winds['speed'], "returning True")
+        print("  wind speed too high", winds['speed'], "returning True")
         return True 
 
     if winds_crosswind > maxcross:
-        ##print("  wind_crosswind too high:", winds_crosswind, "returning True")
+        print("  wind_crosswind too high:", winds_crosswind, "returning True")
         return True 
 
+    print( "   wind speeds are ok, returning False")
     return False
 
 def bad_ceiling(ceiling,minimum):
@@ -640,7 +641,101 @@ def get_weather_violation(weather,minimums):
     Parameter minimums: The safety minimums for ceiling, visibility, wind, and crosswind
     Precondition: minimums is a list of four floats
     """
-    pass                    # Implement this function
+
+    # verify inputs
+
+    print(" weather is: ", weather)
+    print(" minimums is: ", minimums)
+    minimum_ceiling = minimums[0]
+    minimum_visibility = minimums[1]
+    max_windspeed = minimums[2]
+    max_crosswind = minimums[3]
+    print(" minimum_ceiling is:    ", minimum_ceiling)
+    print(" minimum_visibility is: ", minimum_visibility)
+    print(" max_windspeed is:      ", max_windspeed)
+    print(" max_crosswind is:      ", max_crosswind)
+
+    # check visibility
+    """
+    def bad_visibility(visibility,minimum): 
+    Returns True if the visibility measurement violates the minimum, False otherwise
+        Example: Suppose we have the following visibility measurement.
+        
+        {
+            "prevailing": 21120.0,
+            "minimum": 1400.0,
+            "maximum": 21120.0,
+            "units": "FT"
+        }
+    
+    """
+
+    weather_observations = weather['visibility']
+    print(" weather_observations is: ", weather_observations)
+    print(" type(weather_observations) is: ", type(weather_observations))
+    visibility_is_bad = bad_visibility(weather_observations,minimum_visibility)
+
+    #if is_visibility_bad == True:
+    #    print(" visibility violation")
+
+
+    # check for bad winds
+    #def bad_winds(winds,maxwind,maxcross):
+    """
+    Returns True if the wind measurement violates the maximums, False otherwise
+    A valid wind measurement is EITHER the string 'calm', the string 'unavailable' or 
+    a dictionary with (up to) four values: 'speed', 'crosswind', 'gusts', and 'units'. 
+            Example: Suppose we have the following wind measurement.
+        
+        {
+            "speed": 12.0,
+            "crosswind": 10.0,
+            "gusts": 18.0,
+            "units": "KT"
+        }
+    
+    Parameter winds: The wind speed information
+    Precondition: winds is a valid wind measurement, as described above.
+    (e.g. either a dictionary, the string 'calm', or the string 'unavailable')
+    
+    Parameter maxwind: The maximum allowable wind speed (in knots)
+    Precondition: maxwind is a float or int
+    
+    Parameter maxcross: The maximum allowable crosswind speed (in knots)
+    Precondition: maxcross is a float or int
+    """
+
+    wind_observations = weather['wind']
+    print(" wind_observations is: ", wind_observations)
+    print(" type(wind_observations) is: ", type(wind_observations))
+    
+    winds_are_bad = bad_winds(wind_observations,float(max_windspeed),float(max_crosswind))
+
+
+
+
+
+
+
+
+
+
+
+
+
+    print( " ")
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # FILES TO AUDIT
