@@ -140,15 +140,15 @@ def bad_visibility(visibility,minimum):
 
 
         if prevailing < minimum:
-            print("   prevailing is less than minimum, bad visibility, returning True")
+            #print("   prevailing is less than minimum, bad visibility, returning True")
             return True
 
         if prevailing == minimum:
-            print("   prevailing equals minimum")
+            #print("   prevailing equals minimum")
             return False
 
         if prevailing > minimum:
-            print("   prevailing viz greater than minimum, good visibility")
+            #print("   prevailing viz greater than minimum, good visibility")
             return False
 
 
@@ -252,18 +252,18 @@ def bad_winds(winds,maxwind,maxcross):
     ##print(" winds_speed:", winds_speed, "winds_gusts:", winds_gusts,"winds_crosswind:", winds_crosswind)
 
     if winds_gusts > maxwind:
-        print("  wind gusts too high", winds['gusts'], "returning True")
+        #print("  wind gusts too high", winds['gusts'], "returning True")
         return True
 
     if winds_speed > maxwind:
-        print("  wind speed too high", winds['speed'], "returning True")
+        #print("  wind speed too high", winds['speed'], "returning True")
         return True 
 
     if winds_crosswind > maxcross:
-        print("  wind_crosswind too high:", winds_crosswind, "returning True")
+        #print("  wind_crosswind too high:", winds_crosswind, "returning True")
         return True 
 
-    print( "   wind speeds are ok, returning False")
+    #print( "   wind speeds are ok, returning False")
     return False
 
 def bad_ceiling(ceiling,minimum):
@@ -643,16 +643,16 @@ def get_weather_violation(weather,minimums):
     """
 
     # verify inputs
-    print(" weather is: ", weather)
-    print(" minimums is: ", minimums)
+    #print(" weather is: ", weather)
+    #print(" minimums is: ", minimums)
     minimum_ceiling = minimums[0]
     minimum_visibility = minimums[1]
     max_windspeed = minimums[2]
     max_crosswind = minimums[3]
-    print(" minimum_ceiling is:    ", minimum_ceiling)
-    print(" minimum_visibility is: ", minimum_visibility)
-    print(" max_windspeed is:      ", max_windspeed)
-    print(" max_crosswind is:      ", max_crosswind)
+    #print(" minimum_ceiling is:    ", minimum_ceiling)
+    #print(" minimum_visibility is: ", minimum_visibility)
+    #print(" max_windspeed is:      ", max_windspeed)
+    #print(" max_crosswind is:      ", max_crosswind)
 
     # accumulators
     number_of_violations = 0
@@ -679,12 +679,12 @@ def get_weather_violation(weather,minimums):
     """
 
     weather_observations = weather['visibility']
-    print(" weather_observations is: ", weather_observations)
-    print(" type(weather_observations) is: ", type(weather_observations))
+    #print(" weather_observations is: ", weather_observations)
+    #print(" type(weather_observations) is: ", type(weather_observations))
     visibility_is_bad = bad_visibility(weather_observations,minimum_visibility)
 
     if visibility_is_bad == True:
-        print(" visibility violation")
+        #print(" visibility violation")
         number_of_violations = number_of_violations + 1
 
 
@@ -715,13 +715,13 @@ def get_weather_violation(weather,minimums):
     """
 
     wind_observations = weather['wind']
-    print(" wind_observations is: ", wind_observations)
-    print(" type(wind_observations) is: ", type(wind_observations))
+    #print(" wind_observations is: ", wind_observations)
+    #print(" type(wind_observations) is: ", type(wind_observations))
     
     winds_are_bad = bad_winds(wind_observations,float(max_windspeed),float(max_crosswind))
 
     if winds_are_bad == True:
-        print(" wind violation")
+        #print(" wind violation")
         number_of_violations = number_of_violations + 1
 
 
@@ -757,11 +757,11 @@ def get_weather_violation(weather,minimums):
     """
 
     ceiling_observations = weather['sky']
-    print(" ceiling_observations is: ", ceiling_observations)
+    #print(" ceiling_observations is: ", ceiling_observations)
     ceiling_is_bad = bad_ceiling(ceiling_observations,minimum_ceiling)
 
     if ceiling_is_bad == True:
-        print(" ceiling violation")
+        #print(" ceiling violation")
         number_of_violations = number_of_violations + 1
 
 
@@ -780,27 +780,27 @@ def get_weather_violation(weather,minimums):
     if visibility_is_bad == True:
         if winds_are_bad == False:
             if ceiling_is_bad == False:
-                print("   visibility is the only violation - returning 'Visibility")
+                #print("   visibility is the only violation - returning 'Visibility")
                 return 'Visibility'
 
     if winds_are_bad == True:
         if visibility_is_bad == False:
             if ceiling_is_bad == False:
-                print("   Wind is the only violation - returning 'Wind'")
+                #print("   Wind is the only violation - returning 'Wind'")
                 return 'Winds'
 
     if ceiling_is_bad == True:
         if visibility_is_bad == False:
             if winds_are_bad == False:
-                print("   ceiling is the only violation - returning 'Ceiling'")
+                #print("   ceiling is the only violation - returning 'Ceiling'")
                 return 'Ceiling'
 
     if number_of_violations > 1:
-        print("   more than 1 violation - returning 'Weather'")
+        #print("   more than 1 violation - returning 'Weather'")
         return 'Weather'
 
     
-    print( " ")
+    #print( " ")
 
     result = ''
     return result
