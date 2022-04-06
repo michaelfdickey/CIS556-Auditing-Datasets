@@ -643,7 +643,6 @@ def get_weather_violation(weather,minimums):
     """
 
     # verify inputs
-
     print(" weather is: ", weather)
     print(" minimums is: ", minimums)
     minimum_ceiling = minimums[0]
@@ -654,6 +653,15 @@ def get_weather_violation(weather,minimums):
     print(" minimum_visibility is: ", minimum_visibility)
     print(" max_windspeed is:      ", max_windspeed)
     print(" max_crosswind is:      ", max_crosswind)
+
+    # accumulators
+    number_of_violations = 0
+
+    # check initial determinents
+    if weather == None:
+        result = 'Unknown'
+        return result
+
 
     # check visibility
     """
@@ -675,8 +683,9 @@ def get_weather_violation(weather,minimums):
     print(" type(weather_observations) is: ", type(weather_observations))
     visibility_is_bad = bad_visibility(weather_observations,minimum_visibility)
 
-    #if is_visibility_bad == True:
-    #    print(" visibility violation")
+    if visibility_is_bad == True:
+        print(" visibility violation")
+        number_of_violations = number_of_violations + 1
 
 
     # check for bad winds
@@ -711,20 +720,90 @@ def get_weather_violation(weather,minimums):
     
     winds_are_bad = bad_winds(wind_observations,float(max_windspeed),float(max_crosswind))
 
+    if winds_are_bad == True:
+        print(" wind violation")
+        number_of_violations = number_of_violations + 1
+
+
+    # check for bad cieling:
+    #def bad_ceiling(ceiling,minimum):
+    """
+    Returns True if the ceiling measurement violates the minimum, False otherwise
+    Example: Suppose we have the following ceiling measurement.
+        
+        [
+            {
+                "cover": "clouds",
+                "type": "scattered",
+                "height": 700.0,
+                "units": "FT"
+            },
+            {
+                "type": "overcast",
+                "height": 1200.0,
+                "units": "FT"
+            }
+        ]
+    
+    Given the above measurement, this function returns True if minimum is 2000,
+    but False if it is 1000.
+    
+    Parameter ceiling: The ceiling information
+    Precondition: ceiling is a valid ceiling measurement, as described above.
+    (e.g. either a dictionary, the string 'clear', or the string 'unavailable')
+        
+    Parameter minimum: The minimum allowed ceiling (in feet)
+    Precondition: minimum is a float or int
+    """
+
+    ceiling_observations = weather['sky']
+    print(" ceiling_observations is: ", ceiling_observations)
+    ceiling_is_bad = bad_ceiling(ceiling_observations,minimum_ceiling)
+
+    if ceiling_is_bad == True:
+        print(" ceiling violation")
+        number_of_violations = number_of_violations + 1
 
 
 
+    """
+    This function uses bad_visibility, bad_winds, and bad_ceiling as helpers. It returns
+    'Visibility' if the only problem is bad visibility, 'Wind' if the only problem is 
+    wind, and 'Ceiling' if the only problem is the ceiling.  If there are multiple
+    problems, it returns 'Weather', It returns 'Unknown' if no weather reading is 
+    available (e.g. weather is None).  Finally, it returns '' (the empty string) if 
+    the weather is fine and there are no violations.
+    """
 
+    
 
+    if visibility_is_bad == True:
+        if winds_are_bad == False:
+            if ceiling_is_bad == False:
+                print("   visibility is the only violation - returning 'Visibility")
+                return 'Visibility'
 
+    if winds_are_bad == True:
+        if visibility_is_bad == False:
+            if ceiling_is_bad == False:
+                print("   Wind is the only violation - returning 'Wind'")
+                return 'Winds'
 
+    if ceiling_is_bad == True:
+        if visibility_is_bad == False:
+            if winds_are_bad == False:
+                print("   ceiling is the only violation - returning 'Ceiling'")
+                return 'Ceiling'
 
+    if number_of_violations > 1:
+        print("   more than 1 violation - returning 'Weather'")
+        return 'Weather'
 
-
-
-
+    
     print( " ")
 
+    result = ''
+    return result
 
 
 
