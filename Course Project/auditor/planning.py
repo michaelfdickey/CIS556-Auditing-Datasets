@@ -17,14 +17,28 @@ Precondition: student is 10-element list of strings representing a pilot
 
 # Get the pilot credentials
     ##get row from studens csv for student import it and get cert back. 
+    ## get pilot credentials from takeoff time and flight history
 
 # Get the pilot minimums
-    # get instrument rating, takeofftime & student
+    # get instrument rating from takeofftime & student
     # get endorsement takeoff & student
-    # get multiengine endorse takeoff& student  
+    # check if daytime flight
     # get minimums using cert, area, instructed, vfr, daytime, minimums csv
-        
+
 
 # Get the weather conditions
 
 # Check for a violation and add to result if so
+
+
+
+def has_instrument_rating(takeoff,student):
+def has_advanced_endorsement(takeoff,student):
+
+
+def daytime(time,daycycle):
+Returns true if the time takes place during the day.
+
+def get_minimums(cert, area, instructed, vfr, daytime, minimums):
+"""
+Returns the most advantageous minimums for the given flight category.

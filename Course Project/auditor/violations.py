@@ -903,6 +903,23 @@ def list_weather_violations(directory):
     print(" type(file_lessons_csv_wrapped) is: ", file_lessons_csv_wrapped)
     
     
+    # CONVERT MINIMUM CSV INTO A TABLE
+    print("  > converting minimums csv to table < ")
+    minimums_table = []
+    row_index = 0
+    for row in file_minimums_csv_wrapped:
+        current_row_table = []
+        #print(" row_index is: ", row_index, row)
+        for column_index in range(len(row)):
+            #print("  column_index is: ", column_index, "content: ", row[column_index])  
+            current_row_table.append(row[column_index])
+            #print("  current_row_table is: ", current_row_table)            
+        row_index = row_index + 1
+        minimums_table.append(current_row_table)
+    print(" len minimums_table is: ", len(minimums_table))
+
+
+
     # CONVERT STUDENTS CSV INTO A TABLE
     print("  > converting students csv into table < ")
     students_table = []
@@ -918,7 +935,7 @@ def list_weather_violations(directory):
         students_table.append(current_row_table)
     print(" len students_table is: ", len(students_table))
 
-
+    
 
     # CONVERT LESSONS CSV INTO TABLE
     print("  > converting lessons csv into table < ")
@@ -971,18 +988,19 @@ def list_weather_violations(directory):
 
     #for row_index in range(lessons_length):    #uncomment when ready for full testing
     for row_index in range(3):                 #just to make testing quicker
+        print(" ")
         print("  row_index: ", row_index, violations_result_table[row_index])
         
         if row_index > 0:
             # get values from lessons table for evaluating
             student_id = violations_result_table[row_index][0]
-            intrusctor = violations_result_table[row_index][2]
+            instructor = violations_result_table[row_index][2]
             takeoff_time = violations_result_table[row_index][3]
-            flight_filed = intrusctor = violations_result_table[row_index][5]
-            flight_area = intrusctor = violations_result_table[row_index][6]
+            flight_filed = violations_result_table[row_index][5]
+            flight_area = violations_result_table[row_index][6]
 
             print("   student_id:  ", student_id)
-            print("   intrusctor:  ", intrusctor)
+            print("   instructor:  ", instructor)
             print("   takeoff_time:", takeoff_time)
             print("   flight_filed:", flight_filed)
             print("   flight_area: ", flight_area)
@@ -1007,5 +1025,53 @@ def list_weather_violations(directory):
                         student_history_row.append(students_table[student_table_index_row][column_index])
                     print("       student_history_row is: ", student_history_row)
 
-    
+            ### check credentials with get_certification
+            print("      created student history row, checking pilot credentials ")
+            certification = pilots.get_certification(takeoff_time_dt, student_history_row)
+            print("       certification is: ", certification)
+
+            
+            # Get the Pilot Minimums
+            print("  >> checking pilot minimums << ")
+            
+            ## get instrument rating 
+            instrument_rating = pilots.has_instrument_rating(takeoff_time_dt, student_history_row)
+            print("   has instrument_rating : ", instrument_rating)
+
+            ## get advanced endorsement status
+            advanced_endorcement = pilots.has_advanced_endorsement(takeoff_time_dt, student_history_row)
+            print("   has advanced_endorcement : ", advanced_endorcement)
+
+            ## set instructed to true or false 
+            print("   instructor is: ", instructor)
+            if instructor == '':
+                instructed = False
+            if instructor != '':
+                instructed = True
+
+            ## set instrument rating:
+            # if flight is filed as VFR then vfr for get minimums is true
+            if flight_filed == 'VFR':
+                flight_filed_as_vfr = True
+            if flight_filed == 'IFR':
+                flight_filed_as_vfr = False
+
+
+            daytime = utils.daytime(takeoff_time_dt,file_daycycle_json_wrapped)  
+            print("   daytime is: ", daytime)          
+
+            ## get minimums using cert, area, instructed, vfr, daytime, minimums_csv
+            print("  >>> verifying data for checking pilot minimums <<< ")
+            print("    certification is: ", certification)
+            print("    area is: ", flight_area)
+            print("    instructed is: ", instructed)
+            print("    instrument_rating is: ", instrument_rating, " *from def(has_instrment_rating)")
+            print("    flight_filed is: ", flight_filed)
+            print("    daytime is: ", daytime)
+            print("    minimum_table len is: ", len(minimums_table))
+
+            pilot_minimums = pilots.get_minimums(certification, flight_area, instructed, flight_filed_as_vfr, daytime, minimums_table)
+            print("    ~ pilot_minimums are: ", pilot_minimums)
+
+
     print(" ")
