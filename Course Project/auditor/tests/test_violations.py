@@ -302,8 +302,8 @@ def test():
     Performs all tests on the module violations.
     """
     print('Testing module violations')
-    #test_bad_visibility()
-    #test_bad_winds()
+    test_bad_visibility()
+    test_bad_winds()
     test_bad_ceiling()
     test_get_weather_report()
     test_get_weather_violation()

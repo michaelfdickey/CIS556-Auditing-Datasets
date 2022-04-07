@@ -987,7 +987,7 @@ def list_weather_violations(directory):
     #print(" lessons_length is:", lessons_length, "lessons_width is: ", lessons_width)
 
     #for row_index in range(lessons_length):    #uncomment when ready for full testing
-    for row_index in range(3):                 #just to make testing quicker
+    for row_index in range(100):                 #just to make testing quicker
         print(" ")
         print("  row_index: ", row_index, violations_result_table[row_index])
         

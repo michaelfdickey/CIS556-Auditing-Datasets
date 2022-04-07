@@ -234,7 +234,17 @@ def has_instrument_rating(takeoff,student):
         instrument_date = parse(student[7])
         ##print("  instrument_date is: ", str(instrument_date))
 
-    # check if takeoff is after instrment date
+    # check if takeoff is after instrument date
+    #print(" +++++takeoff is:         ", str(takeoff))
+    #print(" +++++instrument_date is: ", str(instrument_date))
+
+    if takeoff.tzinfo != None:
+        if instrument_date.tzinfo == None:
+            tz = takeoff.tzinfo
+            instrument_date_naive = instrument_date
+            instrument_date = instrument_date.replace(tzinfo=tz)
+
+
     if takeoff > instrument_date:
         ##print("  student was instrument rated at time of takeoff")
         return True 
@@ -271,6 +281,16 @@ def has_advanced_endorsement(takeoff,student):
         ##print("  student has an instrument rating, ", student[8])
         advanced_date = parse(student[8])
         ##print("  advanced_date is: ", str(advanced_date))
+
+    # check if takeoff is after instrument date
+    print(" +++++takeoff is:         ", str(takeoff))
+    print(" +++++advanced_date is:   ", str(advanced_date))
+
+    if takeoff.tzinfo != None:
+        if advanced_date.tzinfo == None:
+            tz = takeoff.tzinfo
+            advanced_date_naive = advanced_date
+            advanced_date = advanced_date_naive.replace(tzinfo=tz)
 
     # check if takeoff is after advanced date
     if takeoff > advanced_date:
