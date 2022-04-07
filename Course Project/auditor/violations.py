@@ -38,6 +38,7 @@ import datetime
 from dateutil.parser import parse
 import dateutil
 import csv
+import json 
 
 
 # WEATHER FUNCTIONS
@@ -865,24 +866,67 @@ def list_weather_violations(directory):
     # Load in all of the files
 
     ## open daycycle.json
+    path_daycycle_json = os.path.join('tests','daycycle.json')
+    file_daycycle_json = open(path_daycycle_json)
+    text_daycycle_json = file_daycycle_json.read()
+    file_daycycle_json_wrapped = json.loads(text_daycycle_json)
+    #print("file_daycycle_json_wrapped", file_daycycle_json_wrapped)
+    print(" type(file_daycycle_json_wrapped) is: ", type(file_daycycle_json_wrapped))
 
     ## open weather.json
+    path_weather_json = os.path.join('tests','weather.json')
+    file_weather_json = open(path_weather_json)
+    text_weather_json = file_weather_json.read()
+    file_weather_json_wrapped = json.loads(text_weather_json)
+    #print("file_weather_json_wrapped is:", file_weather_json_wrapped)
+    print(" type(file_weather_json_wrapped) is: ", type(file_weather_json_wrapped))
+
 
     ## open students.csv
     path_students_csv = os.path.join('tests','students.csv')
     file_students_csv = open(path_students_csv)
     file_students_csv_wrapped = csv.reader(file_students_csv)
-    for row in file_students_csv_wrapped:
-        print(row)
+    #for row in file_students_csv_wrapped:
+    #    print(row)
 
     ## open minimums.csv
+    path_minimums_csv = os.path.join('tests','minimums.csv')
+    file_minimums_csv = open(path_minimums_csv)
+    file_minimums_csv_wrapped = csv.reader(file_minimums_csv)
+    #for row in file_minimums_csv_wrapped:
+    #    print(row)
 
     ## open lessons.csv
+    path_lessons_csv = os.path.join('tests','lessons.csv')
+    file_lessons_csv = open(path_lessons_csv)
+    file_lessons_csv_wrapped = csv.reader(file_lessons_csv)
+    print(" type(file_lessons_csv_wrapped) is: ", file_lessons_csv_wrapped)
     
-    # For each of the lessons
-        # Get the takeoff time
-        # Get the pilot credentials
-        # Get the pilot minimums
-        # Get the weather conditions
-        # Check for a violation and add to result if so
 
+    violations_result_table = []
+    
+    #convert lessons_csv into table
+
+
+    row_index = 0
+
+    ## checking lessons
+    for row in file_lessons_csv_wrapped:
+        current_row_table = []
+        print(" row_index is: ", row_index, row)
+        for column_index in range(len(row)):
+            print("  column_index is: ", column_index, "content: ", row[column_index])                        
+            current_row_table.append(row[column_index])
+            print("  current_row_table is: ", current_row_table)
+        row_index = row_index + 1
+        violations_result_table.append(current_row_table)
+    print(" ")
+
+    # For each of the lessons
+    # Get the takeoff time
+    # Get the pilot credentials
+    # Get the pilot minimums
+    # Get the weather conditions
+    # Check for a violation and add to result if so
+
+    print(" violations_result_table: ", violations_result_table)
