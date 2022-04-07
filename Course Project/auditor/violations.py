@@ -902,25 +902,54 @@ def list_weather_violations(directory):
     file_lessons_csv_wrapped = csv.reader(file_lessons_csv)
     print(" type(file_lessons_csv_wrapped) is: ", file_lessons_csv_wrapped)
     
-
-    violations_result_table = []
     
-    #convert lessons_csv into table
-
-
+    # CONVERT STUDENTS CSV INTO A TABLE
+    print("  > converting students csv into table < ")
+    students_table = []
     row_index = 0
+    for row in file_students_csv_wrapped:
+        current_row_table = []
+        #print(" row_index is: ", row_index, row)
+        for column_index in range(len(row)):
+            #print("  column_index is: ", column_index, "content: ", row[column_index])  
+            current_row_table.append(row[column_index])
+            #print("  current_row_table is: ", current_row_table)
+        row_index = row_index + 1
+        students_table.append(current_row_table)
+    print(" len students_table is: ", len(students_table))
 
+
+
+    # CONVERT LESSONS CSV INTO TABLE
+    print("  > converting lessons csv into table < ")
+    violations_result_table = []
+    row_index = 0
     ## checking lessons
     for row in file_lessons_csv_wrapped:
         current_row_table = []
-        print(" row_index is: ", row_index, row)
+        #print(" row_index is: ", row_index, row)
         for column_index in range(len(row)):
-            print("  column_index is: ", column_index, "content: ", row[column_index])                        
+            #print("  column_index is: ", column_index, "content: ", row[column_index])                        
             current_row_table.append(row[column_index])
-            print("  current_row_table is: ", current_row_table)
+            #print("  current_row_table is: ", current_row_table)
         row_index = row_index + 1
         violations_result_table.append(current_row_table)
-    print(" ")
+    print(" len violations_result_table is: ", len(violations_result_table))
+
+    """
+    ## checking to make sure table is constructed properly
+    #print(" violations_result_table: ", violations_result_table)
+    print(violations_result_table[0])
+    print(violations_result_table[10])
+    print(violations_result_table[100])
+    print(violations_result_table[1000])
+    """
+
+    """
+    ## testing appending a row:
+    violations_result_table[0].append('test append')
+    print(violations_result_table[0])
+    """
 
     # For each of the lessons
     # Get the takeoff time
@@ -929,4 +958,54 @@ def list_weather_violations(directory):
     # Get the weather conditions
     # Check for a violation and add to result if so
 
-    print(" violations_result_table: ", violations_result_table)
+    # open up each row, 
+
+
+    # ANALYZE LESSONS TABLE AND PRODUCE VIOLATIONS
+    print(" ")
+    row_index = 0
+    column_index = 0
+    lessons_length = len(violations_result_table)
+    lessons_width = len(violations_result_table[0])
+    #print(" lessons_length is:", lessons_length, "lessons_width is: ", lessons_width)
+
+    #for row_index in range(lessons_length):    #uncomment when ready for full testing
+    for row_index in range(3):                 #just to make testing quicker
+        print("  row_index: ", row_index, violations_result_table[row_index])
+        
+        if row_index > 0:
+            # get values from lessons table for evaluating
+            student_id = violations_result_table[row_index][0]
+            intrusctor = violations_result_table[row_index][2]
+            takeoff_time = violations_result_table[row_index][3]
+            flight_filed = intrusctor = violations_result_table[row_index][5]
+            flight_area = intrusctor = violations_result_table[row_index][6]
+
+            print("   student_id:  ", student_id)
+            print("   intrusctor:  ", intrusctor)
+            print("   takeoff_time:", takeoff_time)
+            print("   flight_filed:", flight_filed)
+            print("   flight_area: ", flight_area)
+
+            #convert takeoff_time to datetime obj
+            print("  >> converting takeoff to datetime obj << ")
+            takeoff_time_dt = parse(takeoff_time)
+            print("      takeoff_time_dt:", str(takeoff_time_dt))
+            print("   ", takeoff_time_dt, type(takeoff_time_dt))
+
+            # Get the pilot credentials
+            print("  >> checking pilot credentials << ")
+            ##get row from studens csv for student import it and get cert back. 
+            ### search for student id in students.csv 
+            #print("   student_id from lessons table is: ", student_id)
+            student_history_row = []
+            for student_table_index_row in range(len(students_table)):
+                #print("    students_table[0] is ", repr(students_table[student_table_index_row][0]))
+                if student_id == students_table[student_table_index_row][0]:
+                    print("      FOUND STUDENT ID MATCHES", student_id, students_table[student_table_index_row][0])
+                    for column_index in range(len(students_table[0])):
+                        student_history_row.append(students_table[student_table_index_row][column_index])
+                    print("       student_history_row is: ", student_history_row)
+
+    
+    print(" ")
