@@ -26,19 +26,30 @@ Precondition: student is 10-element list of strings representing a pilot
     # get minimums using cert, area, instructed, vfr, daytime, minimums csv
 
 
-# Get the weather conditions
-
-# Check for a violation and add to result if so
-
-
 
 def has_instrument_rating(takeoff,student):
 def has_advanced_endorsement(takeoff,student):
 
 
 def daytime(time,daycycle):
-Returns true if the time takes place during the day.
+#Returns true if the time takes place during the day.
 
 def get_minimums(cert, area, instructed, vfr, daytime, minimums):
 """
 Returns the most advantageous minimums for the given flight category.
+
+~~ NEXT ~~
+
+# Get the weather conditions
+    #get weather dictionary of just that day from def get_weather_report
+    #split into:
+        #visibility
+        #winds
+        #ceiling
+    # check
+        # bad_visibility (visibility, minimum)
+        # bad_winds (winds, maxwind, maxcross)
+        # bad_ceiling (ceiling,minimum)
+
+# Check for a violation and add to result if so
+

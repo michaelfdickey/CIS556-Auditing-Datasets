@@ -283,8 +283,8 @@ def has_advanced_endorsement(takeoff,student):
         ##print("  advanced_date is: ", str(advanced_date))
 
     # check if takeoff is after instrument date
-    print(" +++++takeoff is:         ", str(takeoff))
-    print(" +++++advanced_date is:   ", str(advanced_date))
+    #print(" +++++takeoff is:         ", str(takeoff))
+    #print(" +++++advanced_date is:   ", str(advanced_date))
 
     if takeoff.tzinfo != None:
         if advanced_date.tzinfo == None:

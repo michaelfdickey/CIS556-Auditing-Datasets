@@ -987,7 +987,7 @@ def list_weather_violations(directory):
     #print(" lessons_length is:", lessons_length, "lessons_width is: ", lessons_width)
 
     #for row_index in range(lessons_length):    #uncomment when ready for full testing
-    for row_index in range(100):                 #just to make testing quicker
+    for row_index in range(3):                 #just to make testing quicker
         print(" ")
         print("  row_index: ", row_index, violations_result_table[row_index])
         
@@ -1072,6 +1072,57 @@ def list_weather_violations(directory):
 
             pilot_minimums = pilots.get_minimums(certification, flight_area, instructed, flight_filed_as_vfr, daytime, minimums_table)
             print("    ~ pilot_minimums are: ", pilot_minimums)
+            # get pilot minimum values
+            flight_ceiling_min =  pilot_minimums[0]
+            flight_visibility_min =  pilot_minimums[1]
+            flight_wind_max = pilot_minimums[2]
+            flight_crosswind_max = pilot_minimums[3]
+            print("      ceiling is:    ", flight_ceiling_min)
+            print("      visibility is: ", flight_visibility_min)
+            print("      wind is:       ", flight_wind_max)
+            print("      crosswind is:  ", flight_crosswind_max)
+
+            """
+            print("  >> convert time to iso << ")               #get_weather actual converts to iso
+            takeoff_time_iso = takeoff_time_dt.isoformat()
+            print("   takeoff_time_iso is :", takeoff_time_iso)
+            """
+
+            # Get weather report
+            print("  >> getting weather report from get_weather_report <<")
+            weather_at_flight = get_weather_report(takeoff_time_dt,file_weather_json_wrapped)
+            print("   weather_at_flight is: ", weather_at_flight)
+
+            # get weather_report_visibility
+            weather_report_visibility = weather_at_flight['visibility']
+            print("  weather_report_visibility is", weather_report_visibility)
+
+            # get weather_report_winds
+            weather_report_winds = weather_at_flight['wind']
+            print("  weather_report_winds is: ", weather_report_winds)
+
+            # get weather_report_ceiling
+            weather_report_ceiling = weather_at_flight['sky']
+            print("  weather_report_ceiling is: ", weather_report_ceiling)
+
+            """
+            Not necessary as get_weather_violations checks all these
+            # CHECK visiblity
+            visibility_bad = bad_visibility(weather_report_visibility,flight_visibility_min)
+            print("  visibility_bad = ", visibility_bad)
+
+            # CHECK winds
+            winds_bad = bad_winds(weather_report_winds,flight_wind_max,flight_crosswind_max)
+            print("  wind_bad =       ", winds_bad)
+            
+            # CHECK ceiling
+            ceiling_bad = bad_ceiling(weather_report_ceiling,flight_ceiling_min)
+            print("  ceiling_bad =    ", ceiling_bad)
+            """
+
+            print(" >> checking VIOLATIONS <<")
+            violation = get_weather_violation(weather_at_flight,pilot_minimums)
+            print(" violation is: ", repr(violation))
 
 
     print(" ")
