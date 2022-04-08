@@ -155,10 +155,20 @@ def get_certification(takeoff,student):
         if student_milestones['license'] != '':
             if student_milestones['license'].tzinfo == None:
                 student_milestones_license_naive = student_milestones['license']
-                student_milestones_license_aware = student_milestones_license_naive
+                student_milestones_license_aware = student_milestones_license_naive.replace(tzinfo=tz)
+
+        if student_milestones['50hours'] != '':
+            if student_milestones['50hours'] == None:
+                student_milestones_50hours_naive = student_milestones['50hours']
+                student_milestones_50hours_aware = student_milestones_50hours_naive.replace(tzinfo=tz)
+
+        if student_milestones['instrument'] != '':
+            if student_milestones['instrument'] == None:
+                student_milestones_instrument_naive = student_milestones['instrument']
+                student_milestones_instrument_aware = student_milestones_instrument_naive.replace(tzinfo=tz)
 
 
-    print("   ++++takeoff is:                         ", takeoff)
+    print("   ++++takeoff is:                            :", takeoff)
 
 
 
@@ -167,17 +177,29 @@ def get_certification(takeoff,student):
         
         if student_milestones['joined'].tzinfo == None:
             student_milestones_joined_aware = student_milestones['joined']
-            print("   ++++student_milestones_joined_aware is :", student_milestones_joined_aware)
+            print("   ++++student_milestones_joined_aware is     :", student_milestones_joined_aware)
 
         if student_milestones['solo'] != '':
             if student_milestones['solo'].tzinfo == None:
                 student_milestones_solo_aware = student_milestones['solo']
-                print("   ++++student_milestones_solo_aware is   :", student_milestones_solo_aware)
+                print("   ++++student_milestones_solo_aware is       :", student_milestones_solo_aware)
 
         if student_milestones['license'] != '':
             if student_milestones['license'].tzinfo == None:
                 student_milestones_license_aware = student_milestones['license']
-                print("   ++++student_milestones_license_aware is   :", student_milestones_license_aware)
+                print("   ++++student_milestones_license_aware is    :", student_milestones_license_aware)
+
+        if student_milestones['50hours'] != '':
+            if student_milestones['50hours'].tzinfo == None:
+                student_milestones_50hours_aware = student_milestones['50hours']
+                print("   ++++student_milestones_50hours_aware is    :", student_milestones_50hours_aware)
+
+        if student_milestones['instrument'] != '':
+            if student_milestones['instrument'].tzinfo == None:
+                student_milestones_instrument_aware = student_milestones['instrument']
+                print("   ++++student_milestones_instrument_aware is :", student_milestones_instrument_aware)
+
+
 
     # test and return certification status comparing takeoff against milestones
     ## joined only
@@ -191,7 +213,7 @@ def get_certification(takeoff,student):
     # joined but solo blank
     try:
         if takeoff > student_milestones_joined_aware:
-            print("    ++++ takeoff is > joined ")
+            #print("    ++++ takeoff is > joined ")
             if student_milestones['solo'] == '':
                 print(" ++++ ++++PILOT_NOVICE")
                 return 0
@@ -201,14 +223,12 @@ def get_certification(takeoff,student):
     # joined but before solo
     try:
         if takeoff > student_milestones_joined_aware:
-            print("    ++++ takeoff is > joined but < solo ")
+            #print("    ++++ takeoff is > joined but < solo ")
             if takeoff < student_milestones_solo_aware:
                 print(" ++++ ++++PILOT_NOVICE")
                 return 0
     except:
         pass 
-
-
 
     # soloed but license blank
     try:
@@ -219,55 +239,52 @@ def get_certification(takeoff,student):
     except:
         pass 
 
-    #return 1 
-
-    """
-    ##PILOT_STUDENT = 1  A pilot that has soloed but does not have a license
-    ##print("    license is: ", str(student_milestones['license']))
+    # soloed but before license
     try:
         if takeoff > student_milestones_solo_aware:
-            if student_milestones['license'] == '':
+            if takeoff < student_milestones_license_aware:
                 print(" ++++ ++++ PILOT_STUDENT")
-                return 1 
+                return 1
     except:
-        #if takeoff > student_milestones['solo']:        #for when previous date is met, but there are no additional dates to compare
-            ##print(" PILOT_STUDENT")
-            #return 1   
-            pass 
-
-    try:
-        if takeoff > student_milestones_solo_aware:
-            if takeoff < student_milestones['license']:
-                ##print(" PILOT_STUDENT")
-                return 1 
-    except:
-        #if takeoff > student_milestones['solo']:        #for when previous date is met, but there are no additional dates to compare
-            ##print(" PILOT_STUDENT")
-            #return 1   
-            pass 
-
-    ##PILOT_CERTIFIED = 2 #    # A pilot that has a license, but has under 50 hours post license
-    try:
-        if takeoff > student_milestones['license']:
-            if takeoff < student_milestones['50hours']:
-                ##print(" PILOT_CERTIFIED")
-                return 2 
-    except:
-        #if takeoff > student_milestones['license']:
-        ##print(" PILOT_CERTIFIED")
-        #return 2 
         pass 
 
-    ##PILOT_50_HOURS  = 3 A pilot that 50 hours post license
-    ##print("    50hours is: ", str(student_milestones['50hours']))
+    # licese but 50hours blank
     try:
-        if takeoff > student_milestones['50hours']:
-            ##print(" PILOT_50_HOURS")
+        if takeoff > student_milestones_license_aware:
+            if student_milestones['50hours'] == '':
+                print(" ++++ ++++ license < takoff PILOT_CERTIFIED")
+                return 2
+    except:
+        pass 
+
+    # license but before 50hours
+    try:
+        if takeoff > student_milestones_license_aware:
+            if takeoff < student_milestones_50hours_aware:
+                print(" ++++ ++++ license < takeoff < 50hours PILOT_CERTIFIED")
+                return 2
+    except:
+        pass 
+
+    # 50hours but instrument blank
+    try: 
+        if takeoff > student_milestones_50hours_aware:
+            #if student_milestones['instrument'] == '':
+            print(" ++++ ++++ 50hours < takeoff PILOT_50_HOURS")
             return 3 
     except:
         pass 
-    """
 
+    """usefull in stretch goals, but cert check doesn't go past 50 hours in required course
+    # 50 hours but before instrument
+    try:
+        if takeoff > student_milestones_50hours_aware:
+            if takeoff < student_milestones_instrument_aware:
+                print(" ++++ ++++ 50hours < takeoff < instrument PILOT_50_HOURS")
+                return 3 
+    except:
+        pass 
+    """
 
 def has_instrument_rating(takeoff,student):
     """
