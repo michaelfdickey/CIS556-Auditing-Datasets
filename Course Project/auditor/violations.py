@@ -987,7 +987,7 @@ def list_weather_violations(directory):
     #print(" lessons_length is:", lessons_length, "lessons_width is: ", lessons_width)
 
     #for row_index in range(lessons_length):    #uncomment when ready for full testing
-    for row_index in range(30):                 #just to make testing quicker
+    for row_index in range(100):                 #just to make testing quicker
         print(" ")
         print("  row_index: ", row_index, violations_result_table[row_index])
         
@@ -999,17 +999,17 @@ def list_weather_violations(directory):
             flight_filed = violations_result_table[row_index][5]
             flight_area = violations_result_table[row_index][6]
 
-            print("   student_id:  ", student_id)
-            print("   instructor:  ", instructor)
-            print("   takeoff_time:", takeoff_time)
-            print("   flight_filed:", flight_filed)
-            print("   flight_area: ", flight_area)
+            #print("   student_id:  ", student_id)
+            #print("   instructor:  ", instructor)
+            #print("   takeoff_time:", takeoff_time)
+            #print("   flight_filed:", flight_filed)
+            #print("   flight_area: ", flight_area)
 
             #convert takeoff_time to datetime obj
             print("  >> converting takeoff to datetime obj << ")
             takeoff_time_dt = parse(takeoff_time)
-            print("      takeoff_time_dt:", str(takeoff_time_dt))
-            print("   ", takeoff_time_dt, type(takeoff_time_dt))
+            #print("      takeoff_time_dt:", str(takeoff_time_dt))
+            #print("   ", takeoff_time_dt, type(takeoff_time_dt))
 
             # Get the pilot credentials
             print("  >> checking pilot credentials << ")
@@ -1020,34 +1020,30 @@ def list_weather_violations(directory):
             for student_table_index_row in range(len(students_table)):
                 #print("    students_table[0] is ", repr(students_table[student_table_index_row][0]))
                 if student_id == students_table[student_table_index_row][0]:
-                    print("      FOUND STUDENT ID MATCHES", student_id, students_table[student_table_index_row][0])
+                    #print("      FOUND STUDENT ID MATCHES", student_id, students_table[student_table_index_row][0])
                     for column_index in range(len(students_table[0])):
                         student_history_row.append(students_table[student_table_index_row][column_index])
-                    print("       student_history_row is: ", student_history_row)
+                    #print("       student_history_row is: ", student_history_row)
 
             ### check credentials with get_certification
-            print("      created student history row, checking pilot credentials ")
+            #print("      created student history row, checking pilot credentials ")
             certification = pilots.get_certification(takeoff_time_dt, student_history_row)
-            print("       certification is: ", certification)
-            if certification > 1:
-                print(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-                print(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-                print(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-
+            #print("       certification is: ", certification)
+            
             
             # Get the Pilot Minimums
             print("  >> checking pilot minimums << ")
             
             ## get instrument rating 
             instrument_rating = pilots.has_instrument_rating(takeoff_time_dt, student_history_row)
-            print("   has instrument_rating : ", instrument_rating)
+            #print("   has instrument_rating : ", instrument_rating)
 
             ## get advanced endorsement status
             advanced_endorcement = pilots.has_advanced_endorsement(takeoff_time_dt, student_history_row)
-            print("   has advanced_endorcement : ", advanced_endorcement)
+            #print("   has advanced_endorcement : ", advanced_endorcement)
 
             ## set instructed to true or false 
-            print("   instructor is: ", instructor)
+            #print("   instructor is: ", instructor)
             if instructor == '':
                 instructed = False
             if instructor != '':
@@ -1062,17 +1058,17 @@ def list_weather_violations(directory):
 
 
             daytime = utils.daytime(takeoff_time_dt,file_daycycle_json_wrapped)  
-            print("   daytime is: ", daytime)          
+            #print("   daytime is: ", daytime)          
 
             ## get minimums using cert, area, instructed, vfr, daytime, minimums_csv
             print("  >>> verifying data for checking pilot minimums <<< ")
-            print("    certification is: ", certification)
-            print("    area is: ", flight_area)
-            print("    instructed is: ", instructed)
-            print("    instrument_rating is: ", instrument_rating, " *from def(has_instrment_rating)")
-            print("    flight_filed is: ", flight_filed)
-            print("    daytime is: ", daytime)
-            print("    minimum_table len is: ", len(minimums_table))
+            #print("    certification is: ", certification)
+            #print("    area is: ", flight_area)
+            #print("    instructed is: ", instructed)
+            #print("    instrument_rating is: ", instrument_rating, " *from def(has_instrment_rating)")
+            #print("    flight_filed is: ", flight_filed)
+            #print("    daytime is: ", daytime)
+            #print("    minimum_table len is: ", len(minimums_table))
 
             pilot_minimums = pilots.get_minimums(certification, flight_area, instructed, flight_filed_as_vfr, daytime, minimums_table)
             print("    ~ pilot_minimums are: ", pilot_minimums)
@@ -1081,10 +1077,10 @@ def list_weather_violations(directory):
             flight_visibility_min =  pilot_minimums[1]
             flight_wind_max = pilot_minimums[2]
             flight_crosswind_max = pilot_minimums[3]
-            print("      ceiling is:    ", flight_ceiling_min)
-            print("      visibility is: ", flight_visibility_min)
-            print("      wind is:       ", flight_wind_max)
-            print("      crosswind is:  ", flight_crosswind_max)
+            #print("      ceiling is:    ", flight_ceiling_min)
+            #print("      visibility is: ", flight_visibility_min)
+            #print("      wind is:       ", flight_wind_max)
+            #print("      crosswind is:  ", flight_crosswind_max)
 
             """
             print("  >> convert time to iso << ")               #get_weather actual converts to iso
@@ -1095,38 +1091,50 @@ def list_weather_violations(directory):
             # Get weather report
             print("  >> getting weather report from get_weather_report <<")
             weather_at_flight = get_weather_report(takeoff_time_dt,file_weather_json_wrapped)
-            print("   weather_at_flight is: ", weather_at_flight)
+            #print("   weather_at_flight is: ", weather_at_flight)
 
             # get weather_report_visibility
             weather_report_visibility = weather_at_flight['visibility']
-            print("  weather_report_visibility is", weather_report_visibility)
+            #print("  weather_report_visibility is", weather_report_visibility)
 
             # get weather_report_winds
             weather_report_winds = weather_at_flight['wind']
-            print("  weather_report_winds is: ", weather_report_winds)
+            #print("  weather_report_winds is: ", weather_report_winds)
 
             # get weather_report_ceiling
             weather_report_ceiling = weather_at_flight['sky']
-            print("  weather_report_ceiling is: ", weather_report_ceiling)
+            #print("  weather_report_ceiling is: ", weather_report_ceiling)
 
             
             #Not necessary as get_weather_violations checks all these
             # CHECK visiblity
             visibility_bad = bad_visibility(weather_report_visibility,flight_visibility_min)
-            print("  _visibility_bad = ", visibility_bad)
+            #print("  _visibility_bad = ", visibility_bad)
 
             # CHECK winds
             winds_bad = bad_winds(weather_report_winds,flight_wind_max,flight_crosswind_max)
-            print("  _wind_bad =       ", winds_bad)
+            #print("  _wind_bad =       ", winds_bad)
             
             # CHECK ceiling
             ceiling_bad = bad_ceiling(weather_report_ceiling,flight_ceiling_min)
-            print("  _ceiling_bad =    ", ceiling_bad)
+            #print("  _ceiling_bad =    ", ceiling_bad)
             
 
             print(" >> >>  checking VIOLATIONS << << ")
             violation = get_weather_violation(weather_at_flight,pilot_minimums)
             print(" violation is: ", repr(violation))
 
+            """
+            ## testing appending a row:
+            violations_result_table[0].append('test append')
+            print(violations_result_table[0])
+
+            flight_area = violations_result_table[row_index][6]
+            """
+            print(" ")
+            print(" UPDATING VIOLATIONS RESULTS TABLE ")
+            print(" current row : ", violations_result_table[row_index])
+            violations_result_table[row_index].append(violation)
+            print(" current row : ", violations_result_table[row_index])
 
     print(" ")
