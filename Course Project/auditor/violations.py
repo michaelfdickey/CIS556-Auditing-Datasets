@@ -980,14 +980,15 @@ def list_weather_violations(directory):
 
     # ANALYZE LESSONS TABLE AND PRODUCE VIOLATIONS
     print(" ")
+    violations_count = 0
     row_index = 0
     column_index = 0
     lessons_length = len(violations_result_table)
     lessons_width = len(violations_result_table[0])
     #print(" lessons_length is:", lessons_length, "lessons_width is: ", lessons_width)
 
-    #for row_index in range(lessons_length):    #uncomment when ready for full testing
-    for row_index in range(100):                 #just to make testing quicker
+    for row_index in range(lessons_length):    #uncomment when ready for full testing
+    #for row_index in range(2000):                 #just to make testing quicker
         print(" ")
         print("  row_index: ", row_index, violations_result_table[row_index])
         
@@ -1123,6 +1124,11 @@ def list_weather_violations(directory):
             print(" >> >>  checking VIOLATIONS << << ")
             violation = get_weather_violation(weather_at_flight,pilot_minimums)
             print(" violation is: ", repr(violation))
+            if violation != '':
+                violations_count = violations_count + 1
+                print(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                print(" ~~~~~~~~~~~~~~~~~~~~~~VIOLATION FOUND ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                print(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
             """
             ## testing appending a row:
@@ -1138,3 +1144,19 @@ def list_weather_violations(directory):
             print(" current row : ", violations_result_table[row_index])
 
     print(" ")
+    print(" violations count: ", violations_count)
+    print(" ")
+
+    """
+    WOO HOO!!
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~~~VIOLATION FOUND ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    UPDATING VIOLATIONS RESULTS TABLE
+    current row :  ['S01011', '133CZ', 'I072', '2017-12-31T09:00:00-05:00', '2017-12-31T11:00:00-05:00', 'VFR', 'Pattern']
+    current row :  ['S01011', '133CZ', 'I072', '2017-12-31T09:00:00-05:00', '2017-12-31T11:00:00-05:00', 'VFR', 'Pattern', 'Visibility']
+
+    violations count:  93
+
+    """
