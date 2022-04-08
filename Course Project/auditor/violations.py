@@ -987,7 +987,7 @@ def list_weather_violations(directory):
     #print(" lessons_length is:", lessons_length, "lessons_width is: ", lessons_width)
 
     #for row_index in range(lessons_length):    #uncomment when ready for full testing
-    for row_index in range(3):                 #just to make testing quicker
+    for row_index in range(30):                 #just to make testing quicker
         print(" ")
         print("  row_index: ", row_index, violations_result_table[row_index])
         
@@ -1029,6 +1029,10 @@ def list_weather_violations(directory):
             print("      created student history row, checking pilot credentials ")
             certification = pilots.get_certification(takeoff_time_dt, student_history_row)
             print("       certification is: ", certification)
+            if certification > 1:
+                print(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+                print(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+                print(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
 
             
             # Get the Pilot Minimums
@@ -1105,22 +1109,22 @@ def list_weather_violations(directory):
             weather_report_ceiling = weather_at_flight['sky']
             print("  weather_report_ceiling is: ", weather_report_ceiling)
 
-            """
-            Not necessary as get_weather_violations checks all these
+            
+            #Not necessary as get_weather_violations checks all these
             # CHECK visiblity
             visibility_bad = bad_visibility(weather_report_visibility,flight_visibility_min)
-            print("  visibility_bad = ", visibility_bad)
+            print("  _visibility_bad = ", visibility_bad)
 
             # CHECK winds
             winds_bad = bad_winds(weather_report_winds,flight_wind_max,flight_crosswind_max)
-            print("  wind_bad =       ", winds_bad)
+            print("  _wind_bad =       ", winds_bad)
             
             # CHECK ceiling
             ceiling_bad = bad_ceiling(weather_report_ceiling,flight_ceiling_min)
-            print("  ceiling_bad =    ", ceiling_bad)
-            """
+            print("  _ceiling_bad =    ", ceiling_bad)
+            
 
-            print(" >> checking VIOLATIONS <<")
+            print(" >> >>  checking VIOLATIONS << << ")
             violation = get_weather_violation(weather_at_flight,pilot_minimums)
             print(" violation is: ", repr(violation))
 

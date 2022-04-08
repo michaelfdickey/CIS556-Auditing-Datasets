@@ -129,23 +129,45 @@ def get_certification(takeoff,student):
     
     ## PILOT_INVALID = -1  # The certification of this pilot is unknown
     ##print("    joined  is: ", str(student_milestones['joined']))
+    print("   ++++takeoff is: ", takeoff)
+    print("   ++++student_milestones['joined'] is: ", student_milestones['joined'])
+    print("   ++++type(takeoff)is ", type(takeoff))
+    print("   ++++type(student_milestones['joined'] is ", type(student_milestones['joined']))
+
+    # give student milestone flight tz info
+    #takeoff has tz info, student milestone does not
+    if takeoff.tzinfo != None:
+        if student_milestones['joined'].tzinfo == None:
+            tz = takeoff.tzinfo
+            student_milestones_joined_naive = student_milestones['joined']
+            student_milestones_joined_aware = student_milestones_joined_naive.replace(tzinfo=tz)
+
+    # both have no tz info
+    if takeoff.tzinfo == None:
+        if student_milestones['joined'].tzinfo == None:
+            student_milestones_joined_aware = student_milestones['joined']
+
+    print("   ++++takeoff is: ", takeoff)
+    print("   ++++student_milestones_joined_aware is :", student_milestones_joined_aware)
+
     try:
-        if takeoff < student_milestones['joined']:
-            ##print(" PILOT_INVALID")
+        if takeoff < student_milestones_joined_aware:
+            print(" ++++ ++++PILOT_INVALID")
             return -1
     except:
-        # date is invalid
-        return -1 
+        #date is invalid
+        #return -1 
+        pass 
 
     ##PILOT_NOVICE = 0 # A pilot that has joined the school, but has not soloed
     ##print("    solo    is: ", str(student_milestones['solo']))
     try:
-        if takeoff > student_milestones['joined']:
+        if takeoff > student_milestones_joined_aware:
             if takeoff < student_milestones['solo']:
                 ##print(" PILOT_NOVICE")
                 return 0 
     except:
-        if takeoff > student_milestones['joined']:
+        if takeoff > student_milestones_joined_aware:
             ##print(" PILOT_NOVICE")
             return 0 
 
