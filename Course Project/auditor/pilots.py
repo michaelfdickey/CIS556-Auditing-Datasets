@@ -81,6 +81,7 @@ def get_certification(takeoff,student):
     Precondition: student is 10-element list of strings representing a pilot
     """
 
+    print(" ------------- CHECKING PILOT certifications ----------------------")
     # verify input
     ##print(" takeoff is: ", takeoff, "type(takeoff) is:", type(takeoff))
     ##print(" student_row is: ", student)
@@ -99,12 +100,13 @@ def get_certification(takeoff,student):
     #print("  multiengine:", student[9])
     """
 
+
     # construct datetime.datetime object
     ## create lists from milestones and dates to use to create dictionary below
     student_milestone_keys = ['joined','solo','license','50hours','instrument','advanced','multiengine']
     student_flight_dates =  [student[3],student[4],student[5],student[6],student[7],student[8],student[9]]
-    ##print("   student_milestone_keys: ", student_milestone_keys)
-    ##print("   student_flight_dates: ", student_flight_dates)
+    print("   student_milestone_keys: ", student_milestone_keys)
+    print("   student_flight_dates: ", student_flight_dates)
 
     ## create initial values for iterating through lists and to create dict
     create_dict_keys = range(7)
@@ -114,7 +116,7 @@ def get_certification(takeoff,student):
     ## creates a dicitonary of milestone / dates key/value pairs and tries to convert each date to a datetime.datetime object
     ## if failes just adds '' as the value
     for key in student_milestone_keys:
-        ##print("    ", key)
+        #print("    ", key)
         try:
             student_milestones[key] = parse(student_flight_dates[flight_dates_index])
         except:
@@ -122,17 +124,19 @@ def get_certification(takeoff,student):
         flight_dates_index = flight_dates_index + 1
     
     ## check result
-    ##print("    student_milestones: ", student_milestones)
+    print("    student_milestones: ", student_milestones)
 
     # evaluate flight
-    ##print("    takeoff is: ", str(takeoff))
+    print("    takeoff is: ", str(takeoff))
     
     ## PILOT_INVALID = -1  # The certification of this pilot is unknown
-    ##print("    joined  is: ", str(student_milestones['joined']))
+    print("    joined  is: ", str(student_milestones['joined']))
     print("   ++++takeoff is: ", takeoff)
     print("   ++++student_milestones['joined'] is: ", student_milestones['joined'])
     print("   ++++type(takeoff)is ", type(takeoff))
     print("   ++++type(student_milestones['joined'] is ", type(student_milestones['joined']))
+    print("   ++++type(student_milesones['solo']) is: ", type(student_milestones['solo']))
+    print("   ++++student_milestones['solo'] is: ", student_milestones['solo'])
 
     # give student milestone flight tz info
     #takeoff has tz info, student milestone does not
@@ -142,47 +146,80 @@ def get_certification(takeoff,student):
             student_milestones_joined_naive = student_milestones['joined']
             student_milestones_joined_aware = student_milestones_joined_naive.replace(tzinfo=tz)
 
+        if student_milestones['solo'] != '':                #skips if empty
+            if student_milestones['solo'].tzinfo == None:
+                tz = takeoff.tzinfo
+                student_milestones_solo_naive = student_milestones['solo']
+                student_milestones_solo_aware = student_milestones_solo_naive.replace(tzinfo=tz)
+
+
     # both have no tz info
     if takeoff.tzinfo == None:
+        
         if student_milestones['joined'].tzinfo == None:
             student_milestones_joined_aware = student_milestones['joined']
 
-    print("   ++++takeoff is: ", takeoff)
+        if student_milestones['solo'] != '':
+            if student_milestones['solo'].tzinfo == None:
+                student_milestones_solo_aware = student_milestones['solo']
+
+
+    print("   ++++takeoff is:                         ", takeoff)
     print("   ++++student_milestones_joined_aware is :", student_milestones_joined_aware)
+    if student_milestones['solo'] != '':
+        print("   ++++student_milestones_solo_aware is   :", student_milestones_solo_aware)
+
 
     try:
         if takeoff < student_milestones_joined_aware:
             print(" ++++ ++++PILOT_INVALID")
             return -1
     except:
-        #date is invalid
-        #return -1 
         pass 
+
+    try:
+        if takeoff > student_milestones_joined_aware:
+            if student_milestones['solo'] == '':
+                print(" ++++ ++++PILOT_NOVICE")
+                return 0
+    except:
+        pass 
+
+
 
     ##PILOT_NOVICE = 0 # A pilot that has joined the school, but has not soloed
     ##print("    solo    is: ", str(student_milestones['solo']))
     try:
         if takeoff > student_milestones_joined_aware:
-            if takeoff < student_milestones['solo']:
-                ##print(" PILOT_NOVICE")
+            if takeoff < student_milestones_solo_aware:
+                print(" ++++ ++++ PILOT_NOVICE")
                 return 0 
     except:
-        if takeoff > student_milestones_joined_aware:
-            ##print(" PILOT_NOVICE")
-            return 0 
+        pass 
 
     ##PILOT_STUDENT = 1  A pilot that has soloed but does not have a license
     ##print("    license is: ", str(student_milestones['license']))
     try:
-        if takeoff > student_milestones['solo']:
+        if takeoff > student_milestones_solo_aware:
+            if student_milestones['license'] == '':
+                print(" ++++ ++++ PILOT_STUDENT")
+                return 1 
+    except:
+        #if takeoff > student_milestones['solo']:        #for when previous date is met, but there are no additional dates to compare
+            ##print(" PILOT_STUDENT")
+            #return 1   
+            pass 
+
+    try:
+        if takeoff > student_milestones_solo_aware:
             if takeoff < student_milestones['license']:
                 ##print(" PILOT_STUDENT")
                 return 1 
     except:
-        if takeoff > student_milestones['solo']:        #for when previous date is met, but there are no additional dates to compare
+        #if takeoff > student_milestones['solo']:        #for when previous date is met, but there are no additional dates to compare
             ##print(" PILOT_STUDENT")
-            return 1   
-
+            #return 1   
+            pass 
 
     ##PILOT_CERTIFIED = 2 #    # A pilot that has a license, but has under 50 hours post license
     try:
@@ -191,9 +228,10 @@ def get_certification(takeoff,student):
                 ##print(" PILOT_CERTIFIED")
                 return 2 
     except:
-        if takeoff > student_milestones['license']:
-            ##print(" PILOT_CERTIFIED")
-            return 2 
+        #if takeoff > student_milestones['license']:
+        ##print(" PILOT_CERTIFIED")
+        #return 2 
+        pass 
 
     ##PILOT_50_HOURS  = 3 A pilot that 50 hours post license
     ##print("    50hours is: ", str(student_milestones['50hours']))
@@ -485,7 +523,8 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     it is '50 Hours', it is only a match if cert is PILOT_50_HOURS. The value 'Dual' 
     only matches if instructed is True.
     """    
-    #print(" checking certifications", cert, "instructed is: ", instructed)
+    print(" ------------- CHECKING PILOT minimums ----------------------")
+    print(" checking certifications", cert, "instructed is: ", instructed)
     if cert == -1:
         #print("  PILOT_INVALID")
         allowed_categories = []
@@ -502,7 +541,7 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
         #print("  PILOT_50_HOURS")
         allowed_categories = ['Student','Certified','50 Hours']
 
-    #print("   category is:", allowed_categories)    
+    print("   category is:", allowed_categories)    
 
     if instructed == True:
         #print("    adding Dual since instructor = true")
@@ -517,7 +556,7 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
 
     if cert == 0:
         if instructed == False:
-            #print(" pilot has not soloed and should note be flying alone, return None")
+            print(" pilot has not soloed and should note be flying alone, return None")
             return None
 
     if cert == 1:
@@ -535,7 +574,7 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
 
     
 
-    # check conditions
+     #check conditions
     """
     The second column (CONDITIONS) has values 'VMC' and 'IMC'. 
     A flight filed as VFR (visual flight rules) is subject to VMC (visual meteorological conditions) minimums.
@@ -551,12 +590,12 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     Parameter vfr: Whether the pilot has filed this as an VFR flight
     Precondition: vfr is a boolean
     """
-    #print(" checking conditions, vfr: ", vfr, "day:", daytime)
+    print(" checking conditions, vfr: ", vfr, "day:", daytime)
     if vfr == True:
         allowed_conditions = ['VMC']
     if vfr == False:
         allowed_conditions = ['IMC','VMC']
-    #print("   conditions are: ", allowed_conditions)
+    print("   conditions are: ", allowed_conditions)
 
 
     # check area
@@ -570,7 +609,7 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
      (where the flight school is hosted). “Practice Area” is an area away from the airport but very nearby.
       “Cross Country” is a flight to another airport.
     """
-    #print(" checking area:", area)
+    print(" checking area:", area)
     if area == "Pattern":
         allowed_areas = ['Pattern','Any','Local']
     if area == "Practice Area":
@@ -581,7 +620,7 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
         allowed_areas = ['Pattern','Practice Area','Local','Cross Country','Any']
     if area == "Cross Country":
         allowed_areas = ['Cross Country','Any']
-    #print("   allowed_areas are: ", allowed_areas)
+    print("   allowed_areas are: ", allowed_areas)
 
 
     # check time
@@ -590,12 +629,12 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
     The fourth column (TIME) has values 'Day' or 'Night'. The value 'Day' is only 
     a match if daytime is True. If it is False, 'Night' is the only match.
     """
-    #print(" checking daytime, daytime is:", daytime)
+    print(" checking daytime, daytime is:", daytime)
     if daytime == True:
         allowed_time = ['Day']
     if daytime == False:
         allowed_time = ['Night']
-    #print("   allowed_time is: ", allowed_time)
+    print("   allowed_time is: ", allowed_time)
 
 
 
@@ -603,7 +642,7 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
 
     #check categories in mininum for matching rows 
     ## loop through rows in mininum checking against list of allowed categories and capturing matching rows
-    #print("  checking rows that match allowed categories: ", allowed_categories)
+    print("  checking rows that match allowed categories: ", allowed_categories)
     category_matching_rows = []
     for row_index in range(len(minimums)):
         ##print(row_index, (minimums[row_index]))
@@ -611,7 +650,7 @@ def get_minimums(cert, area, instructed, vfr, daytime, minimums):
             if minimums[row_index][0] == allowed_categories[allowed_cat_index]:
                 ##print("    category found, row: ", row_index, minimums[row_index])
                 category_matching_rows.append(row_index)
-    #print("     category_matching_rows are: ", category_matching_rows)
+    print("     category_matching_rows are: ", category_matching_rows)
 
 
     
