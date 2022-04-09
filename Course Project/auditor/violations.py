@@ -861,7 +861,7 @@ def list_weather_violations(directory):
     'weather.json', 'minimums.csv', 'students.csv', and 'lessons.csv'
     """
 
-    print(" directory is: ", directory)
+    #print(" directory is: ", directory)
 
     # Load in all of the files
 
@@ -871,7 +871,7 @@ def list_weather_violations(directory):
     text_daycycle_json = file_daycycle_json.read()
     file_daycycle_json_wrapped = json.loads(text_daycycle_json)
     #print("file_daycycle_json_wrapped", file_daycycle_json_wrapped)
-    print(" type(file_daycycle_json_wrapped) is: ", type(file_daycycle_json_wrapped))
+    #print(" type(file_daycycle_json_wrapped) is: ", type(file_daycycle_json_wrapped))
 
     ## open weather.json
     path_weather_json = os.path.join(directory,'weather.json')
@@ -879,7 +879,7 @@ def list_weather_violations(directory):
     text_weather_json = file_weather_json.read()
     file_weather_json_wrapped = json.loads(text_weather_json)
     #print("file_weather_json_wrapped is:", file_weather_json_wrapped)
-    print(" type(file_weather_json_wrapped) is: ", type(file_weather_json_wrapped))
+    #print(" type(file_weather_json_wrapped) is: ", type(file_weather_json_wrapped))
 
 
     ## open students.csv
@@ -887,24 +887,24 @@ def list_weather_violations(directory):
     file_students_csv = open(path_students_csv)
     file_students_csv_wrapped = csv.reader(file_students_csv)
     #for row in file_students_csv_wrapped:
-    #    print(row)
+    #    #print(row)
 
     ## open minimums.csv
     path_minimums_csv = os.path.join(directory,'minimums.csv')
     file_minimums_csv = open(path_minimums_csv)
     file_minimums_csv_wrapped = csv.reader(file_minimums_csv)
     #for row in file_minimums_csv_wrapped:
-    #    print(row)
+    #    #print(row)
 
     ## open lessons.csv
     path_lessons_csv = os.path.join(directory,'lessons.csv')
     file_lessons_csv = open(path_lessons_csv)
     file_lessons_csv_wrapped = csv.reader(file_lessons_csv)
-    print(" type(file_lessons_csv_wrapped) is: ", file_lessons_csv_wrapped)
+    #print(" type(file_lessons_csv_wrapped) is: ", file_lessons_csv_wrapped)
     
     
     # CONVERT MINIMUM CSV INTO A TABLE
-    print("  > converting minimums csv to table < ")
+    #print("  > converting minimums csv to table < ")
     minimums_table = []
     row_index = 0
     for row in file_minimums_csv_wrapped:
@@ -916,12 +916,12 @@ def list_weather_violations(directory):
             #print("  current_row_table is: ", current_row_table)            
         row_index = row_index + 1
         minimums_table.append(current_row_table)
-    print(" len minimums_table is: ", len(minimums_table))
+    #print(" len minimums_table is: ", len(minimums_table))
 
 
 
     # CONVERT STUDENTS CSV INTO A TABLE
-    print("  > converting students csv into table < ")
+    #print("  > converting students csv into table < ")
     students_table = []
     row_index = 0
     for row in file_students_csv_wrapped:
@@ -933,12 +933,12 @@ def list_weather_violations(directory):
             #print("  current_row_table is: ", current_row_table)
         row_index = row_index + 1
         students_table.append(current_row_table)
-    print(" len students_table is: ", len(students_table))
+    #print(" len students_table is: ", len(students_table))
 
     
 
     # CONVERT LESSONS CSV INTO TABLE
-    print("  > converting lessons csv into table < ")
+    #print("  > converting lessons csv into table < ")
     violations_check_table = []
     row_index = 0
     ## checking lessons
@@ -953,21 +953,21 @@ def list_weather_violations(directory):
             violations_check_table.append(current_row_table)
         row_index = row_index + 1
         
-    print(" len violations_check_table is: ", len(violations_check_table))
+    #print(" len violations_check_table is: ", len(violations_check_table))
 
     """
     ## checking to make sure table is constructed properly
     #print(" violations_check_table: ", violations_check_table)
-    print(violations_check_table[0])
-    print(violations_check_table[10])
-    print(violations_check_table[100])
-    print(violations_check_table[1000])
+    #print(violations_check_table[0])
+    #print(violations_check_table[10])
+    #print(violations_check_table[100])
+    #print(violations_check_table[1000])
     """
 
     """
     ## testing appending a row:
     violations_check_table[0].append('test append')
-    print(violations_check_table[0])
+    #print(violations_check_table[0])
     """
 
     # For each of the lessons
@@ -981,18 +981,18 @@ def list_weather_violations(directory):
 
 
     # ANALYZE LESSONS TABLE AND PRODUCE VIOLATIONS
-    print(" ")
+    #print(" ")
     violations_count = 0
     row_index = 0
     column_index = 0
     lessons_length = len(violations_check_table)
     lessons_width = len(violations_check_table[0])
-    print(" lessons_length is:", lessons_length, "lessons_width is: ", lessons_width)
+    #print(" lessons_length is:", lessons_length, "lessons_width is: ", lessons_width)
 
     for row_index in range(lessons_length):    #uncomment when ready for full testing
     #for row_index in range(1):                 #just to make testing quicker
-        print(" ")
-        print("  row_index: ", row_index, violations_check_table[row_index])
+        #print(" ")
+        #print("  row_index: ", row_index, violations_check_table[row_index])
         
         if row_index >= 0:
             # get values from lessons table for evaluating
@@ -1009,13 +1009,13 @@ def list_weather_violations(directory):
             #print("   flight_area: ", flight_area)
 
             #convert takeoff_time to datetime obj
-            print("  >> converting takeoff to datetime obj << ")
+            #print("  >> converting takeoff to datetime obj << ")
             takeoff_time_dt = parse(takeoff_time)
             #print("      takeoff_time_dt:", str(takeoff_time_dt))
             #print("   ", takeoff_time_dt, type(takeoff_time_dt))
 
             # Get the pilot credentials
-            print("  >> checking pilot credentials << ")
+            #print("  >> checking pilot credentials << ")
             ##get row from studens csv for student import it and get cert back. 
             ### search for student id in students.csv 
             #print("   student_id from lessons table is: ", student_id)
@@ -1035,7 +1035,7 @@ def list_weather_violations(directory):
             
             
             # Get the Pilot Minimums
-            print("  >> checking pilot minimums << ")
+            #print("  >> checking pilot minimums << ")
             
             ## get instrument rating 
             instrument_rating = pilots.has_instrument_rating(takeoff_time_dt, student_history_row)
@@ -1064,7 +1064,7 @@ def list_weather_violations(directory):
             #print("   daytime is: ", daytime)          
 
             ## get minimums using cert, area, instructed, vfr, daytime, minimums_csv
-            print("  >>> verifying data for checking pilot minimums <<< ")
+            #print("  >>> verifying data for checking pilot minimums <<< ")
             #print("    certification is: ", certification)
             #print("    area is: ", flight_area)
             #print("    instructed is: ", instructed)
@@ -1074,7 +1074,7 @@ def list_weather_violations(directory):
             #print("    minimum_table len is: ", len(minimums_table))
 
             pilot_minimums = pilots.get_minimums(certification, flight_area, instructed, flight_filed_as_vfr, daytime, minimums_table)
-            print("    ~ pilot_minimums are: ", pilot_minimums)
+            #print("    ~ pilot_minimums are: ", pilot_minimums)
             # get pilot minimum values
             flight_ceiling_min =  pilot_minimums[0]
             flight_visibility_min =  pilot_minimums[1]
@@ -1086,13 +1086,13 @@ def list_weather_violations(directory):
             #print("      crosswind is:  ", flight_crosswind_max)
 
             """
-            print("  >> convert time to iso << ")               #get_weather actual converts to iso
+            #print("  >> convert time to iso << ")               #get_weather actual converts to iso
             takeoff_time_iso = takeoff_time_dt.isoformat()
-            print("   takeoff_time_iso is :", takeoff_time_iso)
+            #print("   takeoff_time_iso is :", takeoff_time_iso)
             """
 
             # Get weather report
-            print("  >> getting weather report from get_weather_report <<")
+            #print("  >> getting weather report from get_weather_report <<")
             weather_at_flight = get_weather_report(takeoff_time_dt,file_weather_json_wrapped)
             #print("   weather_at_flight is: ", weather_at_flight)
 
@@ -1123,54 +1123,54 @@ def list_weather_violations(directory):
             #print("  _ceiling_bad =    ", ceiling_bad)
             
 
-            print(" >> >>  checking VIOLATIONS << << ")
+            #print(" >> >>  checking VIOLATIONS << << ")
             
             violation = get_weather_violation(weather_at_flight,pilot_minimums)
-            print(" violation is: ", repr(violation))
+            #print(" violation is: ", repr(violation))
             if violation != '':
                 violations_count = violations_count + 1
-                print(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-                print(" ~~~~~~~~~~~~~~~~~~~~~~VIOLATION FOUND ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-                print(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                #print(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                #print(" ~~~~~~~~~~~~~~~~~~~~~~VIOLATION FOUND ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                #print(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
             """
             ## testing appending a row:
             violations_check_table[0].append('test append')
-            print(violations_check_table[0])
+            #print(violations_check_table[0])
 
             flight_area = violations_check_table[row_index][6]
             """
             
-            print(" ")
-            print(" UPDATING VIOLATIONS RESULTS TABLE ")
-            print(" current row : ", violations_check_table[row_index])
+            #print(" ")
+            #print(" UPDATING VIOLATIONS RESULTS TABLE ")
+            #print(" current row : ", violations_check_table[row_index])
             violations_check_table[row_index].append(violation)
-            print(" current row : ", violations_check_table[row_index])
+            #print(" current row : ", violations_check_table[row_index])
             
 
-    print(" ")
-    print(" violations count: ", violations_count)
-    print(" ")
+    #print(" ")
+    #print(" violations count: ", violations_count)
+    #print(" ")
 
-    print(violations_check_table[0])
-    print(violations_check_table[1])
+    #print(violations_check_table[0])
+    #print(violations_check_table[1])
 
     violations_result_table = []
 
-    print("  >> CREATE RESULT TABLE  <<  ")
+    #print("  >> CREATE RESULT TABLE  <<  ")
     violations_table_length = len(violations_check_table)
     violations_table_width = len(violations_check_table[0])
-    print(" violations_table_length is : ", violations_table_length)    
-    print(" violations_table_width is: ", violations_table_width)
+    #print(" violations_table_length is : ", violations_table_length)    
+    #print(" violations_table_width is: ", violations_table_width)
     
     for row_index in range(violations_table_length):
-        print("  row is: ", violations_check_table[row_index])
+        #print("  row is: ", violations_check_table[row_index])
         if violations_check_table[row_index][7] != '':
-            print("   appending row to violations_result_table")
+            #print("   appending row to violations_result_table")
             violations_result_table.append(violations_check_table[row_index])
 
-    for row in violations_result_table:
-        print(row)
+    #for row in violations_result_table:
+        #print(row)
 
 
     print(" violations found: ", violations_count)
