@@ -949,8 +949,10 @@ def list_weather_violations(directory):
             #print("  column_index is: ", column_index, "content: ", row[column_index])                        
             current_row_table.append(row[column_index])
             #print("  current_row_table is: ", current_row_table)
+        if row_index > 0:
+            violations_result_table.append(current_row_table)
         row_index = row_index + 1
-        violations_result_table.append(current_row_table)
+        
     print(" len violations_result_table is: ", len(violations_result_table))
 
     """
@@ -985,14 +987,14 @@ def list_weather_violations(directory):
     column_index = 0
     lessons_length = len(violations_result_table)
     lessons_width = len(violations_result_table[0])
-    #print(" lessons_length is:", lessons_length, "lessons_width is: ", lessons_width)
+    print(" lessons_length is:", lessons_length, "lessons_width is: ", lessons_width)
 
     for row_index in range(lessons_length):    #uncomment when ready for full testing
-    #for row_index in range(4):                 #just to make testing quicker
+    #for row_index in range(1):                 #just to make testing quicker
         print(" ")
         print("  row_index: ", row_index, violations_result_table[row_index])
         
-        if row_index > 0:
+        if row_index >= 0:
             # get values from lessons table for evaluating
             student_id = violations_result_table[row_index][0]
             instructor = violations_result_table[row_index][2]
@@ -1146,6 +1148,11 @@ def list_weather_violations(directory):
     print(" ")
     print(" violations count: ", violations_count)
     print(" ")
+
+    print(violations_result_table[0])
+    print(violations_result_table[1])
+    print(" popping row 0 as test")
+    violations_result_table.pop(0)
 
     return violations_result_table
 
