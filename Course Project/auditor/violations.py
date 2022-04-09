@@ -866,7 +866,7 @@ def list_weather_violations(directory):
     # Load in all of the files
 
     ## open daycycle.json
-    path_daycycle_json = os.path.join('tests','daycycle.json')
+    path_daycycle_json = os.path.join(directory,'daycycle.json')
     file_daycycle_json = open(path_daycycle_json)
     text_daycycle_json = file_daycycle_json.read()
     file_daycycle_json_wrapped = json.loads(text_daycycle_json)
@@ -874,7 +874,7 @@ def list_weather_violations(directory):
     print(" type(file_daycycle_json_wrapped) is: ", type(file_daycycle_json_wrapped))
 
     ## open weather.json
-    path_weather_json = os.path.join('tests','weather.json')
+    path_weather_json = os.path.join(directory,'weather.json')
     file_weather_json = open(path_weather_json)
     text_weather_json = file_weather_json.read()
     file_weather_json_wrapped = json.loads(text_weather_json)
@@ -883,21 +883,21 @@ def list_weather_violations(directory):
 
 
     ## open students.csv
-    path_students_csv = os.path.join('tests','students.csv')
+    path_students_csv = os.path.join(directory,'students.csv')
     file_students_csv = open(path_students_csv)
     file_students_csv_wrapped = csv.reader(file_students_csv)
     #for row in file_students_csv_wrapped:
     #    print(row)
 
     ## open minimums.csv
-    path_minimums_csv = os.path.join('tests','minimums.csv')
+    path_minimums_csv = os.path.join(directory,'minimums.csv')
     file_minimums_csv = open(path_minimums_csv)
     file_minimums_csv_wrapped = csv.reader(file_minimums_csv)
     #for row in file_minimums_csv_wrapped:
     #    print(row)
 
     ## open lessons.csv
-    path_lessons_csv = os.path.join('tests','lessons.csv')
+    path_lessons_csv = os.path.join(directory,'lessons.csv')
     file_lessons_csv = open(path_lessons_csv)
     file_lessons_csv_wrapped = csv.reader(file_lessons_csv)
     print(" type(file_lessons_csv_wrapped) is: ", file_lessons_csv_wrapped)
@@ -988,7 +988,7 @@ def list_weather_violations(directory):
     #print(" lessons_length is:", lessons_length, "lessons_width is: ", lessons_width)
 
     for row_index in range(lessons_length):    #uncomment when ready for full testing
-    #for row_index in range(2000):                 #just to make testing quicker
+    #for row_index in range(4):                 #just to make testing quicker
         print(" ")
         print("  row_index: ", row_index, violations_result_table[row_index])
         
@@ -1146,6 +1146,8 @@ def list_weather_violations(directory):
     print(" ")
     print(" violations count: ", violations_count)
     print(" ")
+
+    return violations_result_table
 
     """
     WOO HOO!!
