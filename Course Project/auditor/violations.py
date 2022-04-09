@@ -939,7 +939,7 @@ def list_weather_violations(directory):
 
     # CONVERT LESSONS CSV INTO TABLE
     print("  > converting lessons csv into table < ")
-    violations_result_table = []
+    violations_check_table = []
     row_index = 0
     ## checking lessons
     for row in file_lessons_csv_wrapped:
@@ -950,24 +950,24 @@ def list_weather_violations(directory):
             current_row_table.append(row[column_index])
             #print("  current_row_table is: ", current_row_table)
         if row_index > 0:
-            violations_result_table.append(current_row_table)
+            violations_check_table.append(current_row_table)
         row_index = row_index + 1
         
-    print(" len violations_result_table is: ", len(violations_result_table))
+    print(" len violations_check_table is: ", len(violations_check_table))
 
     """
     ## checking to make sure table is constructed properly
-    #print(" violations_result_table: ", violations_result_table)
-    print(violations_result_table[0])
-    print(violations_result_table[10])
-    print(violations_result_table[100])
-    print(violations_result_table[1000])
+    #print(" violations_check_table: ", violations_check_table)
+    print(violations_check_table[0])
+    print(violations_check_table[10])
+    print(violations_check_table[100])
+    print(violations_check_table[1000])
     """
 
     """
     ## testing appending a row:
-    violations_result_table[0].append('test append')
-    print(violations_result_table[0])
+    violations_check_table[0].append('test append')
+    print(violations_check_table[0])
     """
 
     # For each of the lessons
@@ -985,22 +985,22 @@ def list_weather_violations(directory):
     violations_count = 0
     row_index = 0
     column_index = 0
-    lessons_length = len(violations_result_table)
-    lessons_width = len(violations_result_table[0])
+    lessons_length = len(violations_check_table)
+    lessons_width = len(violations_check_table[0])
     print(" lessons_length is:", lessons_length, "lessons_width is: ", lessons_width)
 
     for row_index in range(lessons_length):    #uncomment when ready for full testing
     #for row_index in range(1):                 #just to make testing quicker
         print(" ")
-        print("  row_index: ", row_index, violations_result_table[row_index])
+        print("  row_index: ", row_index, violations_check_table[row_index])
         
         if row_index >= 0:
             # get values from lessons table for evaluating
-            student_id = violations_result_table[row_index][0]
-            instructor = violations_result_table[row_index][2]
-            takeoff_time = violations_result_table[row_index][3]
-            flight_filed = violations_result_table[row_index][5]
-            flight_area = violations_result_table[row_index][6]
+            student_id = violations_check_table[row_index][0]
+            instructor = violations_check_table[row_index][2]
+            takeoff_time = violations_check_table[row_index][3]
+            flight_filed = violations_check_table[row_index][5]
+            flight_area = violations_check_table[row_index][6]
 
             #print("   student_id:  ", student_id)
             #print("   instructor:  ", instructor)
@@ -1124,6 +1124,7 @@ def list_weather_violations(directory):
             
 
             print(" >> >>  checking VIOLATIONS << << ")
+            
             violation = get_weather_violation(weather_at_flight,pilot_minimums)
             print(" violation is: ", repr(violation))
             if violation != '':
@@ -1134,25 +1135,45 @@ def list_weather_violations(directory):
 
             """
             ## testing appending a row:
-            violations_result_table[0].append('test append')
-            print(violations_result_table[0])
+            violations_check_table[0].append('test append')
+            print(violations_check_table[0])
 
-            flight_area = violations_result_table[row_index][6]
+            flight_area = violations_check_table[row_index][6]
             """
+            
             print(" ")
             print(" UPDATING VIOLATIONS RESULTS TABLE ")
-            print(" current row : ", violations_result_table[row_index])
-            violations_result_table[row_index].append(violation)
-            print(" current row : ", violations_result_table[row_index])
+            print(" current row : ", violations_check_table[row_index])
+            violations_check_table[row_index].append(violation)
+            print(" current row : ", violations_check_table[row_index])
+            
 
     print(" ")
     print(" violations count: ", violations_count)
     print(" ")
 
-    print(violations_result_table[0])
-    print(violations_result_table[1])
-    print(" popping row 0 as test")
-    violations_result_table.pop(0)
+    print(violations_check_table[0])
+    print(violations_check_table[1])
+
+    violations_result_table = []
+
+    print("  >> CREATE RESULT TABLE  <<  ")
+    violations_table_length = len(violations_check_table)
+    violations_table_width = len(violations_check_table[0])
+    print(" violations_table_length is : ", violations_table_length)    
+    print(" violations_table_width is: ", violations_table_width)
+    
+    for row_index in range(violations_table_length):
+        print("  row is: ", violations_check_table[row_index])
+        if violations_check_table[row_index][7] != '':
+            print("   appending row to violations_result_table")
+            violations_result_table.append(violations_check_table[row_index])
+
+    for row in violations_result_table:
+        print(row)
+
+
+    print(" violations found: ", violations_count)
 
     return violations_result_table
 
