@@ -121,5 +121,27 @@ def execute(args):
     Parameter args: The command line arguments for the application (minus the application name)
     Precondition: args is a list of strings
     """
-    pass                    # Implement this function
 
+    # verify input
+    print(" args:",args)
+
+    # get number of args
+    number_of_args = len(args)
+    print(" number_of_args:", number_of_args)
+
+    if number_of_args == 1:
+        print(" number_of_args is 1")
+        #if --test used, run tests.test_all()
+        if args[0] == '--test':
+            print("  executing test scripts, running tests.test_all")
+            tests.test_all()
+        
+        else:
+            #if datafile provided, run it with discover_violations
+            print("  arg is: ", args[0], "running discover_violations" )
+            discover_violations(args[0],None)
+
+    if number_of_args == 2:
+        print(" number_of_args is 2, running discover_violations with ", args[0], ",", args[1])
+        discover_violations(args[0],args[1])
+        
