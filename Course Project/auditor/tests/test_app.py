@@ -19,16 +19,16 @@ TEST_EXTENSION_2 = 2
 
 def test_discover_violations(level=TEST_BASIC_APP):
     
-    print(" RUNNING test_discover_violations")
-    print("  setting initial vars")
+    #print(" RUNNING test_discover_violations")
+    #print("  setting initial vars")
     
     fcn = 'app.discover_violations'
     file = 'scratch.csv'
     
-    #printer = Printer()        #blocks printer capture
-    #app.print = printer.print
+    printer = Printer()        #comment these two lines to block printer capture
+    app.print = printer.print  #capture print output from called function app 
     
-    print("  setting os.path")
+    #print("  setting os.path")
     
     parent = os.path.split(__file__)[0]
     output = os.path.join(parent,file)
@@ -36,14 +36,14 @@ def test_discover_violations(level=TEST_BASIC_APP):
         os.remove(output)
     
 
-    print("  parent is: ", parent)
-    print("  output is: ", output)
+    #print("  parent is: ", parent)
+    #print("  output is: ", output)
 
     correct = [93,125,144]
     expect = '%s violations found.' % str(correct[level])
     results = app.discover_violations(parent,None)
     
-    """
+    """ #commented out to figure out how the printer.printed worked
     # printing the output of discover_violations for dev
     print("  results are: ", results)
     #print("  printer.printed is: ", printer.printed)

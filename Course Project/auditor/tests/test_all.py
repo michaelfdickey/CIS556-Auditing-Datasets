@@ -48,7 +48,7 @@ def test(level=TEST_BASIC_APP):
     """
     test_utils.test()              # temporarily commented out to speed up testing
     test_pilots.test()
-    #test_violations.test()
+    test_violations.test()
     print(" skipping test violations << remove me")
     if level >= TEST_EXTENSION_1:
         test_endorsements.test()

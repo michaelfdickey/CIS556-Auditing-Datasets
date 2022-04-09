@@ -61,11 +61,11 @@ def discover_violations(directory,output):
     #print(" directory is: ", directory)
     #print(" output is: ", output)
 
-    print(" getting violations.list_weather_violations")
+
+    #print(" getting violations.list_weather_violations")
     discovered_weather_violations = violations.list_weather_violations(directory)
     number_discovered_violations = len(discovered_weather_violations)
-    print(number_discovered_violations,"violations found.")
-
+    
     #print(" discovered_weather_violations are ", discovered_weather_violations)
 
     # create output csv table
@@ -80,29 +80,31 @@ def discover_violations(directory,output):
 
     #print(" discovered_violations_table: ")
     #print("  ", discovered_violations_table)
-    for row in discovered_violations_table:
-        print("  ", row)
+    #for row in discovered_violations_table:
+    #    print("  ", row)
 
 
-    # prepare output filename
-    if output == None:
-        output = 'output'
-    filename = output + '.csv'
-    print(" filename will be: ", filename)
+    # prepare output filename and write csv file
+    if output != None:
+        filename = output + '.csv'
+        #print(" filename will be: ", filename)
 
-    # write csv file
-    output_csv_file = open(filename,'w',newline='')
-    output_csv_wrapped = csv.writer(output_csv_file)
-    for row in discovered_violations_table:
-        output_csv_wrapped.writerow(row)
-    output_csv_file.close()
+        # write csv file
+        output_csv_path = os.path.join(directory,filename)
+        output_csv_file = open(output_csv_path,'w',newline='')
+        output_csv_wrapped = csv.writer(output_csv_file)
+        for row in discovered_violations_table:
+            output_csv_wrapped.writerow(row)
+        output_csv_file.close()
 
-    #process and return result
-    if number_discovered_violations == 0:
-        result = 'No violations found.'
-    if number_discovered_violations > 0:
-        result = number_discovered_violations
-    return result
+    number = number_discovered_violations
+
+    if number == 0:
+        print("No violations found.")
+    if number == 1:
+        print(number,"violation found.")
+    if number > 1:
+        print(number,"violations found.")
 
 
 def execute(args):
