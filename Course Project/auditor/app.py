@@ -83,14 +83,8 @@ def discover_violations(directory,output):
     #for row in discovered_violations_table:
     #    print("  ", row)
 
-
     # prepare output filename and write csv file
     if output != None:
-        #filename = output + '.csv'
-        #print(" filename will be: ", filename)
-
-        # write csv file
-        #output_csv_path = os.path.join(directory,filename)
         output_csv_file = open(output,'w',newline='')
         output_csv_wrapped = csv.writer(output_csv_file)
         for row in discovered_violations_table:
