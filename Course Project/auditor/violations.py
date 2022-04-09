@@ -1173,20 +1173,6 @@ def list_weather_violations(directory):
         #print(row)
 
 
-    print(" violations found: ", violations_count)
+    #print("   violations found: ", violations_count)
 
     return violations_result_table
-
-    """
-    WOO HOO!!
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ~~~~~~~~~~~~~~~~~~~~~~VIOLATION FOUND ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    UPDATING VIOLATIONS RESULTS TABLE
-    current row :  ['S01011', '133CZ', 'I072', '2017-12-31T09:00:00-05:00', '2017-12-31T11:00:00-05:00', 'VFR', 'Pattern']
-    current row :  ['S01011', '133CZ', 'I072', '2017-12-31T09:00:00-05:00', '2017-12-31T11:00:00-05:00', 'VFR', 'Pattern', 'Visibility']
-
-    violations count:  93
-
-    """

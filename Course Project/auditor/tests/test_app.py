@@ -18,19 +18,40 @@ TEST_EXTENSION_2 = 2
 
 
 def test_discover_violations(level=TEST_BASIC_APP):
+    
+    print(" RUNNING test_discover_violations")
+    print("  setting initial vars")
+    
     fcn = 'app.discover_violations'
     file = 'scratch.csv'
-    printer = Printer()
-    app.print = printer.print
+    
+    #printer = Printer()        #blocks printer capture
+    #app.print = printer.print
+    
+    print("  setting os.path")
     
     parent = os.path.split(__file__)[0]
     output = os.path.join(parent,file)
     if os.path.exists(output):
         os.remove(output)
     
+
+    print("  parent is: ", parent)
+    print("  output is: ", output)
+
     correct = [93,125,144]
     expect = '%s violations found.' % str(correct[level])
     results = app.discover_violations(parent,None)
+    
+    """
+    # printing the output of discover_violations for dev
+    print("  results are: ", results)
+    #print("  printer.printed is: ", printer.printed)
+    printed_lines = len(printer.printed)
+    for row_index in range(printed_lines):
+        print("  ",printer.printed[row_index])
+    """
+
     if not printer.printed:
         quit_with_error("%s('tests',%s) did not print the number of violations found" % (fcn,repr(file)))
     elif len(printer.printed) > 1:

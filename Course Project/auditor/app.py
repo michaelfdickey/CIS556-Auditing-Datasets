@@ -8,13 +8,14 @@ Technically, we could have put many of these functions in __main__.py.  That is 
 main module of this application anyway.  However, for testing purposes we want all
 functions in modules and we only want script code in the file __main__.py
 
-Author: YOUR NAME HERE
-Date: THE DATE HERE
+Author: Michael Dickey
+Date: Apr 9 2022
 """
 import utils
 import tests
 import os.path
 import violations
+import csv
 
 # Uncomment for the extra credit
 #import endorsements
@@ -54,7 +55,54 @@ def discover_violations(directory,output):
     Parameter output: The CSV file to store the results
     Precondition: output is None or a string that is a valid file name
     """
-    pass                    # Implement this function
+
+    # verify input
+    #print(" --------RUNNING DISCOVER VIOLATIONS -----------")
+    #print(" directory is: ", directory)
+    #print(" output is: ", output)
+
+    print(" getting violations.list_weather_violations")
+    discovered_weather_violations = violations.list_weather_violations(directory)
+    number_discovered_violations = len(discovered_weather_violations)
+    print(number_discovered_violations,"violations found.")
+
+    #print(" discovered_weather_violations are ", discovered_weather_violations)
+
+    # create output csv table
+    discovered_violations_table = []
+    header_row = ['STUDENT','AIRPLANE','INSTRUCTOR','TAKEOFF','LANDING','FILED','AREA','REASON']
+    discovered_violations_table.append(header_row)
+    
+    # populate new table with products of list_weather_violations
+    for row in discovered_weather_violations:
+        discovered_violations_table.append(row)
+        #print(row)
+
+    #print(" discovered_violations_table: ")
+    #print("  ", discovered_violations_table)
+    for row in discovered_violations_table:
+        print("  ", row)
+
+
+    # prepare output filename
+    if output == None:
+        output = 'output'
+    filename = output + '.csv'
+    print(" filename will be: ", filename)
+
+    # write csv file
+    output_csv_file = open(filename,'w',newline='')
+    output_csv_wrapped = csv.writer(output_csv_file)
+    for row in discovered_violations_table:
+        output_csv_wrapped.writerow(row)
+    output_csv_file.close()
+
+    #process and return result
+    if number_discovered_violations == 0:
+        result = 'No violations found.'
+    if number_discovered_violations > 0:
+        result = number_discovered_violations
+    return result
 
 
 def execute(args):
